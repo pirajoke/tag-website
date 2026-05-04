@@ -55,7 +55,7 @@ export function Header() {
             ))}
             <Link
               href="/contact"
-              className="bg-red hover:bg-red/90 text-white px-5 py-2.5 text-sm font-semibold tracking-wide uppercase transition-colors duration-200"
+              className="border border-gold/60 hover:bg-gold hover:text-navy text-gold px-5 py-2 text-sm font-medium tracking-wide uppercase rounded-full transition-all duration-300"
             >
               Get in Touch
             </Link>
@@ -120,7 +120,7 @@ export function Header() {
                 <Link
                   href="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-4 bg-red text-white px-8 py-3 text-lg font-semibold tracking-wide uppercase"
+                  className="mt-4 border border-gold/60 hover:bg-gold hover:text-navy text-gold px-8 py-3 text-lg font-medium tracking-wide uppercase rounded-full transition-all duration-300"
                 >
                   Get in Touch
                 </Link>
