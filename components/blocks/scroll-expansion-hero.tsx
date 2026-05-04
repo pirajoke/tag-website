@@ -228,22 +228,35 @@ const ScrollExpandMedia = ({
 
                 {/* Overlay text on expanded media */}
                 <motion.div
-                  className='absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-8 pb-12 md:pb-16 rounded-xl bg-gradient-to-t from-black/70 via-black/20 to-transparent'
+                  className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: scrollProgress > 0.8 ? 1 : 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
-                    Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions — combining deep institutional knowledge with innovative strategy to deliver results.
-                  </p>
-                  <div className='mt-4 flex items-center gap-6 text-white/50 text-sm uppercase tracking-wider'>
-                    <span>Lobbying</span>
-                    <span className='text-gold'>&#9670;</span>
-                    <span>Campaigns</span>
-                    <span className='text-gold'>&#9670;</span>
-                    <span>Communications</span>
-                    <span className='text-gold'>&#9670;</span>
-                    <span>Design</span>
+                  {/* Top */}
+                  <div className='flex flex-col items-center'>
+                    <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
+                      Est. 1990 &mdash; New York City
+                    </span>
+                    <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
+                      Together, We Make<br />It Happen
+                    </h2>
+                  </div>
+
+                  {/* Bottom */}
+                  <div className='flex flex-col items-center'>
+                    <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
+                      Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions — combining deep institutional knowledge with innovative strategy to deliver results.
+                    </p>
+                    <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
+                      <span>Lobbying</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Campaigns</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Communications</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Design</span>
+                    </div>
                   </div>
                 </motion.div>
 
