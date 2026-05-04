@@ -1,42 +1,57 @@
 "use client";
 
-import { clients } from "@/lib/data";
+import { motion } from "framer-motion";
+import { AnimatedCarousel, LogoItem } from "@/components/ui/logo-carousel";
 
-const allClients = [
-  ...clients.political.slice(0, 6),
-  ...clients.nonprofit.slice(0, 3),
-  ...clients.labor.slice(0, 3),
+const clientLogos: LogoItem[] = [
+  { name: "NY Communities for Change" },
+  { name: "Artbridge" },
+  { name: "CORE" },
+  { name: "Kamillah Hanks" },
+  { name: "CWA Local 1180" },
+  { name: "Edison Properties" },
+  { name: "NY/NJ Hotel & Gaming Workers Union" },
+  { name: "Donovan Richards" },
+  { name: "Met Council on Housing" },
+  { name: "StorageMart" },
+  { name: "Vanessa L. Gibson" },
+  { name: "Youngwoo & Associates" },
+  { name: "Manhattan Mini Storage" },
+  { name: "Climate Organizing Hub" },
+  { name: "Freelancers Union" },
+  { name: "Hotel Trades Council" },
+  { name: "ZD Jasper Realty" },
+  { name: "Jim Owles Liberal Democratic Club" },
+  { name: "UFT" },
+  { name: "Carmen De La Rosa" },
 ];
 
 export function ClientsMarquee() {
   return (
-    <section className="py-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-        <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
-          Trusted By Leaders
-        </p>
-        <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy">
-          Our Clients
-        </h2>
-        <div className="mt-4 w-16 h-0.5 bg-gold mx-auto" />
-      </div>
+    <section className="py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-6"
+        >
+          <span className="inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-6">
+            Trusted By Leaders
+          </span>
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-navy">
+            Our Clients
+          </h2>
+          <div className="mt-6 w-20 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto" />
+        </motion.div>
 
-      <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
-
-        <div className="flex animate-marquee">
-          {[...allClients, ...allClients].map((client, i) => (
-            <div
-              key={`${client}-${i}`}
-              className="flex-shrink-0 mx-8 px-8 py-4 bg-ivory border border-navy/5 flex items-center justify-center"
-            >
-              <span className="text-navy/70 font-medium text-sm whitespace-nowrap">
-                {client}
-              </span>
-            </div>
-          ))}
-        </div>
+        <AnimatedCarousel
+          logos={clientLogos}
+          autoPlay
+          autoPlayInterval={2500}
+          itemsPerViewMobile={2}
+          itemsPerViewDesktop={5}
+        />
       </div>
     </section>
   );
