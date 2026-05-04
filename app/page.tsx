@@ -4,7 +4,6 @@ import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { ClientsMarquee } from "@/components/sections/ClientsMarquee";
 import { AboutTeaser } from "@/components/sections/AboutTeaser";
 import { NewsGrid } from "@/components/sections/NewsGrid";
-import { CTASection } from "@/components/sections/CTASection";
 import { Testimonials } from "@/components/sections/Testimonials";
 
 export default function Home() {
@@ -24,7 +23,6 @@ export default function Home() {
       <AboutTeaser />
       <Testimonials />
       <NewsGrid limit={3} />
-      <CTASection />
     </>
   );
 }
