@@ -1,4 +1,4 @@
-import { Hero } from "@/components/sections/Hero";
+import ScrollExpandMedia from "@/components/blocks/scroll-expansion-hero";
 import { StatsBar } from "@/components/sections/StatsBar";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { ClientsMarquee } from "@/components/sections/ClientsMarquee";
@@ -9,10 +9,14 @@ import { CTASection } from "@/components/sections/CTASection";
 export default function Home() {
   return (
     <>
-      <Hero
-        title="Shaping Policy. Winning Campaigns. Delivering Results."
-        subtitle="New York's premier strategic consulting firm — 35+ years of lobbying, campaigns, and communications excellence."
-        cta={{ label: "Get in Touch", href: "/contact" }}
+      <ScrollExpandMedia
+        mediaType="image"
+        mediaSrc="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1280&h=720&fit=crop&q=80"
+        bgImageSrc="https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=1920&h=1080&fit=crop&q=80"
+        title="Shaping Policy. Winning Campaigns."
+        date="Est. 1990"
+        scrollToExpand="Scroll to Explore"
+        textBlend
       />
       <StatsBar />
       <ServicesGrid />
