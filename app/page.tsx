@@ -12,7 +12,7 @@ export default function Home() {
       <ScrollExpandMedia
         mediaType="image"
         mediaSrc="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1280&h=720&fit=crop&q=80"
-        bgImageSrc="https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=1920&h=1080&fit=crop&q=80"
+        bgImageSrc="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop&q=80"
         title="Shaping Policy. Winning Campaigns."
         date="Est. 1990"
         scrollToExpand="Scroll to Explore"
