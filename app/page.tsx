@@ -21,23 +21,25 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-4">
-            The Advance Group
+            Together, We Make It Happen
           </p>
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-navy leading-tight">
-            New York&apos;s Premier Political Consulting Firm
+            35 Years of Delivering Results
           </h2>
           <div className="mt-6 w-20 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto" />
           <p className="mt-8 text-steel text-lg leading-relaxed max-w-3xl mx-auto">
-            For over three decades, TAG has been at the forefront of political
-            strategy, government relations, and public affairs in New York City.
-            We combine deep institutional knowledge with innovative approaches to
-            deliver results for campaigns, advocacy groups, labor unions, and
-            corporations.
+            Founded and led by Scott Levenson since 1990, TAG is a diverse team
+            of individuals with a broad mix of creative and strategic abilities.
+            Our combined expertise spans lobbying, campaigns and elections,
+            communications, graphic design, fundraising, grant writing, and
+            event management.
           </p>
           <p className="mt-4 text-steel text-lg leading-relaxed max-w-3xl mx-auto">
-            From City Hall to Albany to Washington, our team navigates the
-            complex landscape of government with precision, integrity, and an
-            unmatched network of relationships built over 35 years.
+            What sets us apart is the institutional knowledge and trust
+            we&apos;ve cultivated over three and a half decades. From managing
+            nationally watched political races to producing internationally
+            recognized events, we leverage our unique experience into innovative
+            and effective solutions.
           </p>
         </div>
       </ScrollExpandMedia>
