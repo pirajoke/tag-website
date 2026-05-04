@@ -54,26 +54,67 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      {/* Team — Marquee style */}
+      <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Leadership</p>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy">Our Team</h2>
             <div className="mt-4 w-16 h-0.5 bg-gold mx-auto" />
+            <p className="mt-6 text-steel max-w-2xl mx-auto">
+              A diverse team bringing creative and strategic abilities together
+              to deliver results for our clients since 1990.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((member, i) => (
-              <motion.div key={member.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }} className="group">
-                <div className="aspect-[3/4] bg-navy-light relative overflow-hidden mb-6">
+        </div>
+
+        {/* Marquee cards */}
+        <div className="relative w-full">
+          <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-24 md:w-32 bg-gradient-to-r from-white to-transparent" />
+          <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-24 md:w-32 bg-gradient-to-l from-white to-transparent" />
+
+          <div className="flex animate-marquee">
+            {[...team, ...team, ...team, ...team].map((member, i) => (
+              <div key={`${member.name}-${i}`} className="flex-shrink-0 w-64 mx-3 group">
+                <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-navy-light">
+                  {/* Initials placeholder */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-gold font-serif text-5xl font-bold opacity-20">{member.name.split(" ").map((n) => n[0]).join("")}</span>
+                    <span className="text-gold/20 font-serif text-7xl font-bold select-none">
+                      {member.name.split(" ").map((n) => n[0]).join("")}
+                    </span>
+                  </div>
+
+                  {/* Bottom overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy via-navy/80 to-transparent p-5 pt-12">
+                    <h3 className="font-serif text-lg font-bold text-white">
+                      {member.name}
+                    </h3>
+                    <p className="text-gold text-sm font-medium mt-0.5">
+                      {member.title}
+                    </p>
                   </div>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-navy">{member.name}</h3>
-                <p className="text-gold text-sm font-medium mt-1">{member.title}</p>
-                <p className="mt-3 text-steel text-sm leading-relaxed">{member.bio}</p>
-              </motion.div>
+              </div>
             ))}
+          </div>
+        </div>
+
+        {/* Featured quote */}
+        <div className="max-w-3xl mx-auto mt-16 px-6 text-center">
+          <p className="font-serif text-xl md:text-2xl text-navy leading-relaxed italic">
+            &ldquo;What sets us apart is the institutional knowledge and trust
+            we&apos;ve cultivated over three and a half decades. We don&apos;t
+            just know the political landscape — we&apos;re embedded within
+            it.&rdquo;
+          </p>
+          <div className="flex flex-col items-center gap-3 mt-8">
+            <div className="w-14 h-14 rounded-full bg-navy-light flex items-center justify-center">
+              <span className="text-gold font-serif text-lg font-bold">SL</span>
+            </div>
+            <div className="text-center">
+              <p className="font-semibold text-navy">Scott Levenson</p>
+              <p className="text-steel text-sm">President & Founder</p>
+            </div>
           </div>
         </div>
       </section>
@@ -82,17 +123,17 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-6">Recognition</p>
           <div className="flex flex-wrap justify-center gap-8">
-            <div className="bg-white px-8 py-6 border border-navy/5">
+            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
               <span className="text-gold font-serif text-3xl font-bold">#14</span>
               <p className="mt-2 text-navy text-sm font-medium">City & State Political Consultants Power 75</p>
               <p className="text-steel text-xs mt-1">2021</p>
             </div>
-            <div className="bg-white px-8 py-6 border border-navy/5">
+            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
               <span className="text-gold font-serif text-3xl font-bold">35+</span>
               <p className="mt-2 text-navy text-sm font-medium">Years in NYC Politics</p>
               <p className="text-steel text-xs mt-1">Since 1990</p>
             </div>
-            <div className="bg-white px-8 py-6 border border-navy/5">
+            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
               <span className="text-gold font-serif text-3xl font-bold">$16M+</span>
               <p className="mt-2 text-navy text-sm font-medium">Annual Revenue</p>
               <p className="text-steel text-xs mt-1">2026</p>
