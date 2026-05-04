@@ -226,6 +226,26 @@ const ScrollExpandMedia = ({
                   </div>
                 )}
 
+                {/* Overlay text on expanded media */}
+                <motion.div
+                  className='absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-8 rounded-xl'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: scrollProgress > 0.8 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {date && (
+                    <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-6'>
+                      {date} &mdash; New York City
+                    </span>
+                  )}
+                  {title && (
+                    <h1 className='text-4xl md:text-6xl lg:text-7xl font-bold text-white font-serif leading-[1.1]'>
+                      {title}
+                    </h1>
+                  )}
+                  <div className='mt-6 w-20 h-[2px] bg-gold mx-auto' />
+                </motion.div>
+
                 <div className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'>
                   {date && (
                     <p
