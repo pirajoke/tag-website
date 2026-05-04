@@ -3,7 +3,6 @@
 :root {
   --navy: #0B1D3A;
   --navy-light: #1C3A5F;
-  --red: #B22234;
   --gold: #C9A84C;
   --ivory: #F5F0E8;
   --steel: #6B7B8D;
@@ -13,7 +12,6 @@
 @theme inline {
   --color-navy: var(--navy);
   --color-navy-light: var(--navy-light);
-  --color-red: var(--red);
   --color-gold: var(--gold);
   --color-ivory: var(--ivory);
   --color-steel: var(--steel);

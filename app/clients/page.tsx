@@ -34,7 +34,7 @@ export default function ClientsPage() {
                     <div className="w-12 h-12 bg-navy-light flex items-center justify-center flex-shrink-0">
                       <span className="text-gold font-serif text-lg font-bold">{client[0]}</span>
                     </div>
-                    <span className="text-navy font-medium group-hover:text-red transition-colors">{client}</span>
+                    <span className="text-navy font-medium group-hover:text-gold transition-colors">{client}</span>
                   </div>
                 </div>
               ))}

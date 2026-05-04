@@ -43,7 +43,7 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
                     })}
                   </span>
                 </div>
-                <h3 className="font-serif text-xl font-bold text-navy group-hover:text-red transition-colors leading-snug">
+                <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors leading-snug">
                   {article.title}
                 </h3>
                 <p className="mt-3 text-steel text-sm leading-relaxed">
@@ -63,7 +63,7 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
         <div className="mt-12 text-center">
           <Link
             href="/news"
-            className="text-navy font-semibold text-sm uppercase tracking-wider hover:text-red transition-colors"
+            className="text-navy font-semibold text-sm uppercase tracking-wider hover:text-gold transition-colors"
           >
             View All Articles &rarr;
           </Link>

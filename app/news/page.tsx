@@ -29,7 +29,7 @@ export default function NewsPage() {
                     <span className="text-steel/40 text-xs">&mdash;</span>
                     <span className="text-steel/60 text-xs">{new Date(article.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-navy group-hover:text-red transition-colors leading-snug">{article.title}</h3>
+                  <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors leading-snug">{article.title}</h3>
                   <p className="mt-3 text-steel text-sm leading-relaxed">{article.excerpt}</p>
                   <Link href={article.link} className="mt-4 inline-block text-gold text-sm font-semibold uppercase tracking-wider">Read More &rarr;</Link>
                 </div>

@@ -37,7 +37,7 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 
   return (
     <div ref={ref}>
-      <span className="text-6xl md:text-7xl font-serif font-bold text-gold drop-shadow-[0_0_30px_rgba(201,168,76,0.15)]">
+      <span className="text-6xl md:text-7xl font-serif font-bold text-gold">
         {count}
         <span className="text-gold/60">{suffix}</span>
       </span>
@@ -47,12 +47,7 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 
 export function StatsBar() {
   return (
-    <section className="relative py-24 bg-navy-light overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-      </div>
-
+    <section className="relative py-24 bg-gray-50 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
           {stats.map((stat, i) => (
@@ -65,10 +60,10 @@ export function StatsBar() {
               className="relative"
             >
               {i > 0 && (
-                <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-16 bg-gold/10" />
+                <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-16 bg-navy/10" />
               )}
               <Counter target={stat.value} suffix={stat.suffix} />
-              <p className="mt-3 text-white/40 text-xs uppercase tracking-[0.2em] font-medium">
+              <p className="mt-3 text-navy/60 text-xs uppercase tracking-[0.2em] font-medium">
                 {stat.label}
               </p>
             </motion.div>

@@ -68,7 +68,6 @@ export default function AboutPage() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-gold font-serif text-5xl font-bold opacity-20">{member.name.split(" ").map((n) => n[0]).join("")}</span>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-navy">{member.name}</h3>
                 <p className="text-gold text-sm font-medium mt-1">{member.title}</p>

@@ -45,7 +45,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <p className="text-steel text-sm uppercase tracking-wider mb-2">Next Service</p>
             <Link href={`/services/${nextService.slug}`} className="group flex items-center gap-4">
               <span className="text-3xl">{nextService.icon}</span>
-              <span className="font-serif text-2xl font-bold text-navy group-hover:text-red transition-colors">{nextService.title}</span>
+              <span className="font-serif text-2xl font-bold text-navy group-hover:text-gold transition-colors">{nextService.title}</span>
               <span className="text-gold text-xl ml-auto group-hover:translate-x-2 transition-transform">&rarr;</span>
             </Link>
           </div>

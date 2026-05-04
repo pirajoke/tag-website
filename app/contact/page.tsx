@@ -31,7 +31,7 @@ export default function ContactPage() {
                   <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Organization</label><input type="text" className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy" /></div>
                   <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">How Can We Help?</label><select className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy"><option value="">Select a service...</option><option>Lobbying</option><option>Political Campaigns</option><option>Communications</option><option>Graphic Design</option><option>Fundraising</option><option>Grant Writing</option><option>Event Management</option><option>Other</option></select></div>
                   <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Message</label><textarea rows={5} required className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy resize-none" /></div>
-                  <button type="submit" className="w-full bg-red hover:bg-red/90 text-white py-4 text-sm font-semibold tracking-widest uppercase transition-colors">Send Message</button>
+                  <button type="submit" className="w-full bg-gold hover:bg-gold/90 text-navy py-4 rounded-full text-sm font-semibold tracking-widest uppercase transition-colors">Send Message</button>
                 </form>
               )}
             </motion.div>
@@ -43,8 +43,8 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-serif text-2xl font-bold text-navy mb-4">Direct Contact</h3>
                 <div className="space-y-3">
-                  <a href={`tel:${siteConfig.phone}`} className="block text-navy hover:text-red transition-colors font-medium">{siteConfig.phone}</a>
-                  <a href={`mailto:${siteConfig.email}`} className="block text-navy hover:text-red transition-colors font-medium">{siteConfig.email}</a>
+                  <a href={`tel:${siteConfig.phone}`} className="block text-navy hover:text-gold transition-colors font-medium">{siteConfig.phone}</a>
+                  <a href={`mailto:${siteConfig.email}`} className="block text-navy hover:text-gold transition-colors font-medium">{siteConfig.email}</a>
                 </div>
               </div>
               <div>

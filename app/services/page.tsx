@@ -23,7 +23,7 @@ export default function ServicesPage() {
                   <h2 className="font-serif text-3xl md:text-4xl font-bold text-navy">{service.title}</h2>
                   <div className="mt-3 w-12 h-0.5 bg-gold" />
                   <p className="mt-6 text-steel leading-relaxed">{service.description}</p>
-                  <Link href={`/services/${service.slug}`} className="inline-block mt-6 text-red font-semibold text-sm uppercase tracking-wider hover:text-navy transition-colors">Learn More &rarr;</Link>
+                  <Link href={`/services/${service.slug}`} className="inline-block mt-6 text-gold font-semibold text-sm uppercase tracking-wider hover:text-navy transition-colors">Learn More &rarr;</Link>
                 </div>
                 <div className="bg-ivory p-8">
                   <h4 className="text-navy font-semibold text-sm uppercase tracking-wider mb-4">Key Capabilities</h4>

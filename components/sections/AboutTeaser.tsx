@@ -38,7 +38,7 @@ export function AboutTeaser() {
             </p>
             <Link
               href="/about"
-              className="inline-block mt-8 text-red font-semibold text-sm uppercase tracking-wider hover:text-navy transition-colors"
+              className="inline-block mt-8 text-gold font-semibold text-sm uppercase tracking-wider hover:text-navy transition-colors"
             >
               Our Story &rarr;
             </Link>
@@ -64,8 +64,6 @@ export function AboutTeaser() {
                   <p className="text-white/40 text-sm mt-1">Since 1990</p>
                 </div>
               </div>
-              <div className="absolute top-0 right-0 w-24 h-24 border-t-4 border-r-4 border-gold" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 border-b-4 border-l-4 border-gold" />
             </div>
           </motion.div>
         </div>

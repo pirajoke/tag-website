@@ -8,11 +8,6 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 export function ServicesGrid() {
   return (
     <section className="py-28 bg-ivory relative">
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, #0B1D3A 1px, transparent 0)`,
-        backgroundSize: "32px 32px",
-      }} />
-
       <div className="relative max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -61,17 +56,11 @@ function ServiceCard({
     >
       <Link
         href={`/services/${service.slug}`}
-        className="group block relative bg-white p-8 h-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-navy/10 border border-navy/5 hover:border-gold/40"
+        className="group block relative bg-white p-8 h-full overflow-hidden transition-all duration-300 border border-navy/5 hover:shadow-lg hover:border-l-4 hover:border-l-gold"
       >
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-
-        <span className="absolute top-6 right-6 text-navy/[0.06] font-serif text-6xl font-bold">
-          0{index + 1}
-        </span>
-
         <ServiceIcon slug={service.slug} className="w-14 h-14 mb-6" />
 
-        <h3 className="font-serif text-xl font-bold text-navy group-hover:text-red transition-colors duration-300">
+        <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors duration-300">
           {service.title}
         </h3>
 
@@ -85,8 +74,6 @@ function ServiceCard({
             &rarr;
           </span>
         </div>
-
-        <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-gold/0 group-hover:border-gold/30 transition-colors duration-500" />
       </Link>
     </motion.div>
   );

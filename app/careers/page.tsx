@@ -47,10 +47,10 @@ export default function CareersPage() {
               <motion.div key={pos.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className="bg-white p-8 border border-navy/5 hover:border-gold/30 transition-colors group">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-navy group-hover:text-red transition-colors">{pos.title}</h3>
+                    <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors">{pos.title}</h3>
                     <div className="flex gap-4 mt-2"><span className="text-steel text-sm">{pos.type}</span><span className="text-steel/30">&mdash;</span><span className="text-steel text-sm">{pos.location}</span></div>
                   </div>
-                  <Link href="/contact" className="bg-red hover:bg-red/90 text-white px-6 py-2.5 text-sm font-semibold tracking-wide uppercase transition-colors flex-shrink-0 text-center">Apply</Link>
+                  <Link href="/contact" className="bg-gold hover:bg-gold/90 text-navy px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase transition-colors flex-shrink-0 text-center">Apply</Link>
                 </div>
                 <p className="mt-4 text-steel text-sm leading-relaxed">{pos.description}</p>
               </motion.div>
