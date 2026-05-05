@@ -20,7 +20,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "The Advance Group | Premier Strategic Consulting | New York",
   description:
-    "New York's premier strategic consulting firm. 35+ years of lobbying, political campaigns, communications, fundraising, and event management. Together We Make It Happen.",
+    "Founded and led by Scott Levenson since 1990, The Advance Group is New York's premier strategic consulting firm. Lobbying, campaigns, communications, graphic design, fundraising, event management, and more. Together, We Make It Happen.",
   keywords: [
     "political consulting",
     "lobbying",

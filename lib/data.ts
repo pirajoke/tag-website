@@ -1,17 +1,30 @@
 export const siteConfig = {
   name: "The Advance Group",
-  tagline: "Together We Make It Happen",
+  tagline: "Together, We Make It Happen",
   description:
-    "New York's premier strategic consulting firm. 35+ years of lobbying, political campaigns, communications, and event management.",
-  address: "39 Broadway, Suite 1540, New York, NY 10006",
+    "Founded and led by Scott Levenson since 1990, TAG is a diverse team working together to deliver results. Our combined expertise includes lobbying, campaigns and elections, communications, graphic design, fundraising, event management, and more.",
+  address: "420 Lexington Ave, Suite 1402, New York, NY 10170",
   phone: "(212) 239-7323",
   email: "Info@TheAdvanceGroup.com",
+  website: "http://www.TheAdvanceGroup.com",
   social: {
     twitter: "https://x.com/tag_nyc",
     facebook: "https://www.facebook.com/TheAdvanceGroup/",
     linkedin: "https://www.linkedin.com/company/theadvancegroupny",
   },
   founded: 1990,
+  sector: "Business Consulting & Services",
+  companySize: "11-50 employees",
+  linkedinMembers: 40,
+  specializations: [
+    "Politics",
+    "Communications",
+    "Development",
+    "Lobbying & Government Relations",
+    "Advocacy",
+    "Graphic Design",
+    "Real Estate Management",
+  ],
 };
 
 export const navLinks = [

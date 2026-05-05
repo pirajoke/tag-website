@@ -9,7 +9,7 @@ export default function AboutPage() {
   return (
     <>
       <Hero
-        title="Together We Make It Happen"
+        title="Together, We Make It Happen"
         subtitle="Three and a half decades of institutional knowledge, trust, and results."
         compact
       />
@@ -20,10 +20,14 @@ export default function AboutPage() {
             Our Mission
           </p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-navy leading-relaxed">
-            We are a diverse team of individuals with a broad mix of creative
-            and strategic abilities, united by a commitment to delivering results
-            for our clients.
+            Founded and led by Scott Levenson since 1990, TAG is a diverse team
+            working together to deliver results.
           </h2>
+          <p className="mt-6 text-steel text-lg leading-relaxed max-w-3xl mx-auto">
+            Our combined expertise includes lobbying, campaigns and elections,
+            communications, graphic design, fundraising, event management, and more.
+            Together, we make it happen.
+          </p>
           <div className="mt-6 w-16 h-0.5 bg-gold mx-auto" />
         </div>
       </section>

@@ -24,17 +24,15 @@ export function AboutTeaser() {
             </h2>
             <div className="mt-4 w-16 h-0.5 bg-gold" />
             <p className="mt-6 text-steel leading-relaxed">
-              Founded in 1990 by Scott Levenson, The Advance Group has spent
-              over three decades building deep, enduring relationships across
-              every level of government. From city hall to state capitals to
-              federal agencies, we don&apos;t just know the political
-              landscape—we&apos;re embedded within it.
+              Founded and led by Scott Levenson since 1990, TAG is a diverse
+              team working together to deliver results. From city hall to state
+              capitals to federal agencies, we don&apos;t just know the political
+              landscape — we&apos;re embedded within it.
             </p>
             <p className="mt-4 text-steel leading-relaxed">
-              Our diverse team combines creative and strategic abilities to
-              deliver results for political candidates, not-for-profits,
-              corporations, advocacy groups, and labor unions. We leverage our
-              unique experience into innovative and effective solutions.
+              Our combined expertise includes lobbying, campaigns and elections,
+              communications, graphic design, fundraising, event management,
+              and more. Together, we make it happen.
             </p>
             <Link
               href="/about"

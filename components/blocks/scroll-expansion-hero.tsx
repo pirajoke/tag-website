@@ -230,8 +230,8 @@ const ScrollExpandMedia = ({
                 <motion.div
                   className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: scrollProgress > 0.8 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
+                  animate={{ opacity: scrollProgress > 0.4 ? Math.min((scrollProgress - 0.4) * 2.5, 1) : 0 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {/* Top */}
                   <div className='flex flex-col items-center'>
@@ -260,7 +260,10 @@ const ScrollExpandMedia = ({
                   </div>
                 </motion.div>
 
-                <div className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'>
+                <div
+                  className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'
+                  style={{ opacity: Math.max(1 - scrollProgress * 3, 0) }}
+                >
                   {date && (
                     <p
                       className='text-2xl text-gold/80'
@@ -284,6 +287,7 @@ const ScrollExpandMedia = ({
                 className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
                   textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
                 }`}
+                style={{ opacity: Math.max(1 - scrollProgress * 2, 0) }}
               >
                 <motion.h2
                   className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-white font-serif leading-[1.05] transition-none'

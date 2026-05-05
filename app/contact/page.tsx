@@ -35,29 +35,68 @@ export default function ContactPage() {
                 </form>
               )}
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="space-y-12">
-              <div>
-                <h3 className="font-serif text-2xl font-bold text-navy mb-4">Our Office</h3>
-                <div className="space-y-3 text-steel"><p>{siteConfig.address}</p><p>420 Lexington Avenue, Suite 1402</p><p>New York, NY 10170</p></div>
-              </div>
-              <div>
-                <h3 className="font-serif text-2xl font-bold text-navy mb-4">Direct Contact</h3>
-                <div className="space-y-3">
-                  <a href={`tel:${siteConfig.phone}`} className="block text-navy hover:text-gold transition-colors font-medium">{siteConfig.phone}</a>
-                  <a href={`mailto:${siteConfig.email}`} className="block text-navy hover:text-gold transition-colors font-medium">{siteConfig.email}</a>
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="space-y-10">
+              {/* Office card */}
+              <div className="bg-ivory border border-navy/5 rounded-2xl overflow-hidden">
+                <div className="aspect-video relative">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1838515503284!2d-73.97631492346!3d40.75287597138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2590279faaaab%3A0xc3cfc1e9e6e5e1d5!2s420%20Lexington%20Ave%2C%20New%20York%2C%20NY%2010170!5e0!3m2!1sen!2sus!4v1700000000000"
+                    className="absolute inset-0 w-full h-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="TAG Office Location"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                      <h3 className="font-serif text-lg font-bold text-navy">Headquarters</h3>
+                      <p className="text-steel text-sm mt-1">420 Lexington Ave, Suite 1402</p>
+                      <p className="text-steel text-sm">New York, NY 10170</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <h3 className="font-serif text-2xl font-bold text-navy mb-4">Follow Us</h3>
-                <div className="flex gap-6">
-                  <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" className="text-steel hover:text-gold transition-colors font-medium">Twitter / X</a>
-                  <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-steel hover:text-gold transition-colors font-medium">LinkedIn</a>
-                  <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" className="text-steel hover:text-gold transition-colors font-medium">Facebook</a>
+
+              {/* Contact info */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="bg-ivory border border-navy/5 rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3 className="font-semibold text-navy text-sm uppercase tracking-wider">Phone</h3>
+                  </div>
+                  <a href={`tel:${siteConfig.phone}`} className="text-navy hover:text-gold transition-colors font-medium">{siteConfig.phone}</a>
+                </div>
+                <div className="bg-ivory border border-navy/5 rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </div>
+                    <h3 className="font-semibold text-navy text-sm uppercase tracking-wider">Email</h3>
+                  </div>
+                  <a href={`mailto:${siteConfig.email}`} className="text-navy hover:text-gold transition-colors font-medium text-sm">{siteConfig.email}</a>
                 </div>
               </div>
-              <div className="aspect-video bg-navy-light relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center"><span className="text-gold font-serif text-3xl font-bold">NYC</span><p className="text-white/40 text-sm mt-2">39 Broadway, New York</p></div>
+
+              {/* Social */}
+              <div>
+                <h3 className="font-semibold text-navy text-sm uppercase tracking-wider mb-4">Follow Us</h3>
+                <div className="flex gap-4">
+                  <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-ivory border border-navy/5 flex items-center justify-center text-steel hover:text-gold hover:border-gold/30 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </a>
+                  <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-ivory border border-navy/5 flex items-center justify-center text-steel hover:text-gold hover:border-gold/30 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                  <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-ivory border border-navy/5 flex items-center justify-center text-steel hover:text-gold hover:border-gold/30 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  </a>
                 </div>
               </div>
             </motion.div>
