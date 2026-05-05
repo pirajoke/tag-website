@@ -88,7 +88,7 @@ export function IntroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-white overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-20 bg-white overflow-hidden">
       {/* Floating background elements */}
       <motion.div
         className="absolute top-20 -left-32 w-96 h-96 rounded-full bg-gold/[0.03] blur-3xl"
@@ -101,7 +101,7 @@ export function IntroSection() {
 
       <motion.div style={{ scale, opacity }} className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header with reveal animation */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <motion.p
             initial={{ opacity: 0, y: 20, letterSpacing: "0.1em" }}
             whileInView={{ opacity: 1, y: 0, letterSpacing: "0.3em" }}
