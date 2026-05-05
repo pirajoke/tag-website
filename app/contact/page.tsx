@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
-import { LocationMap } from "@/components/ui/LocationMap";
 import { siteConfig } from "@/lib/data";
 
 export default function ContactPage() {
@@ -37,24 +36,43 @@ export default function ContactPage() {
               )}
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="space-y-10">
-              {/* Office — interactive map card + address */}
-              <div className="flex flex-col items-center gap-6">
-                <LocationMap
-                  location="TAG Headquarters"
-                  address="420 Lexington Ave, Suite 1402, New York, NY 10170"
-                  coordinates="40.7529° N, 73.9764° W"
-                />
-                <div className="text-center">
-                  <h3 className="font-serif text-lg font-bold text-navy">420 Lexington Ave, Suite 1402</h3>
-                  <p className="text-steel text-sm mt-1">New York, NY 10170</p>
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=420+Lexington+Ave+Suite+1402+New+York+NY+10170"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 text-gold text-sm font-semibold uppercase tracking-wider hover:text-navy transition-colors"
-                  >
-                    Open in Google Maps &rarr;
-                  </a>
+              {/* Office — real map + address card */}
+              <div className="rounded-2xl overflow-hidden border border-navy/10 bg-ivory">
+                <div className="relative aspect-[4/3]">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.18!2d-73.9763!3d40.7529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2590279faaaab%3A0x1234!2s420+Lexington+Ave%2C+New+York%2C+NY+10170!5e0!3m2!1sen!2sus!4v1700000000000"
+                    className="absolute inset-0 w-full h-full border-0 grayscale-[0.3] contrast-[1.1]"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="TAG Office — 420 Lexington Ave, Midtown Manhattan"
+                  />
+                  {/* Floating label */}
+                  <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-navy/5">
+                    <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                    <span className="text-navy text-xs font-semibold uppercase tracking-wider">Midtown Manhattan</span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gold/10 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-serif text-lg font-bold text-navy">TAG Headquarters</h3>
+                      <p className="text-steel text-sm mt-1">420 Lexington Ave, Suite 1402</p>
+                      <p className="text-steel text-sm">New York, NY 10170</p>
+                    </div>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=420+Lexington+Ave+Suite+1402+New+York+NY+10170"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-colors"
+                      title="Open in Google Maps"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                  </div>
                 </div>
               </div>
 
