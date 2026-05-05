@@ -2,18 +2,15 @@
 
 import { motion } from "framer-motion";
 
-const clientNames = [
+const clients = [
   "NY Communities for Change",
   "Artbridge",
   "CORE",
-  "Kamillah Hanks",
   "CWA Local 1180",
   "Edison Properties",
   "Hotel & Gaming Workers Union",
-  "Donovan Richards",
   "Met Council on Housing",
   "StorageMart",
-  "Vanessa L. Gibson",
   "Youngwoo & Associates",
   "Manhattan Mini Storage",
   "Climate Organizing Hub",
@@ -23,13 +20,48 @@ const clientNames = [
   "Jim Owles Democratic Club",
   "UFT",
   "Carmen De La Rosa",
+  "Kamillah Hanks",
+  "Donovan Richards",
+  "Vanessa L. Gibson",
 ];
 
-export function ClientsMarquee() {
-  const repeated = [...clientNames, ...clientNames];
+const row1 = clients.slice(0, 10);
+const row2 = clients.slice(10, 20);
+
+function MarqueeRow({
+  items,
+  reverse = false,
+}: {
+  items: string[];
+  reverse?: boolean;
+}) {
+  const doubled = [...items, ...items];
 
   return (
-    <section className="py-16 bg-white overflow-hidden">
+    <div className="relative w-full overflow-hidden">
+      <div
+        className={`flex items-center whitespace-nowrap ${
+          reverse ? "animate-marquee-reverse" : "animate-marquee"
+        }`}
+      >
+        {doubled.map((name, i) => (
+          <div
+            key={`${name}-${i}`}
+            className="inline-flex items-center justify-center mx-3 px-8 py-4 bg-gray-50/80 rounded-xl border border-navy/5 min-w-[180px]"
+          >
+            <span className="text-navy font-semibold text-sm tracking-tight whitespace-nowrap">
+              {name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function ClientsMarquee() {
+  return (
+    <section className="py-16 md:py-20 bg-white overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -45,28 +77,14 @@ export function ClientsMarquee() {
         <div className="mt-6 w-20 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto" />
       </motion.div>
 
-      {/* Flat straight marquee */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative">
         {/* Edge fades */}
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-        <div className="animate-marquee flex items-center whitespace-nowrap">
-          {repeated.map((name, i) => (
-            <div
-              key={`${name}-${i}`}
-              className="inline-flex items-center mx-4 px-6 py-3 bg-gray-50 border border-navy/5 rounded-lg"
-            >
-              <div className="w-10 h-10 bg-navy flex items-center justify-center rounded-md mr-3 flex-shrink-0">
-                <span className="text-gold font-serif text-sm font-bold">
-                  {name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
-                </span>
-              </div>
-              <span className="text-navy font-medium text-sm whitespace-nowrap">
-                {name}
-              </span>
-            </div>
-          ))}
+        <div className="flex flex-col gap-4">
+          <MarqueeRow items={row1} />
+          <MarqueeRow items={row2} reverse />
         </div>
       </div>
     </section>
