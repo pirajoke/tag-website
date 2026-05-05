@@ -12,7 +12,7 @@ const TABS = services.slice(0, 5).map((s, i) => ({
   description: s.shortDescription,
   image: [
     "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=800&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1494172961521-33799ddd43a5?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=800&fit=crop&q=80",
