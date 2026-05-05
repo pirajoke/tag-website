@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #1C2E24;
-  --navy-light: #2A4435;
+  --navy: #2A2118;
+  --navy-light: #3D3228;
   --gold: #C9A84C;
   --ivory: #F5F0E8;
-  --steel: #6B7B8D;
+  --steel: #7A7068;
   --white: #FFFFFF;
 }
 
