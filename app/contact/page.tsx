@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
+import { LocationMap } from "@/components/ui/LocationMap";
 import { siteConfig } from "@/lib/data";
 
 export default function ContactPage() {
@@ -36,29 +37,24 @@ export default function ContactPage() {
               )}
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="space-y-10">
-              {/* Office card */}
-              <div className="bg-ivory border border-navy/5 rounded-2xl overflow-hidden">
-                <div className="aspect-video relative">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1838515503284!2d-73.97631492346!3d40.75287597138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2590279faaaab%3A0xc3cfc1e9e6e5e1d5!2s420%20Lexington%20Ave%2C%20New%20York%2C%20NY%2010170!5e0!3m2!1sen!2sus!4v1700000000000"
-                    className="absolute inset-0 w-full h-full border-0"
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="TAG Office Location"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-lg font-bold text-navy">Headquarters</h3>
-                      <p className="text-steel text-sm mt-1">420 Lexington Ave, Suite 1402</p>
-                      <p className="text-steel text-sm">New York, NY 10170</p>
-                    </div>
-                  </div>
+              {/* Office — interactive map card + address */}
+              <div className="flex flex-col items-center gap-6">
+                <LocationMap
+                  location="TAG Headquarters"
+                  address="420 Lexington Ave, Suite 1402, New York, NY 10170"
+                  coordinates="40.7529° N, 73.9764° W"
+                />
+                <div className="text-center">
+                  <h3 className="font-serif text-lg font-bold text-navy">420 Lexington Ave, Suite 1402</h3>
+                  <p className="text-steel text-sm mt-1">New York, NY 10170</p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=420+Lexington+Ave+Suite+1402+New+York+NY+10170"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-gold text-sm font-semibold uppercase tracking-wider hover:text-navy transition-colors"
+                  >
+                    Open in Google Maps &rarr;
+                  </a>
                 </div>
               </div>
 

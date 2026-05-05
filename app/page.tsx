@@ -1,6 +1,6 @@
 import ScrollExpandMedia from "@/components/blocks/scroll-expansion-hero";
 import { IntroSection } from "@/components/sections/IntroSection";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
+import { ServicesTabs } from "@/components/sections/ServicesTabs";
 import { ClientsMarquee } from "@/components/sections/ClientsMarquee";
 import { AboutTeaser } from "@/components/sections/AboutTeaser";
 import { NewsGrid } from "@/components/sections/NewsGrid";
@@ -18,7 +18,7 @@ export default function Home() {
         textBlend
       />
       <IntroSection />
-      <ServicesGrid />
+      <ServicesTabs />
       <ClientsMarquee />
       <AboutTeaser />
       <Testimonials />
