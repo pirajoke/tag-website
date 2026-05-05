@@ -11,11 +11,11 @@ const TABS = services.slice(0, 5).map((s, i) => ({
   title: s.title,
   description: s.shortDescription,
   image: [
-    "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200&q=80",
-    "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&q=80",
-    "https://images.unsplash.com/photo-1504711434969-e33886168d5c?w=1200&q=80",
-    "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80",
-    "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1200&q=80",
+    "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1494172961521-33799ddd43a5?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=800&fit=crop&q=80",
   ][i],
 }));
 
