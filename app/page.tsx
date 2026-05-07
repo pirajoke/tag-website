@@ -1,10 +1,18 @@
 import ScrollExpandMedia from "@/components/blocks/scroll-expansion-hero";
+import dynamic from "next/dynamic";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ServicesTabs } from "@/components/sections/ServicesTabs";
 import { ClientsMarquee } from "@/components/sections/ClientsMarquee";
-import { AboutTeaser } from "@/components/sections/AboutTeaser";
-import { NewsGrid } from "@/components/sections/NewsGrid";
-import { Testimonials } from "@/components/sections/Testimonials";
+
+const AboutTeaser = dynamic(() =>
+  import("@/components/sections/AboutTeaser").then((mod) => mod.AboutTeaser)
+);
+const Testimonials = dynamic(() =>
+  import("@/components/sections/Testimonials").then((mod) => mod.Testimonials)
+);
+const NewsGrid = dynamic(() =>
+  import("@/components/sections/NewsGrid").then((mod) => mod.NewsGrid)
+);
 
 export default function Home() {
   return (
