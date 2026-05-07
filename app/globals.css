@@ -7,6 +7,20 @@
   --ivory: #F5F0E8;
   --steel: #7A7068;
   --white: #FFFFFF;
+  --gradient-color: rgba(201, 168, 76, 0.7);
+  --sparkles-color: #C9A84C;
+}
+
+@layer base {
+  :root {
+    --gradient-color: rgba(201, 168, 76, 0.7);
+    --sparkles-color: #C9A84C;
+  }
+
+  .dark {
+    --gradient-color: rgba(201, 168, 76, 0.7);
+    --sparkles-color: #ffffff;
+  }
 }
 
 @theme inline {

@@ -28,6 +28,7 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [showQuick, setShowQuick] = useState(true);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const nextMessageId = useRef(2);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -35,7 +36,7 @@ export function ChatWidget() {
 
   const sendMessage = (text: string) => {
     if (!text.trim()) return;
-    const userMsg: Message = { id: Date.now(), text, from: "user" };
+    const userMsg: Message = { id: nextMessageId.current++, text, from: "user" };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setShowQuick(false);
@@ -45,7 +46,7 @@ export function ChatWidget() {
       setMessages((prev) => [
         ...prev,
         {
-          id: Date.now() + 1,
+          id: nextMessageId.current++,
           text: `Thanks for reaching out about "${text}". A member of our team will follow up with you shortly. You can also reach us at (212) 239-7323 or Info@TheAdvanceGroup.com.`,
           from: "bot",
         },
