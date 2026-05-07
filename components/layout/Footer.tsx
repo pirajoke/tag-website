@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { siteConfig, navLinks } from "@/lib/data";
 
 const services = [
@@ -66,13 +65,7 @@ export function Footer() {
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center px-6 pt-20 pb-8 w-full max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
+        <div className="text-center reveal-up">
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-[1.05] mb-6">
             <span className="bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
               Ready to Make
@@ -102,7 +95,7 @@ export function Footer() {
               Our Services
             </Link>
           </div>
-        </motion.div>
+        </div>
 
         {/* Footer columns */}
         <div className="w-full max-w-7xl mx-auto">

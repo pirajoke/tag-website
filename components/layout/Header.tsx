@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { navLinks, siteConfig } from "@/lib/data";
-import { motion, AnimatePresence } from "framer-motion";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -93,48 +92,32 @@ export function Header() {
       </header>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-navy flex flex-col items-center justify-center"
-          >
-            <nav className="flex flex-col items-center gap-6">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="text-white text-2xl font-serif tracking-wide hover:text-gold transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.05 }}
-              >
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-navy animate-fade-in-up">
+          <nav className="flex flex-col items-center gap-6">
+            {navLinks.map((link) => (
+              <div key={link.href}>
                 <Link
-                  href="/contact"
+                  href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="mt-4 border border-gold/60 hover:bg-gold hover:text-navy text-gold px-8 py-3 text-lg font-medium tracking-wide uppercase rounded-full transition-all duration-300"
+                  className="text-white text-2xl font-serif tracking-wide hover:text-gold transition-colors"
                 >
-                  Get in Touch
+                  {link.label}
                 </Link>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </div>
+            ))}
+            <div>
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-4 border border-gold/60 hover:bg-gold hover:text-navy text-gold px-8 py-3 text-lg font-medium tracking-wide uppercase rounded-full transition-all duration-300"
+              >
+                Get in Touch
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </>
   );
 }
