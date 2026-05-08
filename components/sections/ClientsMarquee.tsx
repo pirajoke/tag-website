@@ -80,7 +80,7 @@ export function ClientsMarquee() {
           observer.disconnect();
         }
       },
-      { rootMargin: "600px 0px" }
+      { rootMargin: "120px 0px" }
     );
 
     observer.observe(section);

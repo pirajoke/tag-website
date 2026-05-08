@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { services } from "@/lib/data";
@@ -21,12 +21,41 @@ const TABS = services.slice(0, 5).map((s, i) => ({
 
 export function ServicesTabs() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) return;
+
+        const index = Number((visible.target as HTMLElement).dataset.index);
+        if (!Number.isNaN(index)) {
+          setActiveIndex((current) => (current === index ? current : index));
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-28% 0px -38% 0px",
+        threshold: [0.25, 0.45, 0.65],
+      }
+    );
+
+    itemRefs.current.forEach((item) => {
+      if (item) observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="w-full bg-white py-16 md:py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-12 lg:items-center lg:gap-16 xl:px-20">
+    <section className="w-full bg-white py-10 md:py-14">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-12 lg:gap-16 xl:px-20">
         <div className="lg:col-span-5">
-          <div className="mb-8">
+          <div className="mb-8 lg:sticky lg:top-24 lg:z-10 lg:bg-white lg:pb-5">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
               How We Can Help
             </h2>
@@ -37,15 +66,16 @@ export function ServicesTabs() {
 
           <div className="relative flex flex-col border-l border-navy/10 pl-5 md:pl-8">
             {TABS.map((tab, index) => (
-              <button
+              <div
                 key={tab.id}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                onMouseEnter={() => setActiveIndex(index)}
-                className={`group relative border-t border-navy/10 py-5 text-left first:border-t-0 md:py-6 ${
+                ref={(node) => {
+                  itemRefs.current[index] = node;
+                }}
+                data-index={index}
+                className={`group relative flex min-h-[42vh] flex-col justify-center border-t border-navy/10 py-8 text-left first:border-t-0 md:min-h-[46vh] lg:min-h-[52vh] ${
                   activeIndex === index
                     ? "text-navy"
-                    : "text-navy/28 hover:text-navy/55"
+                    : "text-navy/28"
                 }`}
               >
                 <span
@@ -83,7 +113,7 @@ export function ServicesTabs() {
                     </div>
                   </div>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
 
@@ -96,7 +126,7 @@ export function ServicesTabs() {
         </div>
 
         <div className="lg:col-span-7">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:aspect-[16/11] lg:rounded-[2.5rem]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-24 lg:aspect-[16/11] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
@@ -116,7 +146,7 @@ export function ServicesTabs() {
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
 
             <div className="absolute bottom-6 left-6 z-20 md:bottom-8 md:left-8">
-              <div className="flex items-center gap-2 rounded-full border border-navy/10 bg-white/85 px-4 py-2 shadow-lg backdrop-blur-md">
+              <div className="flex items-center gap-2 rounded-full border border-navy/10 bg-white px-4 py-2 shadow-lg">
                 <div className="h-2 w-2 rounded-full bg-gold" />
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-navy">
                   {TABS[activeIndex].title}

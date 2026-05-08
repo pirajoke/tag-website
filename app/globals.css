@@ -75,14 +75,13 @@ html.lenis, html.lenis body {
   background: var(--gold);
 }
 
-/* Marquee animation — GPU composited */
+/* Marquee animation */
 @keyframes marquee {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
 .animate-marquee {
-  animation: marquee 30s linear infinite;
-  will-change: transform;
+  animation: marquee 42s linear infinite;
   backface-visibility: hidden;
 }
 @keyframes marquee-reverse {
@@ -90,8 +89,7 @@ html.lenis, html.lenis body {
   100% { transform: translate3d(0, 0, 0); }
 }
 .animate-marquee-reverse {
-  animation: marquee-reverse 35s linear infinite;
-  will-change: transform;
+  animation: marquee-reverse 48s linear infinite;
   backface-visibility: hidden;
 }
 

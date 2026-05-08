@@ -67,7 +67,7 @@ const ScrollExpandMedia = ({
       </div>
 
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
-        <h1 className="font-serif text-5xl font-bold leading-[0.9] text-white/72 mix-blend-difference sm:text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="font-serif text-5xl font-bold leading-[0.9] text-white/76 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)] sm:text-6xl md:text-7xl lg:text-8xl">
           {titleLines.map((line) => (
             <span key={line} className="block whitespace-nowrap">
               {line}
@@ -79,7 +79,7 @@ const ScrollExpandMedia = ({
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
         <span className="text-xs uppercase tracking-[0.3em] text-white/50">Scroll</span>
         <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-white/30 p-1">
-          <div className="h-2 w-1 rounded-full bg-white/50 animate-scroll-dot" />
+          <div className="h-2 w-1 rounded-full bg-white/50" />
         </div>
       </div>
     </section>
