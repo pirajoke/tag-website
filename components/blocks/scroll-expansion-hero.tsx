@@ -67,22 +67,23 @@ const ScrollExpandMedia = ({
       const contentEase = easeOutCubic(contentProgress);
       const isMobile = window.innerWidth < 768;
 
-      const finalWidth = isMobile
-        ? Math.min(window.innerWidth * 0.96, 760)
-        : Math.min(window.innerWidth * 0.88, 1500);
-      const finalHeight = isMobile
-        ? Math.min(window.innerHeight * 0.78, 700)
-        : Math.min(window.innerHeight * 0.86, 820);
       const startWidth = isMobile
         ? Math.min(window.innerWidth * 0.72, 320)
         : Math.min(window.innerWidth * 0.24, 420);
+      const endWidth = isMobile
+        ? Math.min(window.innerWidth * 0.96, 760)
+        : Math.min(window.innerWidth * 0.88, 1500);
       const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
-      const scaleX = (startWidth / finalWidth) + (1 - startWidth / finalWidth) * eased;
-      const scaleY = (startHeight / finalHeight) + (1 - startHeight / finalHeight) * eased;
+      const endHeight = isMobile
+        ? Math.min(window.innerHeight * 0.78, 700)
+        : Math.min(window.innerHeight * 0.86, 820);
       const textShift = eased * (isMobile ? 44 : 24);
       const titleOpacity = clamp(1 - contentProgress * 1.25);
 
-      media.style.transform = `translate3d(0, ${-10 * progress}px, 0) scale(${scaleX}, ${scaleY})`;
+      media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
+      media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
+      media.style.borderRadius = `${26 - 14 * eased}px`;
+      media.style.transform = `translate3d(0, ${-10 * progress}px, 0)`;
 
       if (bgRef.current) {
         bgRef.current.style.opacity = `${1 - 0.76 * contentEase}`;
@@ -158,10 +159,8 @@ const ScrollExpandMedia = ({
         <div className="absolute inset-0 flex items-center justify-center px-6">
           <div
             ref={mediaRef}
-            className="relative h-[min(78svh,700px)] w-[min(96vw,760px)] origin-center overflow-hidden rounded-[12px] shadow-2xl shadow-black/35 will-change-transform md:h-[min(86svh,820px)] md:w-[min(88vw,1500px)]"
-            style={{
-              transform: "scale(0.32, 0.58)",
-            }}
+            className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
+            style={{ width: 320, height: 460, borderRadius: 26 }}
           >
             {mediaType === "video" ? (
               <video
