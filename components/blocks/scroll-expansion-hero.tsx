@@ -36,13 +36,14 @@ const ScrollExpandMedia = ({
   const secondLineRef = useRef<HTMLSpanElement | null>(null);
   const scrollHintRef = useRef<HTMLDivElement | null>(null);
 
-  const titleLines = useMemo(() => {
-    if (!title) return [];
+  const titleParts = useMemo(() => {
+    if (!title) return { firstWord: "", rest: "" };
 
-    return title
-      .split(". ")
-      .filter(Boolean)
-      .map((line) => (line.endsWith(".") ? line : `${line}.`));
+    const [firstWord, ...rest] = title.split(" ");
+    return {
+      firstWord,
+      rest: rest.join(" "),
+    };
   }, [title]);
 
   useEffect(() => {
@@ -62,15 +63,16 @@ const ScrollExpandMedia = ({
       const isMobile = window.innerWidth < 768;
 
       const startWidth = isMobile
-        ? Math.min(window.innerWidth * 0.76, 340)
-        : Math.min(window.innerWidth * 0.28, 520);
+        ? Math.min(window.innerWidth * 0.72, 320)
+        : Math.min(window.innerWidth * 0.22, 420);
       const endWidth = isMobile
-        ? Math.min(window.innerWidth * 0.94, 720)
-        : Math.min(window.innerWidth * 0.68, 1240);
-      const startHeight = isMobile ? 410 : Math.min(window.innerHeight * 0.62, 650);
+        ? Math.min(window.innerWidth * 0.96, 760)
+        : Math.min(window.innerWidth * 0.78, 1500);
+      const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
       const endHeight = isMobile
-        ? Math.min(window.innerHeight * 0.72, 650)
-        : Math.min(window.innerHeight * 0.78, 780);
+        ? Math.min(window.innerHeight * 0.78, 700)
+        : Math.min(window.innerHeight * 0.78, 820);
+      const textShift = eased * (isMobile ? 42 : 22);
 
       media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
       media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
@@ -87,11 +89,11 @@ const ScrollExpandMedia = ({
       }
 
       if (firstLineRef.current) {
-        firstLineRef.current.style.transform = `translate3d(0, ${-26 * eased}px, 0)`;
+        firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
       }
 
       if (secondLineRef.current) {
-        secondLineRef.current.style.transform = `translate3d(0, ${24 * eased}px, 0)`;
+        secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
       }
 
       if (scrollHintRef.current) {
@@ -117,7 +119,7 @@ const ScrollExpandMedia = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[185svh] bg-navy">
+    <section ref={sectionRef} className="relative h-[190svh] bg-navy">
       <div className="sticky top-0 h-svh overflow-hidden">
         <div
           ref={bgRef}
@@ -140,7 +142,7 @@ const ScrollExpandMedia = ({
           <div
             ref={mediaRef}
             className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
-            style={{ width: 420, height: 620, borderRadius: 26 }}
+            style={{ width: 320, height: 460, borderRadius: 26 }}
           >
             {mediaType === "video" ? (
               <video
@@ -170,12 +172,12 @@ const ScrollExpandMedia = ({
         </div>
 
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
-          <h1 className="font-serif text-[clamp(3rem,8vw,8rem)] font-bold leading-[0.9] text-white/72 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+          <h1 className="font-serif text-[clamp(3.6rem,8.6vw,9.4rem)] font-bold leading-[0.86] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
             <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
-              {titleLines[0] ?? ""}
+              {titleParts.firstWord}
             </span>
             <span ref={secondLineRef} className="block whitespace-nowrap will-change-transform">
-              {titleLines[1] ?? ""}
+              {titleParts.rest}
             </span>
           </h1>
         </div>
