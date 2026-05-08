@@ -25,9 +25,9 @@ export default function Home() {
         scrollToExpand="Scroll to Explore"
         textBlend
       />
+      <ClientsMarquee />
       <IntroSection />
       <ServicesTabs />
-      <ClientsMarquee />
       <AboutTeaser />
       <Testimonials />
       <NewsGrid limit={3} />

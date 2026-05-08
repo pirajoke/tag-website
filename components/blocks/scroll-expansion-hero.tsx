@@ -32,8 +32,10 @@ const ScrollExpandMedia = ({
   const bgRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
+  const cardScrimRef = useRef<HTMLDivElement | null>(null);
   const firstLineRef = useRef<HTMLSpanElement | null>(null);
   const secondLineRef = useRef<HTMLSpanElement | null>(null);
+  const introRef = useRef<HTMLDivElement | null>(null);
   const scrollHintRef = useRef<HTMLDivElement | null>(null);
 
   const titleParts = useMemo(() => {
@@ -59,41 +61,56 @@ const ScrollExpandMedia = ({
       const rect = section.getBoundingClientRect();
       const viewportHeight = window.innerHeight || 1;
       const progress = clamp(-rect.top / Math.max(rect.height - viewportHeight, 1));
-      const eased = easeOutCubic(progress);
+      const expandProgress = clamp(progress / 0.68);
+      const contentProgress = clamp((progress - 0.56) / 0.26);
+      const eased = easeOutCubic(expandProgress);
+      const contentEase = easeOutCubic(contentProgress);
       const isMobile = window.innerWidth < 768;
 
       const startWidth = isMobile
         ? Math.min(window.innerWidth * 0.72, 320)
-        : Math.min(window.innerWidth * 0.22, 420);
+        : Math.min(window.innerWidth * 0.24, 420);
       const endWidth = isMobile
         ? Math.min(window.innerWidth * 0.96, 760)
-        : Math.min(window.innerWidth * 0.78, 1500);
+        : Math.min(window.innerWidth * 0.88, 1500);
       const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
       const endHeight = isMobile
         ? Math.min(window.innerHeight * 0.78, 700)
-        : Math.min(window.innerHeight * 0.78, 820);
-      const textShift = eased * (isMobile ? 42 : 22);
+        : Math.min(window.innerHeight * 0.86, 820);
+      const textShift = eased * (isMobile ? 44 : 24);
+      const titleOpacity = clamp(1 - contentProgress * 1.25);
 
       media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
       media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
-      media.style.borderRadius = `${26 - 8 * eased}px`;
+      media.style.borderRadius = `${26 - 14 * eased}px`;
       media.style.transform = `translate3d(0, ${-10 * progress}px, 0)`;
 
       if (bgRef.current) {
-        bgRef.current.style.opacity = `${1 - 0.28 * eased}`;
-        bgRef.current.style.transform = `scale(${1 + 0.035 * eased})`;
+        bgRef.current.style.opacity = `${1 - 0.76 * contentEase}`;
+        bgRef.current.style.transform = `scale(${1 + 0.03 * eased})`;
       }
 
       if (overlayRef.current) {
-        overlayRef.current.style.opacity = `${0.34 - 0.12 * eased}`;
+        overlayRef.current.style.opacity = `${0.34 - 0.18 * contentEase}`;
+      }
+
+      if (cardScrimRef.current) {
+        cardScrimRef.current.style.opacity = `${0.1 + 0.52 * contentEase}`;
       }
 
       if (firstLineRef.current) {
         firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
+        firstLineRef.current.style.opacity = `${titleOpacity}`;
       }
 
       if (secondLineRef.current) {
         secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
+        secondLineRef.current.style.opacity = `${titleOpacity}`;
+      }
+
+      if (introRef.current) {
+        introRef.current.style.opacity = `${contentEase}`;
+        introRef.current.style.transform = `translate3d(0, ${22 - 22 * contentEase}px, 0)`;
       }
 
       if (scrollHintRef.current) {
@@ -119,7 +136,7 @@ const ScrollExpandMedia = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[190svh] bg-navy">
+    <section ref={sectionRef} className="relative h-[230svh] bg-white">
       <div className="sticky top-0 h-svh overflow-hidden">
         <div
           ref={bgRef}
@@ -137,6 +154,7 @@ const ScrollExpandMedia = ({
           />
         </div>
         <div className="absolute inset-0 bg-black/42" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white/85" />
 
         <div className="absolute inset-0 flex items-center justify-center px-6">
           <div
@@ -168,6 +186,35 @@ const ScrollExpandMedia = ({
               />
             )}
             <div ref={overlayRef} className="absolute inset-0 bg-black" style={{ opacity: 0.34 }} />
+            <div ref={cardScrimRef} className="absolute inset-0 bg-black" style={{ opacity: 0.1 }} />
+            <div
+              ref={introRef}
+              className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white opacity-0"
+            >
+              <div className="mb-7 inline-flex items-center border border-gold/25 bg-navy/10 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold md:text-xs">
+                EST. 1990 — NEW YORK CITY
+              </div>
+              <h2 className="font-serif text-4xl font-bold leading-[0.92] text-white/88 md:text-6xl lg:text-7xl">
+                Together, We Make
+                <br />
+                It Happen
+              </h2>
+              <p className="mt-24 max-w-4xl text-base leading-relaxed text-white/78 md:text-xl">
+                Since 1990, TAG has represented political candidates,
+                not-for-profits, corporations, advocacy groups, and labor unions
+                — combining deep institutional knowledge with innovative
+                strategy to deliver results.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55 md:text-xs">
+                <span>Lobbying</span>
+                <span className="text-gold">◆</span>
+                <span>Campaigns</span>
+                <span className="text-gold">◆</span>
+                <span>Communications</span>
+                <span className="text-gold">◆</span>
+                <span>Design</span>
+              </div>
+            </div>
           </div>
         </div>
 
