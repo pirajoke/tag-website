@@ -101,6 +101,83 @@ html.lenis, html.lenis body {
   animation: scroll-dot 1.5s ease-in-out infinite;
 }
 
+/* Home hero scroll state. Defaults match the JS measurements to avoid hydration jumps. */
+.hero-scroll-section {
+  --hero-card-w: min(72vw, 320px);
+  --hero-card-h: 390px;
+  --hero-card-r: 26px;
+  --hero-card-y: 0px;
+  --hero-bg-opacity: 1;
+  --hero-bg-scale: 1;
+  --hero-overlay-opacity: 0.34;
+  --hero-scrim-opacity: 0.1;
+  --hero-title-shift: 0vw;
+  --hero-title-y: 0px;
+  --hero-title-opacity: 1;
+  --hero-intro-opacity: 0;
+  --hero-intro-y: 22px;
+  --hero-hint-opacity: 1;
+  --hero-hint-y: 0px;
+}
+
+@media (min-width: 768px) {
+  .hero-scroll-section {
+    --hero-card-w: min(24vw, 420px);
+    --hero-card-h: min(50svh, 500px);
+  }
+}
+
+.hero-bg {
+  opacity: var(--hero-bg-opacity);
+  transform: scale(var(--hero-bg-scale));
+  will-change: opacity, transform;
+}
+
+.hero-media-card {
+  width: var(--hero-card-w);
+  height: var(--hero-card-h);
+  border-radius: var(--hero-card-r);
+  contain: layout paint style;
+  transform: translate3d(0, var(--hero-card-y), 0);
+  will-change: width, height, transform, border-radius;
+}
+
+.hero-media-overlay {
+  opacity: var(--hero-overlay-opacity);
+}
+
+.hero-media-scrim {
+  opacity: var(--hero-scrim-opacity);
+}
+
+.hero-title-first {
+  opacity: var(--hero-title-opacity);
+  transform: translate3d(
+    calc(var(--hero-title-shift) * -1),
+    calc(var(--hero-title-y) * -1),
+    0
+  );
+  will-change: opacity, transform;
+}
+
+.hero-title-second {
+  opacity: var(--hero-title-opacity);
+  transform: translate3d(var(--hero-title-shift), var(--hero-title-y), 0);
+  will-change: opacity, transform;
+}
+
+.hero-intro {
+  opacity: var(--hero-intro-opacity);
+  transform: translate3d(0, var(--hero-intro-y), 0);
+  will-change: opacity, transform;
+}
+
+.hero-scroll-hint {
+  opacity: var(--hero-hint-opacity);
+  transform: translate3d(-50%, var(--hero-hint-y), 0);
+  will-change: opacity, transform;
+}
+
 /* Counter fade in */
 @keyframes fadeInUp {
   from {

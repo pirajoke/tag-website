@@ -20,6 +20,38 @@ const clamp = (value: number, min = 0, max = 1) =>
 
 const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
 
+type HeroMetrics = {
+  viewportWidth: number;
+  viewportHeight: number;
+  isMobile: boolean;
+  startWidth: number;
+  endWidth: number;
+  startHeight: number;
+  endHeight: number;
+};
+
+const getMetrics = (): HeroMetrics => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight || 1;
+  const isMobile = viewportWidth < 768;
+
+  return {
+    viewportWidth,
+    viewportHeight,
+    isMobile,
+    startWidth: isMobile
+      ? Math.min(viewportWidth * 0.72, 320)
+      : Math.min(viewportWidth * 0.24, 420),
+    endWidth: isMobile
+      ? Math.min(viewportWidth * 0.96, 760)
+      : Math.min(viewportWidth * 0.88, 1500),
+    startHeight: isMobile ? 390 : Math.min(viewportHeight * 0.5, 500),
+    endHeight: isMobile
+      ? Math.min(viewportHeight * 0.78, 700)
+      : Math.min(viewportHeight * 0.86, 820),
+  };
+};
+
 const ScrollExpandMedia = ({
   mediaType = "image",
   mediaSrc,
@@ -29,14 +61,7 @@ const ScrollExpandMedia = ({
   scrollToExpand = "Scroll to Explore",
 }: ScrollExpandMediaProps) => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const bgRef = useRef<HTMLDivElement | null>(null);
-  const mediaRef = useRef<HTMLDivElement | null>(null);
-  const overlayRef = useRef<HTMLDivElement | null>(null);
-  const cardScrimRef = useRef<HTMLDivElement | null>(null);
-  const firstLineRef = useRef<HTMLSpanElement | null>(null);
-  const secondLineRef = useRef<HTMLSpanElement | null>(null);
-  const introRef = useRef<HTMLDivElement | null>(null);
-  const scrollHintRef = useRef<HTMLDivElement | null>(null);
+  const metricsRef = useRef<HeroMetrics | null>(null);
 
   const titleParts = useMemo(() => {
     if (!title) return { firstWord: "", rest: "" };
@@ -51,72 +76,53 @@ const ScrollExpandMedia = ({
   useEffect(() => {
     let frame = 0;
 
+    const measure = () => {
+      metricsRef.current = getMetrics();
+    };
+
     const applyProgress = () => {
       frame = 0;
 
       const section = sectionRef.current;
-      const media = mediaRef.current;
-      if (!section || !media) return;
+      if (!section) return;
+      if (!metricsRef.current) measure();
+
+      const metrics = metricsRef.current;
+      if (!metrics) return;
 
       const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || 1;
-      const progress = clamp(-rect.top / Math.max(rect.height - viewportHeight, 1));
+      const progress = clamp(
+        -rect.top / Math.max(rect.height - metrics.viewportHeight, 1)
+      );
       const expandProgress = clamp(progress / 0.68);
       const contentProgress = clamp((progress - 0.56) / 0.26);
       const eased = easeOutCubic(expandProgress);
       const contentEase = easeOutCubic(contentProgress);
-      const isMobile = window.innerWidth < 768;
-
-      const startWidth = isMobile
-        ? Math.min(window.innerWidth * 0.72, 320)
-        : Math.min(window.innerWidth * 0.24, 420);
-      const endWidth = isMobile
-        ? Math.min(window.innerWidth * 0.96, 760)
-        : Math.min(window.innerWidth * 0.88, 1500);
-      const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
-      const endHeight = isMobile
-        ? Math.min(window.innerHeight * 0.78, 700)
-        : Math.min(window.innerHeight * 0.86, 820);
-      const textShift = eased * (isMobile ? 44 : 24);
+      const textShift = eased * (metrics.isMobile ? 44 : 24);
       const titleOpacity = clamp(1 - contentProgress * 1.25);
+      const style = section.style;
 
-      media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
-      media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
-      media.style.borderRadius = `${26 - 14 * eased}px`;
-      media.style.transform = `translate3d(0, ${-10 * progress}px, 0)`;
-
-      if (bgRef.current) {
-        bgRef.current.style.opacity = `${1 - 0.76 * contentEase}`;
-        bgRef.current.style.transform = `scale(${1 + 0.03 * eased})`;
-      }
-
-      if (overlayRef.current) {
-        overlayRef.current.style.opacity = `${0.34 - 0.18 * contentEase}`;
-      }
-
-      if (cardScrimRef.current) {
-        cardScrimRef.current.style.opacity = `${0.1 + 0.52 * contentEase}`;
-      }
-
-      if (firstLineRef.current) {
-        firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
-        firstLineRef.current.style.opacity = `${titleOpacity}`;
-      }
-
-      if (secondLineRef.current) {
-        secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
-        secondLineRef.current.style.opacity = `${titleOpacity}`;
-      }
-
-      if (introRef.current) {
-        introRef.current.style.opacity = `${contentEase}`;
-        introRef.current.style.transform = `translate3d(0, ${22 - 22 * contentEase}px, 0)`;
-      }
-
-      if (scrollHintRef.current) {
-        scrollHintRef.current.style.opacity = `${clamp(1 - progress * 2.8)}`;
-        scrollHintRef.current.style.transform = `translate3d(-50%, ${10 * progress}px, 0)`;
-      }
+      style.setProperty(
+        "--hero-card-w",
+        `${metrics.startWidth + (metrics.endWidth - metrics.startWidth) * eased}px`
+      );
+      style.setProperty(
+        "--hero-card-h",
+        `${metrics.startHeight + (metrics.endHeight - metrics.startHeight) * eased}px`
+      );
+      style.setProperty("--hero-card-r", `${26 - 14 * eased}px`);
+      style.setProperty("--hero-card-y", `${-10 * progress}px`);
+      style.setProperty("--hero-bg-opacity", `${1 - 0.76 * contentEase}`);
+      style.setProperty("--hero-bg-scale", `${1 + 0.03 * eased}`);
+      style.setProperty("--hero-overlay-opacity", `${0.34 - 0.18 * contentEase}`);
+      style.setProperty("--hero-scrim-opacity", `${0.1 + 0.52 * contentEase}`);
+      style.setProperty("--hero-title-shift", `${textShift}vw`);
+      style.setProperty("--hero-title-y", `${8 * eased}px`);
+      style.setProperty("--hero-title-opacity", `${titleOpacity}`);
+      style.setProperty("--hero-intro-opacity", `${contentEase}`);
+      style.setProperty("--hero-intro-y", `${22 - 22 * contentEase}px`);
+      style.setProperty("--hero-hint-opacity", `${clamp(1 - progress * 2.8)}`);
+      style.setProperty("--hero-hint-y", `${10 * progress}px`);
     };
 
     const requestApply = () => {
@@ -124,25 +130,27 @@ const ScrollExpandMedia = ({
       frame = window.requestAnimationFrame(applyProgress);
     };
 
+    const onResize = () => {
+      measure();
+      requestApply();
+    };
+
+    measure();
     applyProgress();
     window.addEventListener("scroll", requestApply, { passive: true });
-    window.addEventListener("resize", requestApply);
+    window.addEventListener("resize", onResize);
 
     return () => {
       window.removeEventListener("scroll", requestApply);
-      window.removeEventListener("resize", requestApply);
+      window.removeEventListener("resize", onResize);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[230svh] bg-white">
+    <section ref={sectionRef} className="hero-scroll-section relative h-[230svh] bg-white">
       <div className="sticky top-0 h-svh overflow-hidden">
-        <div
-          ref={bgRef}
-          className="absolute inset-0 will-change-transform"
-          style={{ transform: "scale(1)" }}
-        >
+        <div className="hero-bg absolute inset-0">
           <Image
             src={bgImageSrc}
             alt="New York City skyline"
@@ -157,11 +165,7 @@ const ScrollExpandMedia = ({
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white/85" />
 
         <div className="absolute inset-0 flex items-center justify-center px-6">
-          <div
-            ref={mediaRef}
-            className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
-            style={{ width: 320, height: 460, borderRadius: 26 }}
-          >
+          <div className="hero-media-card relative overflow-hidden shadow-2xl shadow-black/35">
             {mediaType === "video" ? (
               <video
                 src={mediaSrc}
@@ -185,11 +189,10 @@ const ScrollExpandMedia = ({
                 priority
               />
             )}
-            <div ref={overlayRef} className="absolute inset-0 bg-black" style={{ opacity: 0.34 }} />
-            <div ref={cardScrimRef} className="absolute inset-0 bg-black" style={{ opacity: 0.1 }} />
+            <div className="hero-media-overlay absolute inset-0 bg-black" />
+            <div className="hero-media-scrim absolute inset-0 bg-black" />
             <div
-              ref={introRef}
-              className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white opacity-0"
+              className="hero-intro pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white"
             >
               <div className="mb-7 inline-flex items-center border border-gold/25 bg-navy/10 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold md:text-xs">
                 EST. 1990 — NEW YORK CITY
@@ -220,18 +223,17 @@ const ScrollExpandMedia = ({
 
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
           <h1 className="font-serif text-[clamp(3.6rem,8.6vw,9.4rem)] font-bold leading-[0.86] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
-            <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
+            <span className="hero-title-first block whitespace-nowrap">
               {titleParts.firstWord}
             </span>
-            <span ref={secondLineRef} className="block whitespace-nowrap will-change-transform">
+            <span className="hero-title-second block whitespace-nowrap">
               {titleParts.rest}
             </span>
           </h1>
         </div>
 
         <div
-          ref={scrollHintRef}
-          className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 will-change-transform"
+          className="hero-scroll-hint absolute bottom-8 left-1/2 flex flex-col items-center gap-2"
         >
           <span className="text-xs uppercase tracking-[0.3em] text-white/50">
             {scrollToExpand}
