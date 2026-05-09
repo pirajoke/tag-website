@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ReactNode, useEffect, useMemo, useRef } from "react";
-import Image from "next/image";
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 interface ScrollExpandMediaProps {
-  mediaType?: "video" | "image";
+  mediaType?: 'video' | 'image';
   mediaSrc: string;
   posterSrc?: string;
   bgImageSrc: string;
@@ -15,233 +15,367 @@ interface ScrollExpandMediaProps {
   children?: ReactNode;
 }
 
-const clamp = (value: number, min = 0, max = 1) =>
-  Math.min(Math.max(value, min), max);
-
-const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+const clamp = (value: number): number => Math.min(Math.max(value, 0), 1);
 
 const ScrollExpandMedia = ({
-  mediaType = "image",
+  mediaType = 'image',
   mediaSrc,
   posterSrc,
   bgImageSrc,
   title,
-  scrollToExpand = "Scroll to Explore",
+  date,
+  scrollToExpand,
+  textBlend,
+  children,
 }: ScrollExpandMediaProps) => {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const bgRef = useRef<HTMLDivElement | null>(null);
+  const [showContent, setShowContent] = useState<boolean>(false);
+
+  const progressRef = useRef<number>(0);
+  const mediaFullyExpandedRef = useRef<boolean>(false);
+  const touchStartYRef = useRef<number>(0);
+  const isMobileRef = useRef<boolean>(false);
+  const showContentRef = useRef<boolean>(false);
+  const frameRef = useRef<number | null>(null);
+
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const backgroundRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
-  const overlayRef = useRef<HTMLDivElement | null>(null);
-  const cardScrimRef = useRef<HTMLDivElement | null>(null);
-  const firstLineRef = useRef<HTMLSpanElement | null>(null);
-  const secondLineRef = useRef<HTMLSpanElement | null>(null);
-  const introRef = useRef<HTMLDivElement | null>(null);
-  const scrollHintRef = useRef<HTMLDivElement | null>(null);
+  const videoOverlayRef = useRef<HTMLDivElement | null>(null);
+  const imageOverlayRef = useRef<HTMLDivElement | null>(null);
+  const expandedOverlayRef = useRef<HTMLDivElement | null>(null);
+  const metaRef = useRef<HTMLDivElement | null>(null);
+  const dateRef = useRef<HTMLParagraphElement | null>(null);
+  const scrollLabelRef = useRef<HTMLParagraphElement | null>(null);
+  const titleWrapRef = useRef<HTMLDivElement | null>(null);
+  const firstTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const restTitleRef = useRef<HTMLHeadingElement | null>(null);
 
-  const titleParts = useMemo(() => {
-    if (!title) return { firstWord: "", rest: "" };
-
-    const [firstWord, ...rest] = title.split(" ");
-    return {
-      firstWord,
-      rest: rest.join(" "),
-    };
-  }, [title]);
+  const firstWord = title ? title.split(' ')[0] : '';
+  const restOfTitle = title ? title.split(' ').slice(1).join(' ') : '';
 
   useEffect(() => {
-    let frame = 0;
+    const updateContentVisibility = (nextShowContent: boolean): void => {
+      if (showContentRef.current === nextShowContent) return;
+      showContentRef.current = nextShowContent;
+      setShowContent(nextShowContent);
+    };
 
-    const applyProgress = () => {
-      frame = 0;
+    const applyProgress = (): void => {
+      frameRef.current = null;
 
-      const section = sectionRef.current;
-      const media = mediaRef.current;
-      if (!section || !media) return;
+      const scrollProgress = progressRef.current;
+      const isMobile = isMobileRef.current;
+      const mediaWidth = 300 + scrollProgress * (isMobile ? 650 : 1250);
+      const mediaHeight = 400 + scrollProgress * (isMobile ? 200 : 400);
+      const textTranslateX = scrollProgress * (isMobile ? 180 : 150);
 
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || 1;
-      const progress = clamp(-rect.top / Math.max(rect.height - viewportHeight, 1));
-      const expandProgress = clamp(progress / 0.68);
-      const contentProgress = clamp((progress - 0.56) / 0.26);
-      const eased = easeOutCubic(expandProgress);
-      const contentEase = easeOutCubic(contentProgress);
-      const isMobile = window.innerWidth < 768;
-
-      const startWidth = isMobile
-        ? Math.min(window.innerWidth * 0.72, 320)
-        : Math.min(window.innerWidth * 0.24, 420);
-      const endWidth = isMobile
-        ? Math.min(window.innerWidth * 0.96, 760)
-        : Math.min(window.innerWidth * 0.88, 1500);
-      const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
-      const endHeight = isMobile
-        ? Math.min(window.innerHeight * 0.78, 700)
-        : Math.min(window.innerHeight * 0.86, 820);
-      const textShift = eased * (isMobile ? 44 : 24);
-      const titleOpacity = clamp(1 - contentProgress * 1.25);
-
-      media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
-      media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
-      media.style.borderRadius = `${26 - 14 * eased}px`;
-      media.style.transform = `translate3d(0, ${-10 * progress}px, 0)`;
-
-      if (bgRef.current) {
-        bgRef.current.style.opacity = `${1 - 0.76 * contentEase}`;
-        bgRef.current.style.transform = `scale(${1 + 0.03 * eased})`;
+      if (backgroundRef.current) {
+        backgroundRef.current.style.opacity = `${1 - scrollProgress}`;
       }
 
-      if (overlayRef.current) {
-        overlayRef.current.style.opacity = `${0.34 - 0.18 * contentEase}`;
+      if (mediaRef.current) {
+        mediaRef.current.style.width = `${mediaWidth}px`;
+        mediaRef.current.style.height = `${mediaHeight}px`;
       }
 
-      if (cardScrimRef.current) {
-        cardScrimRef.current.style.opacity = `${0.1 + 0.52 * contentEase}`;
+      if (videoOverlayRef.current) {
+        videoOverlayRef.current.style.opacity = `${0.5 - scrollProgress * 0.3}`;
       }
 
-      if (firstLineRef.current) {
-        firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
-        firstLineRef.current.style.opacity = `${titleOpacity}`;
+      if (imageOverlayRef.current) {
+        imageOverlayRef.current.style.opacity = `${0.7 - scrollProgress * 0.3}`;
       }
 
-      if (secondLineRef.current) {
-        secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
-        secondLineRef.current.style.opacity = `${titleOpacity}`;
+      if (expandedOverlayRef.current) {
+        expandedOverlayRef.current.style.opacity =
+          scrollProgress > 0.4 ? `${Math.min((scrollProgress - 0.4) * 2.5, 1)}` : '0';
       }
 
-      if (introRef.current) {
-        introRef.current.style.opacity = `${contentEase}`;
-        introRef.current.style.transform = `translate3d(0, ${22 - 22 * contentEase}px, 0)`;
+      if (metaRef.current) {
+        metaRef.current.style.opacity = `${Math.max(1 - scrollProgress * 3, 0)}`;
       }
 
-      if (scrollHintRef.current) {
-        scrollHintRef.current.style.opacity = `${clamp(1 - progress * 2.8)}`;
-        scrollHintRef.current.style.transform = `translate3d(-50%, ${10 * progress}px, 0)`;
+      if (dateRef.current) {
+        dateRef.current.style.transform = `translateX(-${textTranslateX}vw)`;
+      }
+
+      if (scrollLabelRef.current) {
+        scrollLabelRef.current.style.transform = `translateX(${textTranslateX}vw)`;
+      }
+
+      if (titleWrapRef.current) {
+        titleWrapRef.current.style.opacity = `${Math.max(1 - scrollProgress * 2, 0)}`;
+      }
+
+      if (firstTitleRef.current) {
+        firstTitleRef.current.style.transform = `translateX(-${textTranslateX}vw)`;
+      }
+
+      if (restTitleRef.current) {
+        restTitleRef.current.style.transform = `translateX(${textTranslateX}vw)`;
       }
     };
 
-    const requestApply = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(applyProgress);
+    const requestApply = (): void => {
+      if (frameRef.current !== null) return;
+      frameRef.current = window.requestAnimationFrame(applyProgress);
     };
 
-    applyProgress();
-    window.addEventListener("scroll", requestApply, { passive: true });
-    window.addEventListener("resize", requestApply);
+    const setProgress = (nextProgress: number): void => {
+      const scrollProgress = clamp(nextProgress);
+      progressRef.current = scrollProgress;
+
+      if (scrollProgress >= 1) {
+        mediaFullyExpandedRef.current = true;
+        updateContentVisibility(true);
+      } else if (scrollProgress < 0.75) {
+        updateContentVisibility(false);
+      }
+
+      requestApply();
+    };
+
+    const syncViewport = (): void => {
+      isMobileRef.current = window.innerWidth < 768;
+      requestApply();
+    };
+
+    const handleWheel = (e: globalThis.WheelEvent): void => {
+      if (mediaFullyExpandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
+        mediaFullyExpandedRef.current = false;
+        e.preventDefault();
+        return;
+      }
+
+      if (!mediaFullyExpandedRef.current) {
+        e.preventDefault();
+        setProgress(progressRef.current + e.deltaY * 0.00125);
+      }
+    };
+
+    const handleTouchStart = (e: globalThis.TouchEvent): void => {
+      touchStartYRef.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: globalThis.TouchEvent): void => {
+      if (!touchStartYRef.current) return;
+
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartYRef.current - touchY;
+
+      if (mediaFullyExpandedRef.current && deltaY < -20 && window.scrollY <= 5) {
+        mediaFullyExpandedRef.current = false;
+        e.preventDefault();
+        return;
+      }
+
+      if (!mediaFullyExpandedRef.current) {
+        e.preventDefault();
+        const scrollFactor = deltaY < 0 ? 0.011 : 0.007;
+        setProgress(progressRef.current + deltaY * scrollFactor);
+        touchStartYRef.current = touchY;
+      }
+    };
+
+    const handleTouchEnd = (): void => {
+      touchStartYRef.current = 0;
+    };
+
+    const handleScroll = (): void => {
+      if (!mediaFullyExpandedRef.current && window.scrollY > 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+
+    progressRef.current = 0;
+    mediaFullyExpandedRef.current = false;
+    touchStartYRef.current = 0;
+    updateContentVisibility(false);
+    syncViewport();
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('resize', syncViewport);
 
     return () => {
-      window.removeEventListener("scroll", requestApply);
-      window.removeEventListener("resize", requestApply);
-      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('resize', syncViewport);
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
     };
-  }, []);
+  }, [mediaType]);
 
   return (
-    <section ref={sectionRef} className="relative h-[230svh] bg-white">
-      <div className="sticky top-0 h-svh overflow-hidden">
-        <div
-          ref={bgRef}
-          className="absolute inset-0 will-change-transform"
-          style={{ transform: "scale(1)" }}
-        >
-          <Image
-            src={bgImageSrc}
-            alt="New York City skyline"
-            fill
-            sizes="100vw"
-            quality={64}
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/42" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white/85" />
+    <div
+      ref={sectionRef}
+      className='transition-colors duration-700 ease-in-out overflow-x-hidden'
+    >
+      <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
+        <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
+          <div ref={backgroundRef} className='absolute inset-0 z-0 h-full'>
+            <Image
+              src={bgImageSrc}
+              alt='Background'
+              width={1920}
+              height={1080}
+              sizes='100vw'
+              className='w-screen h-screen'
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+              priority
+            />
+            <div className='absolute inset-0 bg-black/40' />
+          </div>
 
-        <div className="absolute inset-0 flex items-center justify-center px-6">
-          <div
-            ref={mediaRef}
-            className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
-            style={{ width: 320, height: 460, borderRadius: 26 }}
-          >
-            {mediaType === "video" ? (
-              <video
-                src={mediaSrc}
-                poster={posterSrc}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="h-full w-full object-cover"
-                controls={false}
-              />
-            ) : (
-              <Image
-                src={mediaSrc}
-                alt={title || "TAG campaign strategy"}
-                fill
-                sizes="(min-width: 1024px) 68vw, 94vw"
-                quality={62}
-                className="object-cover"
-                priority
-              />
-            )}
-            <div ref={overlayRef} className="absolute inset-0 bg-black" style={{ opacity: 0.34 }} />
-            <div ref={cardScrimRef} className="absolute inset-0 bg-black" style={{ opacity: 0.1 }} />
-            <div
-              ref={introRef}
-              className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white opacity-0"
-            >
-              <div className="mb-7 inline-flex items-center border border-gold/25 bg-navy/10 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold md:text-xs">
-                EST. 1990 — NEW YORK CITY
+          <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
+            <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
+              <div
+                ref={mediaRef}
+                className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
+                style={{
+                  width: '300px',
+                  height: '400px',
+                  maxWidth: '95vw',
+                  maxHeight: '85vh',
+                  boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                {mediaType === 'video' ? (
+                  <div className='relative w-full h-full pointer-events-none'>
+                    <video
+                      src={mediaSrc}
+                      poster={posterSrc}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload='metadata'
+                      className='w-full h-full object-cover rounded-xl'
+                      controls={false}
+                      disablePictureInPicture
+                      disableRemotePlayback
+                    />
+                    <div
+                      ref={videoOverlayRef}
+                      className='absolute inset-0 bg-black/30 rounded-xl'
+                      style={{ opacity: 0.5 }}
+                    />
+                  </div>
+                ) : (
+                  <div className='relative w-full h-full'>
+                    <Image
+                      src={mediaSrc}
+                      alt={title || 'Media content'}
+                      width={1280}
+                      height={720}
+                      sizes='(min-width: 768px) 95vw, 95vw'
+                      className='w-full h-full object-cover rounded-xl'
+                      priority
+                    />
+                    <div
+                      ref={imageOverlayRef}
+                      className='absolute inset-0 bg-black/50 rounded-xl'
+                      style={{ opacity: 0.7 }}
+                    />
+                  </div>
+                )}
+
+                <div
+                  ref={expandedOverlayRef}
+                  className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
+                  style={{ opacity: 0 }}
+                >
+                  <div className='flex flex-col items-center'>
+                    <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
+                      Est. 1990 &mdash; New York City
+                    </span>
+                    <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
+                      Together, We Make<br />It Happen
+                    </h2>
+                  </div>
+
+                  <div className='flex flex-col items-center'>
+                    <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
+                      Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
+                    </p>
+                    <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
+                      <span>Lobbying</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Campaigns</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Communications</span>
+                      <span className='text-gold'>&#9670;</span>
+                      <span>Design</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  ref={metaRef}
+                  className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'
+                >
+                  {date && (
+                    <p
+                      ref={dateRef}
+                      className='text-2xl text-gold/80'
+                    >
+                      {date}
+                    </p>
+                  )}
+                  {scrollToExpand && (
+                    <p
+                      ref={scrollLabelRef}
+                      className='text-white/60 font-medium text-center text-sm uppercase tracking-[0.3em]'
+                    >
+                      {scrollToExpand}
+                    </p>
+                  )}
+                </div>
               </div>
-              <h2 className="font-serif text-4xl font-bold leading-[0.92] text-white/88 md:text-6xl lg:text-7xl">
-                Together, We Make
-                <br />
-                It Happen
-              </h2>
-              <p className="mt-24 max-w-4xl text-base leading-relaxed text-white/78 md:text-xl">
-                Since 1990, TAG has represented political candidates,
-                not-for-profits, corporations, advocacy groups, and labor unions
-                — combining deep institutional knowledge with innovative
-                strategy to deliver results.
-              </p>
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55 md:text-xs">
-                <span>Lobbying</span>
-                <span className="text-gold">◆</span>
-                <span>Campaigns</span>
-                <span className="text-gold">◆</span>
-                <span>Communications</span>
-                <span className="text-gold">◆</span>
-                <span>Design</span>
+
+              <div
+                ref={titleWrapRef}
+                className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
+                  textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                }`}
+              >
+                <h2
+                  ref={firstTitleRef}
+                  className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-white font-serif leading-[1.05] transition-none'
+                >
+                  {firstWord}
+                </h2>
+                <h2
+                  ref={restTitleRef}
+                  className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-center text-white font-serif leading-[1.05] transition-none'
+                >
+                  {restOfTitle}
+                </h2>
               </div>
             </div>
+
+            {children && (
+              <section
+                className='flex flex-col w-full px-8 py-10 md:px-16 lg:py-20 transition-opacity duration-700'
+                style={{ opacity: showContent ? 1 : 0 }}
+              >
+                {children}
+              </section>
+            )}
           </div>
         </div>
-
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
-          <h1 className="font-serif text-[clamp(3.6rem,8.6vw,9.4rem)] font-bold leading-[0.86] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
-            <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
-              {titleParts.firstWord}
-            </span>
-            <span ref={secondLineRef} className="block whitespace-nowrap will-change-transform">
-              {titleParts.rest}
-            </span>
-          </h1>
-        </div>
-
-        <div
-          ref={scrollHintRef}
-          className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 will-change-transform"
-        >
-          <span className="text-xs uppercase tracking-[0.3em] text-white/50">
-            {scrollToExpand}
-          </span>
-          <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-white/30 p-1">
-            <div className="h-2 w-1 rounded-full bg-white/50 animate-scroll-dot" />
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
