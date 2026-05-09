@@ -12,7 +12,6 @@ interface ScrollExpandMediaProps {
   title?: string;
   date?: string;
   scrollToExpand?: string;
-  textBlend?: boolean;
   children?: ReactNode;
 }
 
@@ -24,7 +23,6 @@ const ScrollExpandMedia = ({
   title,
   date,
   scrollToExpand,
-  textBlend,
   children,
 }: ScrollExpandMediaProps) => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -125,9 +123,7 @@ const ScrollExpandMedia = ({
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
-
-  const firstWord = title ? title.split(" ")[0] : "";
-  const restOfTitle = title ? title.split(" ").slice(1).join(" ") : "";
+  const titleOpacity = Math.min(Math.max((scrollProgress - 0.18) / 0.42, 0), 1);
 
   return (
     <div
@@ -248,6 +244,23 @@ const ScrollExpandMedia = ({
                   </div>
                 )}
 
+                {title && (
+                  <motion.div
+                    className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6 text-center md:px-12"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: titleOpacity,
+                      y: titleOpacity > 0 ? 0 : 12,
+                      scale: 0.98 + titleOpacity * 0.02,
+                    }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                  >
+                    <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[0.98] tracking-normal text-[#f1eee8]/95 mix-blend-normal md:text-6xl lg:text-7xl">
+                      {title}
+                    </h1>
+                  </motion.div>
+                )}
+
                 <div className="relative z-10 mt-4 flex flex-col items-center text-center transition-none">
                   {date && (
                     <p
@@ -266,25 +279,6 @@ const ScrollExpandMedia = ({
                     </p>
                   )}
                 </div>
-              </div>
-
-              <div
-                className={`relative z-10 flex w-full flex-col items-center justify-center gap-4 text-center transition-none ${
-                  textBlend ? "mix-blend-difference" : "mix-blend-normal"
-                }`}
-              >
-                <motion.h2
-                  className="text-4xl font-bold text-[#f1eee8]/82 transition-none md:text-5xl lg:text-6xl"
-                  style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                >
-                  {firstWord}
-                </motion.h2>
-                <motion.h2
-                  className="text-center text-4xl font-bold text-[#f1eee8]/82 transition-none md:text-5xl lg:text-6xl"
-                  style={{ transform: `translateX(${textTranslateX}vw)` }}
-                >
-                  {restOfTitle}
-                </motion.h2>
               </div>
             </div>
 

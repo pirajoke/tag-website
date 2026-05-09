@@ -21,9 +21,8 @@ export default function Home() {
         mediaType="image"
         mediaSrc="https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=1280&h=720&fit=crop&q=80"
         bgImageSrc="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop&q=80"
-        title="Shaping Policy. Winning Campaigns."
+        title="Together, We Make It Happen"
         scrollToExpand="Scroll to Explore"
-        textBlend
       />
       <ClientsMarquee />
       <IntroSection />
