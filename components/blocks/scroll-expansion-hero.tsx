@@ -1,8 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 interface ScrollExpandMediaProps {
   mediaType?: "video" | "image";
@@ -12,288 +11,237 @@ interface ScrollExpandMediaProps {
   title?: string;
   date?: string;
   scrollToExpand?: string;
+  textBlend?: boolean;
   children?: ReactNode;
 }
 
+const clamp = (value: number, min = 0, max = 1) =>
+  Math.min(Math.max(value, min), max);
+
+const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+
 const ScrollExpandMedia = ({
-  mediaType = "video",
+  mediaType = "image",
   mediaSrc,
   posterSrc,
   bgImageSrc,
   title,
-  date,
-  scrollToExpand,
-  children,
+  scrollToExpand = "Scroll to Explore",
 }: ScrollExpandMediaProps) => {
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const [showContent, setShowContent] = useState<boolean>(false);
-  const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
-  const [touchStartY, setTouchStartY] = useState<number>(0);
-  const [isMobileState, setIsMobileState] = useState<boolean>(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const bgRef = useRef<HTMLDivElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const cardScrimRef = useRef<HTMLDivElement | null>(null);
+  const firstLineRef = useRef<HTMLSpanElement | null>(null);
+  const secondLineRef = useRef<HTMLSpanElement | null>(null);
+  const introRef = useRef<HTMLDivElement | null>(null);
+  const scrollHintRef = useRef<HTMLDivElement | null>(null);
 
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const titleParts = useMemo(() => {
+    if (!title) return { firstWord: "", rest: "" };
+
+    const [firstWord, ...rest] = title.split(" ");
+    return {
+      firstWord,
+      rest: rest.join(" "),
+    };
+  }, [title]);
 
   useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      if (mediaFullyExpanded && event.deltaY < 0 && window.scrollY <= 5) {
-        setMediaFullyExpanded(false);
-        event.preventDefault();
-      } else if (!mediaFullyExpanded) {
-        event.preventDefault();
-        const scrollDelta = event.deltaY * 0.0009;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
+    let frame = 0;
 
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
+    const applyProgress = () => {
+      frame = 0;
+
+      const section = sectionRef.current;
+      const media = mediaRef.current;
+      if (!section || !media) return;
+
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const progress = clamp(-rect.top / Math.max(rect.height - viewportHeight, 1));
+      const expandProgress = clamp(progress / 0.68);
+      const contentProgress = clamp((progress - 0.56) / 0.26);
+      const eased = easeOutCubic(expandProgress);
+      const contentEase = easeOutCubic(contentProgress);
+      const isMobile = window.innerWidth < 768;
+
+      const startWidth = isMobile
+        ? Math.min(window.innerWidth * 0.72, 320)
+        : Math.min(window.innerWidth * 0.24, 420);
+      const endWidth = isMobile
+        ? Math.min(window.innerWidth * 0.96, 760)
+        : Math.min(window.innerWidth * 0.88, 1500);
+      const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
+      const endHeight = isMobile
+        ? Math.min(window.innerHeight * 0.78, 700)
+        : Math.min(window.innerHeight * 0.86, 820);
+      const textShift = eased * (isMobile ? 44 : 24);
+      const titleOpacity = clamp(1 - contentProgress * 1.25);
+
+      media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
+      media.style.height = `${startHeight + (endHeight - startHeight) * eased}px`;
+      media.style.borderRadius = `${26 - 14 * eased}px`;
+      media.style.transform = `translate3d(0, ${-10 * progress}px, 0)`;
+
+      if (bgRef.current) {
+        bgRef.current.style.opacity = `${1 - 0.76 * contentEase}`;
+        bgRef.current.style.transform = `scale(${1 + 0.03 * eased})`;
+      }
+
+      if (overlayRef.current) {
+        overlayRef.current.style.opacity = `${0.34 - 0.18 * contentEase}`;
+      }
+
+      if (cardScrimRef.current) {
+        cardScrimRef.current.style.opacity = `${0.1 + 0.52 * contentEase}`;
+      }
+
+      if (firstLineRef.current) {
+        firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
+        firstLineRef.current.style.opacity = `${titleOpacity}`;
+      }
+
+      if (secondLineRef.current) {
+        secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
+        secondLineRef.current.style.opacity = `${titleOpacity}`;
+      }
+
+      if (introRef.current) {
+        introRef.current.style.opacity = `${contentEase}`;
+        introRef.current.style.transform = `translate3d(0, ${22 - 22 * contentEase}px, 0)`;
+      }
+
+      if (scrollHintRef.current) {
+        scrollHintRef.current.style.opacity = `${clamp(1 - progress * 2.8)}`;
+        scrollHintRef.current.style.transform = `translate3d(-50%, ${10 * progress}px, 0)`;
       }
     };
 
-    const handleTouchStart = (event: TouchEvent) => {
-      setTouchStartY(event.touches[0].clientY);
+    const requestApply = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(applyProgress);
     };
 
-    const handleTouchMove = (event: TouchEvent) => {
-      if (!touchStartY) return;
-
-      const touchY = event.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
-
-      if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
-        setMediaFullyExpanded(false);
-        event.preventDefault();
-      } else if (!mediaFullyExpanded) {
-        event.preventDefault();
-        const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
-        const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
-
-        setTouchStartY(touchY);
-      }
-    };
-
-    const handleTouchEnd = (): void => {
-      setTouchStartY(0);
-    };
-
-    const handleScroll = (): void => {
-      if (!mediaFullyExpanded) {
-        window.scrollTo(0, 0);
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd);
+    applyProgress();
+    window.addEventListener("scroll", requestApply, { passive: true });
+    window.addEventListener("resize", requestApply);
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("scroll", requestApply);
+      window.removeEventListener("resize", requestApply);
+      if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
-
-  useEffect(() => {
-    const checkIfMobile = (): void => {
-      setIsMobileState(window.innerWidth < 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
-
-    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
-  const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
-  const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
-  const titleOpacity = Math.min(Math.max((scrollProgress - 0.18) / 0.42, 0), 1);
-
   return (
-    <div
-      ref={sectionRef}
-      className="overflow-x-hidden transition-colors duration-700 ease-in-out"
-    >
-      <section className="relative flex min-h-[100dvh] flex-col items-center justify-start">
-        <div className="relative flex min-h-[100dvh] w-full flex-col items-center">
-          <motion.div
-            className="absolute inset-0 z-0 h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 - scrollProgress }}
-            transition={{ duration: 0.1 }}
+    <section ref={sectionRef} className="relative h-[230svh] bg-white">
+      <div className="sticky top-0 h-svh overflow-hidden">
+        <div
+          ref={bgRef}
+          className="absolute inset-0 will-change-transform"
+          style={{ transform: "scale(1)" }}
+        >
+          <Image
+            src={bgImageSrc}
+            alt="New York City skyline"
+            fill
+            sizes="100vw"
+            quality={64}
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 bg-black/42" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-white/85" />
+
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <div
+            ref={mediaRef}
+            className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
+            style={{ width: 320, height: 460, borderRadius: 26 }}
           >
-            <Image
-              src={bgImageSrc}
-              alt="Background"
-              width={1920}
-              height={1080}
-              className="h-screen w-screen"
-              style={{
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-              priority
-            />
-            <div className="absolute inset-0 bg-black/10" />
-          </motion.div>
-
-          <div className="container relative z-10 mx-auto flex flex-col items-center justify-start">
-            <div className="relative flex h-[100dvh] w-full flex-col items-center justify-center">
-              <div
-                className="absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-2xl transition-none"
-                style={{
-                  width: `${mediaWidth}px`,
-                  height: `${mediaHeight}px`,
-                  maxWidth: "95vw",
-                  maxHeight: "85vh",
-                  boxShadow: "0px 0px 50px rgba(0, 0, 0, 0.3)",
-                }}
-              >
-                {mediaType === "video" ? (
-                  mediaSrc.includes("youtube.com") ? (
-                    <div className="pointer-events-none relative h-full w-full">
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        src={
-                          mediaSrc.includes("embed")
-                            ? mediaSrc +
-                              (mediaSrc.includes("?") ? "&" : "?") +
-                              "autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1"
-                            : mediaSrc.replace("watch?v=", "embed/") +
-                              "?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playlist=" +
-                              mediaSrc.split("v=")[1]
-                        }
-                        className="h-full w-full rounded-xl"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                      <div
-                        className="absolute inset-0 z-10"
-                        style={{ pointerEvents: "none" }}
-                      />
-
-                      <motion.div
-                        className="absolute inset-0 rounded-xl bg-black/30"
-                        initial={{ opacity: 0.7 }}
-                        animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="pointer-events-none relative h-full w-full">
-                      <video
-                        src={mediaSrc}
-                        poster={posterSrc}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                        className="h-full w-full rounded-xl object-cover"
-                        controls={false}
-                        disablePictureInPicture
-                        disableRemotePlayback
-                      />
-                      <div
-                        className="absolute inset-0 z-10"
-                        style={{ pointerEvents: "none" }}
-                      />
-
-                      <motion.div
-                        className="absolute inset-0 rounded-xl bg-black/30"
-                        initial={{ opacity: 0.7 }}
-                        animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </div>
-                  )
-                ) : (
-                  <div className="relative h-full w-full">
-                    <Image
-                      src={mediaSrc}
-                      alt={title || "Media content"}
-                      width={1280}
-                      height={720}
-                      className="h-full w-full rounded-xl object-cover"
-                      priority
-                    />
-
-                    <motion.div
-                      className="absolute inset-0 rounded-xl bg-black/50"
-                      initial={{ opacity: 0.7 }}
-                      animate={{ opacity: 0.7 - scrollProgress * 0.3 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                  </div>
-                )}
-
-                {title && (
-                  <motion.div
-                    className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6 text-center md:px-12"
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: titleOpacity,
-                      y: titleOpacity > 0 ? 0 : 12,
-                      scale: 0.98 + titleOpacity * 0.02,
-                    }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                  >
-                    <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[0.98] tracking-normal text-[#f1eee8]/95 mix-blend-normal md:text-6xl lg:text-7xl">
-                      {title}
-                    </h1>
-                  </motion.div>
-                )}
-
-                <div className="relative z-10 mt-4 flex flex-col items-center text-center transition-none">
-                  {date && (
-                    <p
-                      className="text-2xl text-[#f1eee8]/70"
-                      style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                    >
-                      {date}
-                    </p>
-                  )}
-                  {scrollToExpand && (
-                    <p
-                      className="text-center font-medium text-[#f1eee8]/70"
-                      style={{ transform: `translateX(${textTranslateX}vw)` }}
-                    >
-                      {scrollToExpand}
-                    </p>
-                  )}
-                </div>
+            {mediaType === "video" ? (
+              <video
+                src={mediaSrc}
+                poster={posterSrc}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+                controls={false}
+              />
+            ) : (
+              <Image
+                src={mediaSrc}
+                alt={title || "TAG campaign strategy"}
+                fill
+                sizes="(min-width: 1024px) 68vw, 94vw"
+                quality={62}
+                className="object-cover"
+                priority
+              />
+            )}
+            <div ref={overlayRef} className="absolute inset-0 bg-black" style={{ opacity: 0.34 }} />
+            <div ref={cardScrimRef} className="absolute inset-0 bg-black" style={{ opacity: 0.1 }} />
+            <div
+              ref={introRef}
+              className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white opacity-0"
+            >
+              <div className="mb-7 inline-flex items-center border border-gold/25 bg-navy/10 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold md:text-xs">
+                EST. 1990 — NEW YORK CITY
+              </div>
+              <h2 className="font-serif text-4xl font-bold leading-[0.92] text-white/88 md:text-6xl lg:text-7xl">
+                Together, We Make
+                <br />
+                It Happen
+              </h2>
+              <p className="mt-24 max-w-4xl text-base leading-relaxed text-white/78 md:text-xl">
+                Since 1990, TAG has represented political candidates,
+                not-for-profits, corporations, advocacy groups, and labor unions
+                — combining deep institutional knowledge with innovative
+                strategy to deliver results.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55 md:text-xs">
+                <span>Lobbying</span>
+                <span className="text-gold">◆</span>
+                <span>Campaigns</span>
+                <span className="text-gold">◆</span>
+                <span>Communications</span>
+                <span className="text-gold">◆</span>
+                <span>Design</span>
               </div>
             </div>
-
-            <motion.section
-              className="flex w-full flex-col px-8 py-10 md:px-16 lg:py-20"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: showContent ? 1 : 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              {children}
-            </motion.section>
           </div>
         </div>
-      </section>
-    </div>
+
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
+          <h1 className="font-serif text-[clamp(3.6rem,8.6vw,9.4rem)] font-bold leading-[0.86] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+            <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
+              {titleParts.firstWord}
+            </span>
+            <span ref={secondLineRef} className="block whitespace-nowrap will-change-transform">
+              {titleParts.rest}
+            </span>
+          </h1>
+        </div>
+
+        <div
+          ref={scrollHintRef}
+          className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 will-change-transform"
+        >
+          <span className="text-xs uppercase tracking-[0.3em] text-white/50">
+            {scrollToExpand}
+          </span>
+          <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-white/30 p-1">
+            <div className="h-2 w-1 rounded-full bg-white/50 animate-scroll-dot" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
