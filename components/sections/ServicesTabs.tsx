@@ -52,7 +52,7 @@ export function ServicesTabs() {
   }, []);
 
   return (
-    <section className="w-full bg-white py-10 md:py-14">
+    <section className="w-full bg-white pb-10 pt-16 md:pb-14 md:pt-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-12 lg:gap-16 xl:px-20">
         <div className="lg:col-span-5">
           <div className="mb-8 lg:sticky lg:top-24 lg:z-10 lg:bg-white lg:pb-5">
