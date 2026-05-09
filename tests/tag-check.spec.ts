@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = 'https://tag-website-orpin.vercel.app';
+const BASE = process.env.PLAYWRIGHT_BASE_URL ?? 'https://tag-website-orpin.vercel.app';
 const PAGES = ['/', '/about', '/services', '/clients', '/careers', '/news', '/contact'];
 
 for (const path of PAGES) {
