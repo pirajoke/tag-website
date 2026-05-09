@@ -80,6 +80,7 @@ const ScrollExpandMedia = ({
       const endWidth = Math.min(maxEndWidth, maxEndHeight * HERO_MEDIA_ASPECT);
       const startHeight = startWidth / HERO_MEDIA_ASPECT;
       const endHeight = endWidth / HERO_MEDIA_ASPECT;
+      const textShift = eased * (isMobile ? 24 : 10);
       const titleOpacity = clamp(1 - contentProgress * 1.25);
 
       media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
@@ -101,12 +102,12 @@ const ScrollExpandMedia = ({
       }
 
       if (firstLineRef.current) {
-        firstLineRef.current.style.transform = `translate3d(0, ${-6 * eased}px, 0)`;
+        firstLineRef.current.style.transform = `translate3d(-${textShift}vw, ${-8 * eased}px, 0)`;
         firstLineRef.current.style.opacity = `${titleOpacity}`;
       }
 
       if (secondLineRef.current) {
-        secondLineRef.current.style.transform = `translate3d(0, ${6 * eased}px, 0)`;
+        secondLineRef.current.style.transform = `translate3d(${textShift}vw, ${8 * eased}px, 0)`;
         secondLineRef.current.style.opacity = `${titleOpacity}`;
       }
 
@@ -189,16 +190,6 @@ const ScrollExpandMedia = ({
             )}
             <div ref={overlayRef} className="absolute inset-0 bg-black" style={{ opacity: 0.34 }} />
             <div ref={cardScrimRef} className="absolute inset-0 bg-black" style={{ opacity: 0.1 }} />
-            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
-              <h1 className="max-w-[92%] font-serif text-[clamp(2.3rem,5vw,5.8rem)] font-bold leading-[0.94] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
-                <span ref={firstLineRef} className="block will-change-transform">
-                  {titleParts.firstWord}
-                </span>
-                <span ref={secondLineRef} className="block [text-wrap:balance] will-change-transform">
-                  {titleParts.rest}
-                </span>
-              </h1>
-            </div>
             <div
               ref={introRef}
               className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center text-white opacity-0"
@@ -228,6 +219,17 @@ const ScrollExpandMedia = ({
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
+          <h1 className="font-serif text-[clamp(2.9rem,6vw,6.9rem)] font-bold leading-[0.9] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+            <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
+              {titleParts.firstWord}
+            </span>
+            <span ref={secondLineRef} className="block whitespace-nowrap will-change-transform">
+              {titleParts.rest}
+            </span>
+          </h1>
         </div>
 
         <div
