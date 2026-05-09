@@ -19,6 +19,7 @@ const clamp = (value: number, min = 0, max = 1) =>
   Math.min(Math.max(value, min), max);
 
 const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+const HERO_MEDIA_ASPECT = 16 / 9;
 
 const ScrollExpandMedia = ({
   mediaType = "image",
@@ -68,16 +69,18 @@ const ScrollExpandMedia = ({
       const isMobile = window.innerWidth < 768;
 
       const startWidth = isMobile
-        ? Math.min(window.innerWidth * 0.72, 320)
-        : Math.min(window.innerWidth * 0.24, 420);
-      const endWidth = isMobile
-        ? Math.min(window.innerWidth * 0.96, 760)
-        : Math.min(window.innerWidth * 0.88, 1500);
-      const startHeight = isMobile ? 390 : Math.min(window.innerHeight * 0.5, 500);
-      const endHeight = isMobile
-        ? Math.min(window.innerHeight * 0.78, 700)
-        : Math.min(window.innerHeight * 0.86, 820);
-      const textShift = eased * (isMobile ? 44 : 24);
+        ? Math.min(window.innerWidth * 0.86, 380)
+        : Math.min(window.innerWidth * 0.42, 720);
+      const maxEndWidth = isMobile
+        ? Math.min(window.innerWidth * 0.94, 760)
+        : Math.min(window.innerWidth * 0.84, 1480);
+      const maxEndHeight = isMobile
+        ? Math.min(window.innerHeight * 0.58, 620)
+        : Math.min(window.innerHeight * 0.76, 820);
+      const endWidth = Math.min(maxEndWidth, maxEndHeight * HERO_MEDIA_ASPECT);
+      const startHeight = startWidth / HERO_MEDIA_ASPECT;
+      const endHeight = endWidth / HERO_MEDIA_ASPECT;
+      const textShift = eased * (isMobile ? 24 : 10);
       const titleOpacity = clamp(1 - contentProgress * 1.25);
 
       media.style.width = `${startWidth + (endWidth - startWidth) * eased}px`;
@@ -159,8 +162,8 @@ const ScrollExpandMedia = ({
         <div className="absolute inset-0 flex items-center justify-center px-6">
           <div
             ref={mediaRef}
-            className="relative overflow-hidden shadow-2xl shadow-black/35 will-change-transform"
-            style={{ width: 320, height: 460, borderRadius: 26 }}
+            className="relative aspect-video w-[min(86vw,380px)] overflow-hidden shadow-2xl shadow-black/35 will-change-transform md:w-[min(42vw,720px)]"
+            style={{ borderRadius: 26 }}
           >
             {mediaType === "video" ? (
               <video
@@ -219,7 +222,7 @@ const ScrollExpandMedia = ({
         </div>
 
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center">
-          <h1 className="font-serif text-[clamp(3.6rem,8.6vw,9.4rem)] font-bold leading-[0.86] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+          <h1 className="font-serif text-[clamp(2.9rem,6vw,6.9rem)] font-bold leading-[0.9] text-white/70 drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
             <span ref={firstLineRef} className="block whitespace-nowrap will-change-transform">
               {titleParts.firstWord}
             </span>
