@@ -251,7 +251,7 @@ const ScrollExpandMedia = ({
                 <div className="relative z-10 mt-4 flex flex-col items-center text-center transition-none">
                   {date && (
                     <p
-                      className="text-2xl text-blue-200"
+                      className="text-2xl text-white/55"
                       style={{ transform: `translateX(-${textTranslateX}vw)` }}
                     >
                       {date}
@@ -259,7 +259,7 @@ const ScrollExpandMedia = ({
                   )}
                   {scrollToExpand && (
                     <p
-                      className="text-center font-medium text-blue-200"
+                      className="text-center font-medium text-white/55"
                       style={{ transform: `translateX(${textTranslateX}vw)` }}
                     >
                       {scrollToExpand}
@@ -274,13 +274,13 @@ const ScrollExpandMedia = ({
                 }`}
               >
                 <motion.h2
-                  className="text-4xl font-bold text-blue-200 transition-none md:text-5xl lg:text-6xl"
+                  className="text-4xl font-bold text-white/60 transition-none md:text-5xl lg:text-6xl"
                   style={{ transform: `translateX(-${textTranslateX}vw)` }}
                 >
                   {firstWord}
                 </motion.h2>
                 <motion.h2
-                  className="text-center text-4xl font-bold text-blue-200 transition-none md:text-5xl lg:text-6xl"
+                  className="text-center text-4xl font-bold text-white/60 transition-none md:text-5xl lg:text-6xl"
                   style={{ transform: `translateX(${textTranslateX}vw)` }}
                 >
                   {restOfTitle}
