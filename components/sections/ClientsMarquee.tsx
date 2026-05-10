@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const Sparkles = dynamic(
   () => import("@/components/ui/sparkles").then((mod) => mod.Sparkles),
@@ -13,11 +14,17 @@ type ClientLogo = {
   name: string;
   domain: string;
   logoSrc?: string;
+  logoClassName?: string;
 };
 
 const clients: ClientLogo[] = [
   { name: "NY Communities for Change", domain: "nycommunities.org" },
-  { name: "Artbridge", domain: "art-bridge.org" },
+  {
+    name: "Artbridge",
+    domain: "art-bridge.org",
+    logoSrc: "/logos/artbridge.png",
+    logoClassName: "h-8 w-24 opacity-75",
+  },
   { name: "CORE", domain: "coreresponse.org" },
   { name: "CWA Local 1180", domain: "cwa1180.org", logoSrc: "/logos/cwa.svg" },
   { name: "Edison Properties", domain: "edisonproperties.com" },
@@ -32,7 +39,12 @@ const clients: ClientLogo[] = [
   { name: "ZD Jasper Realty", domain: "zdjasper.com" },
   { name: "Jim Owles Democratic Club", domain: "jimowles.org" },
   { name: "UFT", domain: "uft.org" },
-  { name: "Carmen De La Rosa", domain: "carmendelaroza.com" },
+  {
+    name: "Carmen De La Rosa",
+    domain: "council.nyc.gov",
+    logoSrc: "/logos/carmen-de-la-rosa.jpeg",
+    logoClassName: "h-12 w-16 rounded-md object-cover grayscale-0 opacity-80",
+  },
   { name: "Kamillah Hanks", domain: "kamillahhanks.com" },
   { name: "Donovan Richards", domain: "queensbp.org" },
   { name: "Vanessa L. Gibson", domain: "bronxboropres.nyc.gov" },
@@ -82,7 +94,10 @@ function ClientCard({ client }: { client: ClientLogo }) {
             width={80}
             height={44}
             unoptimized
-            className="h-11 w-20 shrink-0 object-contain grayscale opacity-70 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+            className={cn(
+              "h-11 w-20 shrink-0 object-contain grayscale opacity-70 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100",
+              client.logoClassName
+            )}
             loading="lazy"
             onError={() => {
               if (client.logoSrc) {

@@ -40,6 +40,7 @@ const ScrollExpandMedia = ({
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const mediaVisualRef = useRef<HTMLDivElement | null>(null);
   const videoOverlayRef = useRef<HTMLDivElement | null>(null);
   const imageOverlayRef = useRef<HTMLDivElement | null>(null);
   const expandedOverlayRef = useRef<HTMLDivElement | null>(null);
@@ -67,15 +68,22 @@ const ScrollExpandMedia = ({
       const isMobile = isMobileRef.current;
       const mediaWidth = 300 + scrollProgress * (isMobile ? 650 : 1250);
       const mediaHeight = 400 + scrollProgress * (isMobile ? 200 : 400);
-      const textTranslateX = scrollProgress * (isMobile ? 180 : 150);
+      const mediaReveal = Math.pow(clamp(scrollProgress / 0.28), 1.1);
+      const titleExitProgress = clamp((scrollProgress - 0.3) / 0.45);
+      const metaExitProgress = clamp(scrollProgress / 0.5);
 
       if (backgroundRef.current) {
-        backgroundRef.current.style.opacity = `${1 - scrollProgress}`;
+        backgroundRef.current.style.opacity = `${1 - scrollProgress * 0.45}`;
       }
 
       if (mediaRef.current) {
         mediaRef.current.style.width = `${mediaWidth}px`;
         mediaRef.current.style.height = `${mediaHeight}px`;
+      }
+
+      if (mediaVisualRef.current) {
+        mediaVisualRef.current.style.opacity = `${mediaReveal}`;
+        mediaVisualRef.current.style.transform = `scale(${0.72 + mediaReveal * 0.28})`;
       }
 
       if (videoOverlayRef.current) {
@@ -88,31 +96,33 @@ const ScrollExpandMedia = ({
 
       if (expandedOverlayRef.current) {
         expandedOverlayRef.current.style.opacity =
-          scrollProgress > 0.4 ? `${Math.min((scrollProgress - 0.4) * 2.5, 1)}` : '0';
+          scrollProgress > 0.6 ? `${Math.min((scrollProgress - 0.6) * 2.5, 1)}` : '0';
       }
 
       if (metaRef.current) {
-        metaRef.current.style.opacity = `${Math.max(1 - scrollProgress * 3, 0)}`;
+        metaRef.current.style.opacity = `${1 - metaExitProgress}`;
+        metaRef.current.style.transform = `translate(-50%, ${metaExitProgress * 16}px)`;
       }
 
       if (dateRef.current) {
-        dateRef.current.style.transform = `translateX(-${textTranslateX}vw)`;
+        dateRef.current.style.transform = 'translateY(0)';
       }
 
       if (scrollLabelRef.current) {
-        scrollLabelRef.current.style.transform = `translateX(${textTranslateX}vw)`;
+        scrollLabelRef.current.style.transform = 'translateY(0)';
       }
 
       if (titleWrapRef.current) {
-        titleWrapRef.current.style.opacity = `${Math.max(1 - scrollProgress * 2, 0)}`;
+        titleWrapRef.current.style.opacity = `${1 - titleExitProgress}`;
+        titleWrapRef.current.style.transform = `translateY(-${titleExitProgress * 18}px) scale(${1 - titleExitProgress * 0.03})`;
       }
 
       if (firstTitleRef.current) {
-        firstTitleRef.current.style.transform = `translateX(-${textTranslateX}vw)`;
+        firstTitleRef.current.style.transform = 'translateX(0)';
       }
 
       if (restTitleRef.current) {
-        restTitleRef.current.style.transform = `translateX(${textTranslateX}vw)`;
+        restTitleRef.current.style.transform = 'translateX(0)';
       }
     };
 
@@ -247,11 +257,19 @@ const ScrollExpandMedia = ({
                   height: '400px',
                   maxWidth: '95vw',
                   maxHeight: '85vh',
-                  boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                {mediaType === 'video' ? (
-                  <div className='relative w-full h-full pointer-events-none'>
+                <div
+                  ref={mediaVisualRef}
+                  className='relative w-full h-full rounded-2xl transition-none will-change-[opacity,transform]'
+                  style={{
+                    opacity: 0,
+                    transform: 'scale(0.72)',
+                    boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                  }}
+                >
+                  {mediaType === 'video' ? (
+                    <div className='relative w-full h-full pointer-events-none'>
                     <video
                       src={mediaSrc}
                       poster={posterSrc}
@@ -270,9 +288,9 @@ const ScrollExpandMedia = ({
                       className='absolute inset-0 bg-black/30 rounded-xl'
                       style={{ opacity: 0.5 }}
                     />
-                  </div>
-                ) : (
-                  <div className='relative w-full h-full'>
+                    </div>
+                  ) : (
+                    <div className='relative w-full h-full'>
                     <Image
                       src={mediaSrc}
                       alt={title || 'Media content'}
@@ -287,65 +305,61 @@ const ScrollExpandMedia = ({
                       className='absolute inset-0 bg-black/50 rounded-xl'
                       style={{ opacity: 0.7 }}
                     />
-                  </div>
-                )}
+                    </div>
+                  )}
 
-                <div
-                  ref={expandedOverlayRef}
-                  className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
-                  style={{ opacity: 0 }}
-                >
-                  <div className='flex flex-col items-center'>
-                    <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
-                      Est. 1990 &mdash; New York City
-                    </span>
-                    <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
-                      Together, We Make<br />It Happen
-                    </h2>
-                  </div>
+                  <div
+                    ref={expandedOverlayRef}
+                    className='absolute inset-0 z-20 flex flex-col items-center justify-center gap-10 text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
+                    style={{ opacity: 0 }}
+                  >
+                    <div className='flex flex-col items-center'>
+                      <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
+                        Together, We Make<br />It Happen
+                      </h2>
+                    </div>
 
-                  <div className='flex flex-col items-center'>
-                    <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
-                      Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
-                    </p>
-                    <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
-                      <span>Lobbying</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Campaigns</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Communications</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Design</span>
+                    <div className='flex flex-col items-center'>
+                      <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
+                        Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
+                      </p>
+                      <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
+                        <span>Lobbying</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Campaigns</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Communications</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Design</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div
-                  ref={metaRef}
-                  className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'
-                >
-                  {date && (
-                    <p
-                      ref={dateRef}
-                      className='text-2xl text-gold/80'
-                    >
-                      {date}
-                    </p>
-                  )}
-                  {scrollToExpand && (
-                    <p
-                      ref={scrollLabelRef}
-                      className='text-white/60 font-medium text-center text-sm uppercase tracking-[0.3em]'
-                    >
-                      {scrollToExpand}
-                    </p>
-                  )}
                 </div>
               </div>
 
               <div
+                ref={metaRef}
+                className='pointer-events-none absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-3 text-center transition-none will-change-[opacity,transform] md:bottom-10'
+              >
+                <p
+                  ref={dateRef}
+                  className='inline-block max-w-[calc(100vw-2rem)] border border-gold/45 bg-black/10 px-3 py-2 text-[10px] font-semibold uppercase leading-relaxed tracking-[0.18em] text-gold/90 backdrop-blur-sm sm:px-4 sm:text-[11px] sm:tracking-[0.25em] md:whitespace-nowrap md:px-5 md:text-xs md:tracking-[0.3em]'
+                >
+                  {date || 'Est. 1990 \u2014 New York City'}
+                </p>
+                {scrollToExpand && (
+                  <p
+                    ref={scrollLabelRef}
+                    className='max-w-[calc(100vw-2rem)] text-center text-xs font-medium uppercase tracking-[0.22em] text-white/70 sm:tracking-[0.3em] md:whitespace-nowrap md:text-sm md:tracking-[0.35em]'
+                  >
+                    {scrollToExpand}
+                  </p>
+                )}
+              </div>
+
+              <div
                 ref={titleWrapRef}
-                className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
+                className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none will-change-[opacity,transform] flex-col ${
                   textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
                 }`}
               >

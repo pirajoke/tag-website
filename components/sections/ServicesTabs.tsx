@@ -52,10 +52,10 @@ export function ServicesTabs() {
   }, []);
 
   return (
-    <section className="w-full bg-white pb-10 pt-16 md:pb-14 md:pt-24">
+    <section className="w-full bg-white pb-10 pt-24 md:pb-14 md:pt-32 lg:pt-36">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-12 lg:gap-16 xl:px-20">
         <div className="lg:col-span-5">
-          <div className="mb-8 lg:sticky lg:top-24 lg:z-10 lg:bg-white lg:pb-5">
+          <div className="mb-8 lg:sticky lg:top-32 lg:z-10 lg:bg-white lg:pb-5">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
               How We Can Help
             </h2>
@@ -126,7 +126,7 @@ export function ServicesTabs() {
         </div>
 
         <div className="lg:col-span-7">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-24 lg:aspect-[16/11] lg:rounded-[2.5rem]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-32 lg:aspect-[16/11] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
