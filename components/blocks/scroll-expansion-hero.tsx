@@ -40,6 +40,7 @@ const ScrollExpandMedia = ({
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const mediaVisualRef = useRef<HTMLDivElement | null>(null);
   const videoOverlayRef = useRef<HTMLDivElement | null>(null);
   const imageOverlayRef = useRef<HTMLDivElement | null>(null);
   const expandedOverlayRef = useRef<HTMLDivElement | null>(null);
@@ -67,6 +68,7 @@ const ScrollExpandMedia = ({
       const isMobile = isMobileRef.current;
       const mediaWidth = 300 + scrollProgress * (isMobile ? 650 : 1250);
       const mediaHeight = 400 + scrollProgress * (isMobile ? 200 : 400);
+      const mediaReveal = Math.pow(clamp(scrollProgress / 0.36), 1.45);
       const textTranslateX = scrollProgress * (isMobile ? 180 : 150);
 
       if (backgroundRef.current) {
@@ -76,6 +78,11 @@ const ScrollExpandMedia = ({
       if (mediaRef.current) {
         mediaRef.current.style.width = `${mediaWidth}px`;
         mediaRef.current.style.height = `${mediaHeight}px`;
+      }
+
+      if (mediaVisualRef.current) {
+        mediaVisualRef.current.style.opacity = `${mediaReveal}`;
+        mediaVisualRef.current.style.transform = `scale(${0.72 + mediaReveal * 0.28})`;
       }
 
       if (videoOverlayRef.current) {
@@ -247,75 +254,84 @@ const ScrollExpandMedia = ({
                   height: '400px',
                   maxWidth: '95vw',
                   maxHeight: '85vh',
-                  boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                {mediaType === 'video' ? (
-                  <div className='relative w-full h-full pointer-events-none'>
-                    <video
-                      src={mediaSrc}
-                      poster={posterSrc}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload='metadata'
-                      className='w-full h-full object-cover rounded-xl'
-                      controls={false}
-                      disablePictureInPicture
-                      disableRemotePlayback
-                    />
-                    <div
-                      ref={videoOverlayRef}
-                      className='absolute inset-0 bg-black/30 rounded-xl'
-                      style={{ opacity: 0.5 }}
-                    />
-                  </div>
-                ) : (
-                  <div className='relative w-full h-full'>
-                    <Image
-                      src={mediaSrc}
-                      alt={title || 'Media content'}
-                      width={1280}
-                      height={720}
-                      sizes='(min-width: 768px) 95vw, 95vw'
-                      className='w-full h-full object-cover rounded-xl'
-                      priority
-                    />
-                    <div
-                      ref={imageOverlayRef}
-                      className='absolute inset-0 bg-black/50 rounded-xl'
-                      style={{ opacity: 0.7 }}
-                    />
-                  </div>
-                )}
-
                 <div
-                  ref={expandedOverlayRef}
-                  className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
-                  style={{ opacity: 0 }}
+                  ref={mediaVisualRef}
+                  className='relative w-full h-full rounded-2xl transition-none will-change-[opacity,transform]'
+                  style={{
+                    opacity: 0,
+                    transform: 'scale(0.72)',
+                    boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                  }}
                 >
-                  <div className='flex flex-col items-center'>
-                    <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
-                      Est. 1990 &mdash; New York City
-                    </span>
-                    <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
-                      Together, We Make<br />It Happen
-                    </h2>
-                  </div>
+                  {mediaType === 'video' ? (
+                    <div className='relative w-full h-full pointer-events-none'>
+                      <video
+                        src={mediaSrc}
+                        poster={posterSrc}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload='metadata'
+                        className='w-full h-full object-cover rounded-xl'
+                        controls={false}
+                        disablePictureInPicture
+                        disableRemotePlayback
+                      />
+                      <div
+                        ref={videoOverlayRef}
+                        className='absolute inset-0 bg-black/30 rounded-xl'
+                        style={{ opacity: 0.5 }}
+                      />
+                    </div>
+                  ) : (
+                    <div className='relative w-full h-full'>
+                      <Image
+                        src={mediaSrc}
+                        alt={title || 'Media content'}
+                        width={1280}
+                        height={720}
+                        sizes='(min-width: 768px) 95vw, 95vw'
+                        className='w-full h-full object-cover rounded-xl'
+                        priority
+                      />
+                      <div
+                        ref={imageOverlayRef}
+                        className='absolute inset-0 bg-black/50 rounded-xl'
+                        style={{ opacity: 0.7 }}
+                      />
+                    </div>
+                  )}
 
-                  <div className='flex flex-col items-center'>
-                    <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
-                      Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
-                    </p>
-                    <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
-                      <span>Lobbying</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Campaigns</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Communications</span>
-                      <span className='text-gold'>&#9670;</span>
-                      <span>Design</span>
+                  <div
+                    ref={expandedOverlayRef}
+                    className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
+                    style={{ opacity: 0 }}
+                  >
+                    <div className='flex flex-col items-center'>
+                      <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
+                        Est. 1990 &mdash; New York City
+                      </span>
+                      <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
+                        Together, We Make<br />It Happen
+                      </h2>
+                    </div>
+
+                    <div className='flex flex-col items-center'>
+                      <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
+                        Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
+                      </p>
+                      <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
+                        <span>Lobbying</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Campaigns</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Communications</span>
+                        <span className='text-gold'>&#9670;</span>
+                        <span>Design</span>
+                      </div>
                     </div>
                   </div>
                 </div>
