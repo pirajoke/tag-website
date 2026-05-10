@@ -42,8 +42,8 @@ const clients: ClientLogo[] = [
   {
     name: "Carmen De La Rosa",
     domain: "council.nyc.gov",
-    logoSrc: "/logos/carmen-de-la-rosa.jpeg",
-    logoClassName: "h-12 w-16 rounded-md object-cover grayscale-0 opacity-80",
+    logoSrc: "/logos/carmen-de-la-rosa.png",
+    logoClassName: "h-12 w-12 object-contain opacity-75",
   },
   { name: "Kamillah Hanks", domain: "kamillahhanks.com" },
   { name: "Donovan Richards", domain: "queensbp.org" },
