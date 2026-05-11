@@ -13,9 +13,9 @@ const TABS = services.slice(0, 5).map((s, i) => ({
   image: [
     "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&h=800&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=800&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&h=800&fit=crop&q=80",
   ][i],
 }));
 
@@ -145,8 +145,8 @@ export function ServicesTabs() {
           </Link>
         </div>
 
-        <div className="lg:col-span-7 lg:ml-6 lg:pt-20 xl:ml-10 xl:pt-24">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-52 lg:aspect-[16/10] lg:rounded-[2.5rem]">
+        <div className="lg:col-span-7 lg:ml-6 lg:pt-28 xl:ml-10 xl:pt-32">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-60 lg:aspect-[16/10] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
