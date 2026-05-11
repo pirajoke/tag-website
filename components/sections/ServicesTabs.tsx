@@ -145,8 +145,8 @@ export function ServicesTabs() {
           </Link>
         </div>
 
-        <div className="lg:col-span-7 lg:-ml-4 lg:pt-14 xl:-ml-8 xl:pt-16">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-44 lg:aspect-[16/10] lg:rounded-[2.5rem]">
+        <div className="lg:col-span-7 lg:ml-6 lg:pt-20 xl:ml-10 xl:pt-24">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-52 lg:aspect-[16/10] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
