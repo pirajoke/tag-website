@@ -24,31 +24,51 @@ export function ServicesTabs() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    let frame = 0;
 
+    const updateActiveTab = () => {
+      frame = 0;
+
+      const viewportHeight = window.innerHeight;
+      const targetY = Math.min(
+        Math.max(viewportHeight * 0.48, 300),
+        viewportHeight - 180
+      );
+      let nextIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      itemRefs.current.forEach((item, index) => {
+        if (!item) return;
+
+        const rect = item.getBoundingClientRect();
+        const visible = rect.bottom > 96 && rect.top < viewportHeight;
         if (!visible) return;
 
-        const index = Number((visible.target as HTMLElement).dataset.index);
-        if (!Number.isNaN(index)) {
-          setActiveIndex((current) => (current === index ? current : index));
+        const itemCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(itemCenter - targetY);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextIndex = index;
         }
-      },
-      {
-        root: null,
-        rootMargin: "-28% 0px -38% 0px",
-        threshold: [0.25, 0.45, 0.65],
-      }
-    );
+      });
 
-    itemRefs.current.forEach((item) => {
-      if (item) observer.observe(item);
-    });
+      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
+    };
 
-    return () => observer.disconnect();
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateActiveTab);
+    };
+
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
