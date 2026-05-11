@@ -147,7 +147,22 @@ const ScrollExpandMedia = ({
       requestApply();
     };
 
+    const finishExpansion = (): void => {
+      progressRef.current = 1;
+      mediaFullyExpandedRef.current = true;
+      updateContentVisibility(true);
+      requestApply();
+    };
+
+    const recoverIfPageIsAlreadyScrolled = (): boolean => {
+      if (window.scrollY <= 5 || mediaFullyExpandedRef.current) return false;
+      finishExpansion();
+      return true;
+    };
+
     const handleWheel = (e: globalThis.WheelEvent): void => {
+      if (recoverIfPageIsAlreadyScrolled()) return;
+
       if (mediaFullyExpandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
         mediaFullyExpandedRef.current = false;
         e.preventDefault();
@@ -166,6 +181,7 @@ const ScrollExpandMedia = ({
 
     const handleTouchMove = (e: globalThis.TouchEvent): void => {
       if (!touchStartYRef.current) return;
+      if (recoverIfPageIsAlreadyScrolled()) return;
 
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartYRef.current - touchY;
@@ -189,6 +205,8 @@ const ScrollExpandMedia = ({
     };
 
     const handleScroll = (): void => {
+      if (recoverIfPageIsAlreadyScrolled()) return;
+
       if (!mediaFullyExpandedRef.current && window.scrollY > 0) {
         window.scrollTo(0, 0);
       }
@@ -199,6 +217,7 @@ const ScrollExpandMedia = ({
     touchStartYRef.current = 0;
     updateContentVisibility(false);
     syncViewport();
+    recoverIfPageIsAlreadyScrolled();
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('scroll', handleScroll);

@@ -105,7 +105,7 @@ export function IntroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-white py-14 md:py-18">
+    <section className="relative overflow-hidden bg-white pt-14 pb-5 md:pt-18 md:pb-6">
       <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-gold/[0.03]" />
       <div className="pointer-events-none absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-navy/[0.03]" />
 
@@ -162,7 +162,7 @@ export function IntroSection() {
           ))}
         </div>
 
-        <div className="mt-14 text-center reveal-up">
+        <div className="mt-10 text-center reveal-up">
           <Link
             href="/about"
             className="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold transition-colors duration-300 hover:text-navy"
