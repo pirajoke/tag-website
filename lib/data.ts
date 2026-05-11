@@ -30,7 +30,6 @@ export const siteConfig = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Clients", href: "/clients" },
   { label: "Careers", href: "/careers" },
@@ -221,6 +220,16 @@ export const team = [
 ];
 
 export const creativeProjects = [
+  {
+    title: "Print & Mail Campaign Collateral",
+    category: "Print & Mail",
+    duration: "Case Realized",
+    client: "TAG Creative",
+    image: "/images/projects/print-mail-collage.png",
+    href: undefined,
+    summary:
+      "Direct mail, palm cards, posters, and campaign literature built for borough, City Council, and state races.",
+  },
   {
     title: "Let's Get to Work: Donovan Richards for Queens Borough President",
     category: "Campaign Ad",

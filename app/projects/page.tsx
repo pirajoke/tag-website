@@ -41,14 +41,24 @@ export default function ProjectsPage() {
                 key={project.title}
                 className="group overflow-hidden border border-navy/10 bg-white shadow-[0_18px_50px_rgba(42,33,24,0.06)]"
               >
-                <div className="relative aspect-video overflow-hidden bg-navy/10">
+                <div
+                  className={`relative aspect-video overflow-hidden ${
+                    project.image.includes("print-mail-collage")
+                      ? "bg-[#0b3d68]"
+                      : "bg-navy/10"
+                  }`}
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     priority
                     sizes="(min-width: 1024px) 33vw, 100vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                    className={`transition duration-500 group-hover:scale-[1.03] ${
+                      project.image.includes("print-mail-collage")
+                        ? "object-contain"
+                        : "object-cover"
+                    }`}
                   />
                   <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-navy">
                     {project.duration}
@@ -105,13 +115,23 @@ export default function ProjectsPage() {
                 key={project.title}
                 className="group overflow-hidden bg-white"
               >
-                <div className="relative aspect-video overflow-hidden bg-navy/10">
+                <div
+                  className={`relative aspect-video overflow-hidden ${
+                    project.image.includes("print-mail-collage")
+                      ? "bg-[#0b3d68]"
+                      : "bg-navy/10"
+                  }`}
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                    className={`transition duration-500 group-hover:scale-[1.03] ${
+                      project.image.includes("print-mail-collage")
+                        ? "object-contain"
+                        : "object-cover"
+                    }`}
                   />
                 </div>
                 <div className="p-5">

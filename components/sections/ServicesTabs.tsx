@@ -14,7 +14,7 @@ const TABS = services.slice(0, 5).map((s, i) => ({
     "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&h=800&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?w=1200&h=800&fit=crop&q=80",
+    "/images/projects/print-mail-collage.png",
     "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&h=800&fit=crop&q=80",
   ][i],
 }));
@@ -152,14 +152,18 @@ export function ServicesTabs() {
                 key={tab.id}
                 className={`absolute inset-0 transition-opacity duration-500 ${
                   activeIndex === index ? "opacity-100" : "opacity-0"
-                }`}
+                } ${tab.slug === "graphic-design" ? "bg-[#0b3d68]" : ""}`}
               >
                 <Image
                   src={tab.image}
                   alt={tab.title}
                   fill
                   sizes="(min-width: 1024px) 58vw, 100vw"
-                  className="object-cover"
+                  className={
+                    tab.slug === "graphic-design"
+                      ? "object-contain"
+                      : "object-cover"
+                  }
                 />
               </div>
             ))}
