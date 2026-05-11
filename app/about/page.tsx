@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { CTASection } from "@/components/sections/CTASection";
 import { team, timeline } from "@/lib/data";
@@ -58,11 +59,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team — cnippet style */}
-      <section className="relative py-24 bg-white overflow-hidden">
-        {/* Decorative SVG */}
+      <section id="team" className="relative scroll-mt-28 overflow-hidden bg-white py-20 md:py-24">
         <svg
-          className="absolute right-0 bottom-0 text-navy/5"
+          className="absolute bottom-0 right-0 text-navy/5"
           fill="none"
           height="154"
           viewBox="0 0 460 154"
@@ -85,10 +84,9 @@ export default function AboutPage() {
           </defs>
         </svg>
 
-        <div className="relative z-10 mx-auto max-w-7xl">
-          {/* Header */}
-          <div className="mx-auto mb-16 flex max-w-5xl flex-col items-center px-6 text-center">
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div className="mx-auto mb-14 flex max-w-4xl flex-col items-center text-center">
+            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
@@ -97,24 +95,8 @@ export default function AboutPage() {
               </svg>
             </div>
 
-            <h2 className="relative mb-4 font-serif text-4xl font-bold text-navy tracking-tight sm:text-5xl">
-              Our Leadership Team
-              <svg
-                className="absolute -top-2 -right-8 -z-10 w-24 text-gold/20"
-                fill="currentColor"
-                height="86"
-                viewBox="0 0 108 86"
-                width="108"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M38.8484 16.236L15 43.5793L78.2688 15L18.1218 71L93 34.1172L70.2047 65.2739"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="28"
-                />
-              </svg>
+            <h2 className="mb-4 font-serif text-4xl font-bold tracking-tight text-navy sm:text-5xl">
+              Our Team
             </h2>
             <p className="max-w-2xl text-steel">
               A diverse team bringing creative and strategic abilities together
@@ -122,38 +104,40 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Marquee */}
-          <div className="relative w-full">
-            <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-32 bg-gradient-to-r from-white to-transparent" />
-            <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-32 bg-gradient-to-l from-white to-transparent" />
-
-            <div className="flex animate-marquee gap-6">
-              {[...team, ...team, ...team, ...team].map((member, i) => (
-                <div key={`${member.name}-${i}`} className="group flex w-64 shrink-0 flex-col">
-                  <div className="relative h-[22rem] w-full overflow-hidden rounded-2xl bg-navy/10">
-                    {/* Placeholder portrait — initials on gradient bg */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-navy-light to-navy flex items-center justify-center grayscale transition-all duration-300 group-hover:grayscale-0">
-                      <span className="text-gold/30 font-serif text-8xl font-bold select-none">
-                        {member.name.split(" ").map((n: string) => n[0]).join("")}
-                      </span>
-                    </div>
-
-                    {/* Frosted glass name overlay */}
-                    <div className="absolute bottom-0 w-full bg-white/85 backdrop-blur-sm p-3">
-                      <h3 className="font-semibold text-navy text-base">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((member, i) => (
+              <motion.article
+                key={member.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, delay: i * 0.04 }}
+                className="group"
+              >
+                <div className="relative aspect-[8/9] overflow-hidden bg-navy/10">
+                  <Image
+                    src={member.image}
+                    alt={`${member.name}, ${member.title}`}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                    style={{ objectPosition: member.imagePosition }}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 translate-y-2 px-6 pb-6 transition-transform duration-300 group-hover:translate-y-0">
+                    <div className="bg-white px-5 py-4 shadow-[0_18px_40px_rgba(42,33,24,0.10)]">
+                      <h3 className="font-sans text-lg font-bold tracking-normal text-gold">
                         {member.name}
                       </h3>
-                      <p className="text-steel text-sm">
+                      <p className="mt-1 text-sm font-medium leading-snug text-navy">
                         {member.title}
                       </p>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </motion.article>
+            ))}
           </div>
 
-          {/* Featured quote */}
           <div className="mx-auto mt-20 max-w-3xl px-6 text-center">
             <p className="mb-8 font-serif text-lg text-navy leading-relaxed md:text-xl italic">
               &ldquo;What sets us apart is the institutional knowledge and trust
@@ -163,11 +147,18 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-col items-center gap-3">
               <div className="relative h-14 w-14 overflow-hidden rounded-full bg-navy flex items-center justify-center">
-                <span className="text-gold font-serif text-lg font-bold">SL</span>
+                <Image
+                  src="/images/team/scott-levenson.webp"
+                  alt="Scott Levenson"
+                  fill
+                  sizes="56px"
+                  className="object-cover grayscale"
+                  style={{ objectPosition: "center 36%" }}
+                />
               </div>
               <div className="text-center">
                 <p className="font-semibold text-navy">Scott Levenson</p>
-                <p className="text-steel text-sm">President & Founder</p>
+                <p className="text-steel text-sm">Founder & President</p>
               </div>
             </div>
           </div>

@@ -52,10 +52,10 @@ export function ServicesTabs() {
   }, []);
 
   return (
-    <section className="w-full bg-white pb-10 pt-24 md:pb-14 md:pt-32 lg:pt-36">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-12 lg:gap-16 xl:px-20">
+    <section className="w-full bg-white pb-8 pt-20 md:pb-12 md:pt-28 lg:pt-[7.5rem]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:px-12 lg:grid-cols-12 lg:gap-8 xl:px-16">
         <div className="lg:col-span-5">
-          <div className="mb-8 lg:sticky lg:top-32 lg:z-10 lg:bg-white lg:pb-5">
+          <div className="mb-6 lg:sticky lg:top-28 lg:z-10 lg:bg-white lg:pb-4">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
               How We Can Help
             </h2>
@@ -64,7 +64,7 @@ export function ServicesTabs() {
             </span>
           </div>
 
-          <div className="relative flex flex-col border-l border-navy/10 pl-5 md:pl-8">
+          <div className="relative flex flex-col border-l border-navy/10 pl-5 md:pl-7">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
@@ -72,7 +72,7 @@ export function ServicesTabs() {
                   itemRefs.current[index] = node;
                 }}
                 data-index={index}
-                className={`group relative flex min-h-[42vh] flex-col justify-center border-t border-navy/10 py-8 text-left first:border-t-0 md:min-h-[46vh] lg:min-h-[52vh] ${
+                className={`group relative flex min-h-[28vh] flex-col justify-center border-t border-navy/10 py-5 text-left first:border-t-0 md:min-h-[31vh] md:py-6 lg:min-h-[36vh] ${
                   activeIndex === index
                     ? "text-navy"
                     : "text-navy/28"
@@ -84,7 +84,7 @@ export function ServicesTabs() {
                   }`}
                 />
 
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 md:gap-4">
                   <span className="mt-2 text-[10px] font-medium tabular-nums opacity-50">
                     /{tab.id}
                   </span>
@@ -100,12 +100,12 @@ export function ServicesTabs() {
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <p className="max-w-sm pt-3 text-sm leading-relaxed text-steel md:text-base">
+                        <p className="max-w-sm pt-2 text-sm leading-relaxed text-steel md:text-base">
                           {tab.description}
                         </p>
                         <Link
                           href={`/services/${tab.slug}`}
-                          className="mt-4 inline-block text-sm font-semibold uppercase tracking-wider text-gold transition-colors hover:text-navy"
+                          className="mt-3 inline-block text-sm font-semibold uppercase tracking-wider text-gold transition-colors hover:text-navy"
                         >
                           Learn More &rarr;
                         </Link>
@@ -125,8 +125,8 @@ export function ServicesTabs() {
           </Link>
         </div>
 
-        <div className="lg:col-span-7 lg:pt-12">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-36 lg:aspect-[16/12] lg:rounded-[2.5rem]">
+        <div className="lg:col-span-7 lg:-ml-4 lg:pt-6 xl:-ml-8">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-32 lg:aspect-[16/10] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}

@@ -31,6 +31,7 @@ export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
   { label: "Clients", href: "/clients" },
   { label: "Careers", href: "/careers" },
   { label: "News", href: "/news" },
@@ -162,34 +163,223 @@ export const services = [
 
 export const team = [
   {
+    name: "Ademi Levenson",
+    title: "VP Development & Campaigns",
+    image: "/images/team/ademi-levenson.webp",
+    imagePosition: "center 33%",
+    bio: "Leads TAG\u2019s international business development and nonprofit client management. Brings extensive experience in cross-sector consulting and organizational strategy.",
+  },
+  {
+    name: "Max Sweetbaum",
+    title: "Associate Communications",
+    image: "/images/team/max-sweetbaum.webp",
+    imagePosition: "center 32%",
+    bio: "Supports communications strategy, messaging, and campaign content for TAG clients.",
+  },
+  {
+    name: "Michaela Tofer",
+    title: "Associate Lobbying",
+    image: "/images/team/michaela-tofer.webp",
+    imagePosition: "center 28%",
+    bio: "Supports lobbying and government relations work across TAG\u2019s client portfolio.",
+  },
+  {
+    name: "Charles Esposito",
+    title: "Associate Grants & Campaigns",
+    image: "/images/team/charles-esposito.webp",
+    imagePosition: "center 30%",
+    bio: "Supports grants, campaign operations, and client execution across TAG engagements.",
+  },
+  {
     name: "Scott Levenson",
-    title: "President & Founder",
+    title: "Founder & President",
+    image: "/images/team/scott-levenson.webp",
+    imagePosition: "center 36%",
     bio: "Founded TAG in 1990 following a decade of community and labor union organizing. Served as lead advance person for Jesse Jackson\u2019s Presidential Campaign (1988), Director of Advance for David Dinkins\u2019 mayoral campaign (1989), and Chief of Operations to Public Advocate Mark Green. A nationally recognized Democratic commentator and HuffPost contributor.",
-    image: "/images/team/scott-levenson.jpg",
+  },
+  {
+    name: "Michael Gaspard",
+    title: "Partner & Advisor",
+    image: "/images/team/michael-gaspard.webp",
+    imagePosition: "center center",
+    bio: "Advises TAG clients on political strategy, coalition building, and relationship-driven public affairs work.",
   },
   {
     name: "Sebastian Levenson",
-    title: "Executive Director",
+    title: "VP Client Relations",
+    image: "/images/team/sebastian-levenson.webp",
+    imagePosition: "center 35%",
     bio: "Oversees day-to-day operations and client relations at TAG. Brings a fresh perspective to the firm\u2019s strategic approach while maintaining the high standards of client service that have defined TAG for decades.",
-    image: "/images/team/sebastian-levenson.jpg",
   },
   {
-    name: "Ademi Levenson",
-    title: "Sr. Director, International Business & Nonprofits",
-    bio: "Leads TAG\u2019s international business development and nonprofit client management. Brings extensive experience in cross-sector consulting and organizational strategy.",
-    image: "/images/team/ademi-levenson.jpg",
+    name: "Christine Strahl",
+    title: "VP Operations",
+    image: "/images/team/christine-strahl.webp",
+    imagePosition: "center 30%",
+    bio: "Keeps TAG\u2019s operations moving across client work, internal systems, and day-to-day delivery.",
+  },
+];
+
+export const creativeProjects = [
+  {
+    title: "Let's Get to Work: Donovan Richards for Queens Borough President",
+    category: "Campaign Ad",
+    duration: "01:52",
+    client: "Donovan Richards for Queens Borough President",
+    image: "/images/projects/01-let-s-get-to-work-donovan-richards-for-queens-borough-president.jpg",
+    href: "https://www.youtube.com/watch?v=jijOvSH5wX0",
+    summary:
+      "A campaign narrative focused on comeback, borough-wide opportunity, expanded healthcare, transportation, affordable housing, and good-paying jobs.",
   },
   {
-    name: "Thomas Musich",
-    title: "Director of Communications",
-    bio: "Manages TAG\u2019s communications strategy and media relations. Oversees messaging, PR campaigns, and public commentary for the firm and its clients.",
-    image: "/images/team/thomas-musich.jpg",
+    title: "Vanessa L. Gibson Bronx Borough President Announcement Video",
+    category: "Announcement Video",
+    duration: "01:31",
+    client: "TAG Television",
+    image: "/images/projects/02-vanessa-l-gibson-bronx-borough-president-announcement-video.jpg",
+    href: "https://www.youtube.com/watch?v=Mf9A9N286VQ",
+    summary:
+      "A launch video introducing Vanessa L. Gibson's borough-wide campaign message.",
   },
   {
-    name: "Ana Paula Rodrigues",
-    title: "Design Director",
-    bio: "Leads TAG\u2019s design team, bringing her MFA expertise to create powerful visual identities for political campaigns, nonprofits, and corporate clients.",
-    image: "/images/team/ana-paula-rodrigues.jpg",
+    title: "Hanks for Council",
+    category: "Campaign Ad",
+    duration: "00:30",
+    client: "Kamillah Hanks",
+    image: "/images/projects/03-hanks-for-council.jpg",
+    href: undefined,
+    summary:
+      "A concise thirty-second campaign spot produced for a City Council race.",
+  },
+  {
+    title: "Selvena Brooks-Powers for City Council",
+    category: "Campaign Ad",
+    duration: "02:29",
+    client: "Selvena Brooks-Powers",
+    image: "/images/projects/04-selvena-brooks-powers-for-city-council.jpg",
+    href: undefined,
+    summary:
+      "A candidate video built around community presence, leadership, and voter connection.",
+  },
+  {
+    title: "Senator Jose Peralta Fights for Women's Rights",
+    category: "Issue Ad",
+    duration: "01:21",
+    client: "Jose Peralta",
+    image: "/images/projects/05-senator-jose-peralta-fights-for-women-s-rights.jpg",
+    href: "https://www.youtube.com/watch?v=Us-TinCwr_A",
+    summary:
+      "An issue-driven ad tying legislative work to rights, representation, and public trust.",
+  },
+  {
+    title: "Pledge 2 Protect",
+    category: "Advocacy Ad",
+    duration: "00:31",
+    client: "Pledge 2 Protect",
+    image: "/images/projects/06-pledge-2-protect.jpg",
+    href: "https://www.youtube.com/watch?v=pWpdFIzKh1A",
+    summary:
+      "A short advocacy spot designed to cut through quickly and move public attention.",
+  },
+  {
+    title: "Iggy Terranova - Misleading Mike",
+    category: "Campaign Ad",
+    duration: "00:31",
+    client: "Iggy Terranova",
+    image: "/images/projects/07-iggy-terranova-misleading-mike.jpg",
+    href: "https://www.youtube.com/watch?v=WbS7duXYpKg",
+    summary:
+      "A contrast ad with a direct message and a tight thirty-second structure.",
+  },
+  {
+    title: "Robert Jackson for Manhattan Borough President",
+    category: "Campaign Ad",
+    duration: "00:31",
+    client: "Robert Jackson",
+    image: "/images/projects/08-robert-jackson-for-manhattan-borough-president.jpg",
+    href: "https://www.youtube.com/watch?v=QImYIDwm_K4",
+    summary:
+      "A borough-wide campaign spot focused on recognition, credibility, and leadership.",
+  },
+  {
+    title: "Opportunity - Bronx Borough President Ruben Diaz Jr.",
+    category: "Campaign Ad",
+    duration: "00:31",
+    client: "Ruben Diaz Jr.",
+    image: "/images/projects/09-opportunity-bronx-borough-president-ruben-diaz-jr-campaign-ad-2017.jpg",
+    href: "https://www.youtube.com/watch?v=K8cP1iwRtWg",
+    summary:
+      "A Bronx campaign ad centered on opportunity, progress, and executive leadership.",
+  },
+  {
+    title: "\"The Smoke Filled Room\" New York City is not for $ale Campaign",
+    category: "Advocacy Ad",
+    duration: "00:31",
+    client: "New York City is not for $ale",
+    image: "/images/projects/10-the-smoke-filled-room-new-york-city-is-not-for-ale-campaign.jpg",
+    href: "https://www.youtube.com/watch?v=2tvkCTjhT8g",
+    summary:
+      "A sharp advocacy concept using classic political imagery to frame influence and accountability.",
+  },
+  {
+    title: "Former Queens Borough President Claire Shulman for Donovan Richards",
+    category: "Endorsement Video",
+    duration: "00:31",
+    client: "Donovan Richards",
+    image: "/images/projects/11-former-queens-borough-president-claire-shulman-for-donovan-richards.jpg",
+    href: "https://www.youtube.com/watch?v=-70vckYGSH4",
+    summary:
+      "An endorsement spot built around borough leadership, continuity, and trusted validators.",
+  },
+  {
+    title: "Donovan J. Richards: Candidate for Council District 31",
+    category: "Candidate Video",
+    duration: "01:34",
+    client: "Donovan Richards",
+    image: "/images/projects/12-donovan-j-richards-candidate-for-council-district-31.jpg",
+    href: "https://www.youtube.com/watch?v=xMTC07HJpqY",
+    summary:
+      "A candidate introduction video establishing biography, district connection, and campaign values.",
+  },
+  {
+    title: "\"Basic Math\" - Bloomberg's New York Campaign",
+    category: "Advocacy Ad",
+    duration: "00:32",
+    client: "Bloomberg's New York",
+    image: "/images/projects/13-basic-math-bloomberg-s-new-york-campaign.jpg",
+    href: "https://www.youtube.com/watch?v=YHx9P5e4-pI",
+    summary:
+      "A concise advocacy message using a simple frame to clarify policy stakes.",
+  },
+  {
+    title: "\"2021\" - New York City is not for $ale Campaign",
+    category: "Advocacy Ad",
+    duration: "00:32",
+    client: "New York City is not for $ale",
+    image: "/images/projects/14-2021-new-york-city-is-not-for-ale-campaign.jpg",
+    href: "https://www.youtube.com/watch?v=mYvMBG9tMsk",
+    summary:
+      "A campaign spot connecting citywide decisions to long-term public consequences.",
+  },
+  {
+    title: "\"Cocktail Party\" - Bloomberg's New York Campaign",
+    category: "Advocacy Ad",
+    duration: "00:32",
+    client: "Bloomberg's New York",
+    image: "/images/projects/15-cocktail-party-bloomberg-s-new-york-campaign.jpg",
+    href: "https://www.youtube.com/watch?v=Qgrujf1Har0",
+    summary:
+      "A concept-driven ad using social setting and contrast to sharpen the campaign message.",
+  },
+  {
+    title: "Bloomzilla",
+    category: "Advocacy Ad",
+    duration: "01:16",
+    client: "Bloomberg's New York",
+    image: "/images/projects/16-bloomzilla.jpg",
+    href: "https://www.youtube.com/watch?v=1gpmBDVxwzs",
+    summary:
+      "A longer-form creative spot with memorable visual framing and a political accountability message.",
   },
 ];
 
