@@ -105,7 +105,7 @@ export function IntroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-white pt-14 pb-5 md:pt-18 md:pb-6">
+    <section className="relative overflow-hidden bg-white pt-10 pb-5 md:pt-14 md:pb-6">
       <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-gold/[0.03]" />
       <div className="pointer-events-none absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-navy/[0.03]" />
 
