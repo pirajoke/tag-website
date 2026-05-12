@@ -15,7 +15,7 @@ const TABS = services.slice(0, 5).map((s, i) => ({
     "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&h=800&fit=crop&q=80",
     "/images/projects/print-mail-collage.png",
-    "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&h=800&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1768508951219-130ed0b29fd4?w=1200&h=800&fit=crop&q=80",
   ][i],
 }));
 
