@@ -91,6 +91,78 @@ export default function ProjectsPage() {
         </div>
       </section>
 
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-gold">
+              Success Stories
+            </p>
+            <h2 className="font-serif text-3xl font-bold text-navy md:text-4xl">
+              Featured Results
+            </h2>
+            <div className="mx-auto mt-4 h-0.5 w-16 bg-gold" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="bg-navy p-8">
+              <span className="text-sm font-semibold uppercase tracking-wider text-gold">
+                Borough President Race
+              </span>
+              <h3 className="mt-3 font-serif text-2xl font-bold text-white">
+                Vanessa Gibson — Bronx BP
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/60">
+                TAG served as general consultant for Vanessa Gibson&apos;s
+                successful 2021 campaign for Bronx Borough President.
+              </p>
+              <div className="mt-6 flex gap-6">
+                <div>
+                  <span className="font-serif text-2xl font-bold text-gold">
+                    2021
+                  </span>
+                  <p className="mt-1 text-xs text-white/40">Election Year</p>
+                </div>
+                <div>
+                  <span className="font-serif text-2xl font-bold text-gold">
+                    Won
+                  </span>
+                  <p className="mt-1 text-xs text-white/40">
+                    Primary & General
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-navy p-8">
+              <span className="text-sm font-semibold uppercase tracking-wider text-gold">
+                Reelection Campaign
+              </span>
+              <h3 className="mt-3 font-serif text-2xl font-bold text-white">
+                Donovan Richards — Queens BP
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/60">
+                TAG provided strategic consulting for Donovan Richards&apos;
+                successful reelection as Queens Borough President.
+              </p>
+              <div className="mt-6 flex gap-6">
+                <div>
+                  <span className="font-serif text-2xl font-bold text-gold">
+                    2021
+                  </span>
+                  <p className="mt-1 text-xs text-white/40">Election Year</p>
+                </div>
+                <div>
+                  <span className="font-serif text-2xl font-bold text-gold">
+                    Reelected
+                  </span>
+                  <p className="mt-1 text-xs text-white/40">Result</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-ivory py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">

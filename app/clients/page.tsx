@@ -40,33 +40,6 @@ export default function ClientsPage() {
               ))}
             </motion.div>
           </AnimatePresence>
-          <div className="mt-24">
-            <div className="text-center mb-12">
-              <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">Success Stories</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-navy">Featured Results</h2>
-              <div className="mt-4 w-16 h-0.5 bg-gold mx-auto" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-navy p-8">
-                <span className="text-gold text-sm font-semibold uppercase tracking-wider">Borough President Race</span>
-                <h3 className="mt-3 font-serif text-2xl font-bold text-white">Vanessa Gibson — Bronx BP</h3>
-                <p className="mt-3 text-white/60 text-sm leading-relaxed">TAG served as general consultant for Vanessa Gibson&apos;s successful 2021 campaign for Bronx Borough President.</p>
-                <div className="mt-6 flex gap-6">
-                  <div><span className="text-gold font-serif text-2xl font-bold">2021</span><p className="text-white/40 text-xs mt-1">Election Year</p></div>
-                  <div><span className="text-gold font-serif text-2xl font-bold">Won</span><p className="text-white/40 text-xs mt-1">Primary & General</p></div>
-                </div>
-              </div>
-              <div className="bg-navy p-8">
-                <span className="text-gold text-sm font-semibold uppercase tracking-wider">Reelection Campaign</span>
-                <h3 className="mt-3 font-serif text-2xl font-bold text-white">Donovan Richards — Queens BP</h3>
-                <p className="mt-3 text-white/60 text-sm leading-relaxed">TAG provided strategic consulting for Donovan Richards&apos; successful reelection as Queens Borough President.</p>
-                <div className="mt-6 flex gap-6">
-                  <div><span className="text-gold font-serif text-2xl font-bold">2021</span><p className="text-white/40 text-xs mt-1">Election Year</p></div>
-                  <div><span className="text-gold font-serif text-2xl font-bold">Reelected</span><p className="text-white/40 text-xs mt-1">Result</p></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
       <CTASection />

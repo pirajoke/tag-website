@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
+import { CTASection } from "@/components/sections/CTASection";
 import { LocationMap } from "@/components/ui/LocationMap";
 import { siteConfig } from "@/lib/data";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const fieldClass =
+    "w-full rounded-2xl border border-navy/10 bg-ivory px-4 py-3 text-navy shadow-sm transition-colors focus:border-gold focus:bg-white focus:outline-none";
 
   return (
     <>
@@ -25,13 +28,13 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">First Name</label><input type="text" required className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy" /></div>
-                    <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Last Name</label><input type="text" required className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy" /></div>
+                    <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">First Name</label><input type="text" required className={fieldClass} /></div>
+                    <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Last Name</label><input type="text" required className={fieldClass} /></div>
                   </div>
-                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Email</label><input type="email" required className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy" /></div>
-                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Organization</label><input type="text" className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy" /></div>
-                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">How Can We Help?</label><select className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy"><option value="">Select a service...</option><option>Lobbying</option><option>Political Campaigns</option><option>Communications</option><option>Graphic Design</option><option>Fundraising</option><option>Grant Writing</option><option>Event Management</option><option>Other</option></select></div>
-                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Message</label><textarea rows={5} required className="w-full px-4 py-3 bg-ivory border border-navy/10 focus:border-gold focus:outline-none text-navy resize-none" /></div>
+                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Email</label><input type="email" required className={fieldClass} /></div>
+                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Organization</label><input type="text" className={fieldClass} /></div>
+                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">How Can We Help?</label><select className={fieldClass}><option value="">Select a service...</option><option>Lobbying</option><option>Political Campaigns</option><option>Communications</option><option>Graphic Design</option><option>Fundraising</option><option>Grant Writing</option><option>Event Management</option><option>Other</option></select></div>
+                  <div><label className="block text-navy text-sm font-semibold uppercase tracking-wider mb-2">Message</label><textarea rows={5} required className={`${fieldClass} resize-none`} /></div>
                   <button type="submit" className="w-full bg-gold hover:bg-gold/90 text-navy py-4 rounded-full text-sm font-semibold tracking-widest uppercase transition-colors">Send Message</button>
                 </form>
               )}
@@ -102,6 +105,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <CTASection />
     </>
   );
 }

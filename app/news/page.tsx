@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
+import { CTASection } from "@/components/sections/CTASection";
 import { news } from "@/lib/data";
 
 const allCategories = ["All", ...new Set(news.map((n) => n.category))];
@@ -38,6 +39,7 @@ export default function NewsPage() {
           </div>
         </div>
       </section>
+      <CTASection />
     </>
   );
 }

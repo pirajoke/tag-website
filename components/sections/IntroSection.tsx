@@ -162,7 +162,7 @@ export function IntroSection() {
           ))}
         </div>
 
-        <div className="mt-10 text-center reveal-up">
+        <div className="mt-14 text-center reveal-up">
           <Link
             href="/about"
             className="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold transition-colors duration-300 hover:text-navy"

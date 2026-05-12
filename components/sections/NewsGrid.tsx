@@ -8,7 +8,7 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
   const articles = news.slice(0, limit);
 
   return (
-    <section className="bg-ivory pt-20 pb-8 md:pt-24 md:pb-12 lg:pb-14">
+    <section className="bg-ivory pt-14 pb-8 md:pt-16 md:pb-12 lg:pb-14">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">

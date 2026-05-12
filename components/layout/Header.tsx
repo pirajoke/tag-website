@@ -8,6 +8,10 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const scrolledRef = useRef(false);
+  const headerLinks = navLinks.filter(
+    (link) =>
+      link.href !== "/" && link.href !== "/clients" && link.href !== "/contact"
+  );
 
   useEffect(() => {
     let frame = 0;
@@ -66,7 +70,7 @@ export function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {headerLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -116,7 +120,7 @@ export function Header() {
       {mobileOpen && (
         <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-navy animate-fade-in-up">
           <nav className="flex flex-col items-center gap-6">
-            {navLinks.map((link) => (
+            {headerLinks.map((link) => (
               <div key={link.href}>
                 <Link
                   href={link.href}
