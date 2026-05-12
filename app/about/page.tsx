@@ -15,21 +15,44 @@ export default function AboutPage() {
         compact
       />
 
-      <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
-            Our Mission
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-navy leading-relaxed">
-            Founded and led by Scott Levenson since 1990, TAG is a diverse team
-            working together to deliver results.
-          </h2>
-          <p className="mt-6 text-steel text-lg leading-relaxed max-w-3xl mx-auto">
-            Our combined expertise includes lobbying, campaigns and elections,
-            communications, graphic design, fundraising, event management, and more.
-            Together, we make it happen.
-          </p>
-          <div className="mt-6 w-16 h-0.5 bg-gold mx-auto" />
+      <section className="bg-white py-20 md:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-16">
+          <div className="text-center lg:text-left">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-gold">
+              Our Mission
+            </p>
+            <h2 className="font-serif text-3xl font-bold leading-relaxed text-navy md:text-4xl">
+              Founded and led by Scott Levenson since 1990, TAG is a diverse team
+              working together to deliver results.
+            </h2>
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-steel lg:mx-0">
+              Our combined expertise includes lobbying, campaigns and elections,
+              communications, graphic design, fundraising, event management, and more.
+              Together, we make it happen.
+            </p>
+            <div className="mx-auto mt-6 h-0.5 w-16 bg-gold lg:mx-0" />
+          </div>
+
+          <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-navy/10 bg-ivory shadow-[0_24px_70px_rgba(42,33,24,0.10)] lg:max-w-none">
+            <div className="relative aspect-[4/5]">
+              <Image
+                src="/images/team/scott-levenson.webp"
+                alt="Scott Levenson, Founder and President of The Advance Group"
+                fill
+                sizes="(min-width: 1024px) 420px, 90vw"
+                className="object-cover grayscale"
+                style={{ objectPosition: "center 34%" }}
+              />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/75 via-navy/35 to-transparent px-6 pb-6 pt-20">
+              <p className="font-serif text-2xl font-bold text-white">
+                Scott Levenson
+              </p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                Founder &amp; President
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

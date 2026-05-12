@@ -59,11 +59,11 @@ export function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <span className="text-gold font-serif text-2xl font-bold tracking-tight">
+          <Link href="/" className="flex items-center gap-3 group leading-none">
+            <span className="text-gold font-serif text-2xl font-bold tracking-tight leading-none">
               TAG
             </span>
-            <span className={`hidden sm:block text-sm font-light tracking-wider uppercase transition-colors duration-300 ${
+            <span className={`hidden sm:block text-sm font-light tracking-wider uppercase leading-none transition-colors duration-300 ${
               scrolled ? "text-navy/70" : "text-white/80"
             }`}>
               {siteConfig.name}
