@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { CTASection } from "@/components/sections/CTASection";
-import { team, timeline } from "@/lib/data";
+import { stats, team, timeline } from "@/lib/data";
 
 export default function AboutPage() {
   return (
@@ -31,6 +31,23 @@ export default function AboutPage() {
               Together, we make it happen.
             </p>
             <div className="mx-auto mt-6 h-0.5 w-16 bg-gold lg:mx-0" />
+
+            <div className="mt-9 grid gap-3 sm:grid-cols-2">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-navy/5 bg-ivory/55 px-5 py-4 text-left shadow-[0_14px_36px_rgba(42,33,24,0.04)]"
+                >
+                  <p className="font-serif text-3xl font-bold leading-none text-gold">
+                    {stat.value}
+                    {stat.suffix}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy/60">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-navy/10 bg-ivory shadow-[0_24px_70px_rgba(42,33,24,0.10)] lg:max-w-none">
