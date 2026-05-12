@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig, navLinks } from "@/lib/data";
 
 const services = [
@@ -14,6 +15,12 @@ const services = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname !== "/") {
+    return null;
+  }
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
