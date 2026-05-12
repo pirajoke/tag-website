@@ -146,7 +146,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="-mt-24 bg-white pb-20 pt-4 md:-mt-32 md:pt-6">
+      <section className="-mt-16 bg-white pb-20 pt-4 md:-mt-24 md:pt-6">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto mb-16 max-w-4xl rounded-[1.5rem] border border-navy/5 bg-white px-6 py-12 text-center shadow-[0_24px_70px_rgba(42,33,24,0.08)] md:px-12">
             <p className="font-serif text-5xl font-medium leading-none text-gold md:text-6xl">

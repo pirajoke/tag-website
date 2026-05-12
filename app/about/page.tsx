@@ -137,7 +137,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="group"
               >
-                <div className="relative aspect-[8/9] overflow-hidden bg-navy/10">
+                <div className="relative aspect-[8/9] overflow-hidden rounded-2xl bg-navy/10 shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
@@ -146,12 +146,12 @@ export default function AboutPage() {
                     className="object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
                     style={{ objectPosition: member.imagePosition }}
                   />
-                  <div className="absolute inset-x-0 bottom-0 translate-y-2 px-6 pb-6 transition-transform duration-300 group-hover:translate-y-0">
-                    <div className="bg-white px-5 py-4 shadow-[0_18px_40px_rgba(42,33,24,0.10)]">
-                      <h3 className="font-sans text-lg font-bold tracking-normal text-gold">
+                  <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
+                    <div className="max-w-[82%] rounded-xl bg-white/95 px-4 py-3 shadow-[0_14px_34px_rgba(42,33,24,0.12)] backdrop-blur-sm">
+                      <h3 className="font-sans text-base font-bold tracking-normal text-gold">
                         {member.name}
                       </h3>
-                      <p className="mt-1 text-sm font-medium leading-snug text-navy">
+                      <p className="mt-1 text-xs font-medium leading-snug text-navy">
                         {member.title}
                       </p>
                     </div>
