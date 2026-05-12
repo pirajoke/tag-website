@@ -143,18 +143,12 @@ export function ServicesTabs() {
           >
             View All Services &rarr;
           </Link>
-          <div className="hidden lg:block lg:h-[52vh]" aria-hidden="true" />
+          <div className="hidden lg:block lg:h-[12vh]" aria-hidden="true" />
         </div>
 
         <div className="lg:col-span-7 lg:ml-6 xl:ml-10">
           <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
-            <div
-              className={`relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 transition-transform duration-500 ease-out md:aspect-[4/3] lg:aspect-[16/10] lg:rounded-[2.5rem] ${
-                activeIndex === TABS.length - 1
-                  ? "lg:translate-y-32 xl:translate-y-36"
-                  : "lg:translate-y-0"
-              }`}
-            >
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:aspect-[16/10] lg:rounded-[2.5rem]">
               {TABS.map((tab, index) => (
                 <div
                   key={tab.id}
