@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { navLinks, siteConfig } from "@/lib/data";
 
 export function Header() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const scrolledRef = useRef(false);
@@ -70,19 +72,26 @@ export function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {headerLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium tracking-wide uppercase transition-colors duration-200 ${
-                  scrolled
-                    ? "text-navy/70 hover:text-gold"
-                    : "text-white/80 hover:text-gold"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {headerLinks.map((link) => {
+              const isActive =
+                pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium tracking-wide uppercase transition-colors duration-200 ${
+                    isActive
+                      ? "text-gold"
+                      : scrolled
+                        ? "text-navy/70 hover:text-gold"
+                        : "text-white/80 hover:text-gold"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <Link
               href="/contact"
               className="border border-gold/60 hover:bg-gold hover:text-navy text-gold px-5 py-2 text-sm font-medium tracking-wide uppercase rounded-full transition-all duration-300"
@@ -120,17 +129,24 @@ export function Header() {
       {mobileOpen && (
         <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-navy animate-fade-in-up">
           <nav className="flex flex-col items-center gap-6">
-            {headerLinks.map((link) => (
-              <div key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-white text-2xl font-serif tracking-wide hover:text-gold transition-colors"
-                >
-                  {link.label}
-                </Link>
-              </div>
-            ))}
+            {headerLinks.map((link) => {
+              const isActive =
+                pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+              return (
+                <div key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`text-2xl font-serif tracking-wide transition-colors hover:text-gold ${
+                      isActive ? "text-gold" : "text-white"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </div>
+              );
+            })}
             <div>
               <Link
                 href="/contact"
