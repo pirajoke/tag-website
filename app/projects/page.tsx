@@ -1,12 +1,57 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Hero } from "@/components/sections/Hero";
 import { CTASection } from "@/components/sections/CTASection";
 import { creativeProjects } from "@/lib/data";
 
+type CreativeProject = (typeof creativeProjects)[number];
+
+function getYouTubeEmbedUrl(href?: string) {
+  if (!href) return null;
+
+  try {
+    const url = new URL(href);
+    const videoId =
+      url.hostname.includes("youtu.be")
+        ? url.pathname.slice(1)
+        : url.searchParams.get("v");
+
+    return videoId
+      ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function ProjectsPage() {
   const featured = creativeProjects.slice(0, 3);
   const remaining = creativeProjects.slice(3);
+  const [activeProject, setActiveProject] = useState<CreativeProject | null>(
+    null
+  );
+  const activeEmbedUrl = getYouTubeEmbedUrl(activeProject?.href);
+
+  useEffect(() => {
+    if (!activeProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveProject(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeProject]);
 
   return (
     <>
@@ -36,17 +81,23 @@ export default function ProjectsPage() {
           </div>
 
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {featured.map((project) => (
+            {featured.map((project) => {
+              const embedUrl = getYouTubeEmbedUrl(project.href);
+
+              return (
               <article
                 key={project.title}
-                className="group overflow-hidden border border-navy/10 bg-white shadow-[0_18px_50px_rgba(42,33,24,0.06)]"
+                className="group overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-[0_18px_50px_rgba(42,33,24,0.06)]"
               >
-                <div
-                  className={`relative aspect-video overflow-hidden ${
+                <button
+                  type="button"
+                  disabled={!embedUrl}
+                  onClick={() => embedUrl && setActiveProject(project)}
+                  className={`relative block aspect-video w-full overflow-hidden text-left ${
                     project.image.includes("print-mail-collage")
                       ? "bg-[#0b3d68]"
                       : "bg-navy/10"
-                  }`}
+                  } ${embedUrl ? "cursor-pointer" : "cursor-default"}`}
                 >
                   <Image
                     src={project.image}
@@ -63,7 +114,14 @@ export default function ProjectsPage() {
                   <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-navy">
                     {project.duration}
                   </div>
-                </div>
+                  {embedUrl && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-navy/0 transition-colors duration-300 group-hover:bg-navy/20">
+                      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-navy shadow-[0_14px_40px_rgba(42,33,24,0.25)] transition-transform duration-300 group-hover:scale-105">
+                        <span className="ml-1 h-0 w-0 border-y-[9px] border-l-[14px] border-y-transparent border-l-gold" />
+                      </span>
+                    </span>
+                  )}
+                </button>
                 <div className="p-6">
                   <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">
                     {project.category}
@@ -74,19 +132,19 @@ export default function ProjectsPage() {
                   <p className="mt-3 text-sm leading-relaxed text-steel">
                     {project.summary}
                   </p>
-                  {project.href && (
-                    <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {embedUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveProject(project)}
                       className="mt-5 inline-flex text-xs font-bold uppercase tracking-[0.18em] text-gold transition-colors hover:text-navy"
                     >
                       Watch Project &rarr;
-                    </Link>
+                    </button>
                   )}
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -114,7 +172,7 @@ export default function ProjectsPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="bg-navy p-8">
+            <div className="rounded-2xl bg-navy p-8">
               <span className="text-sm font-semibold uppercase tracking-wider text-gold">
                 Borough President Race
               </span>
@@ -143,7 +201,7 @@ export default function ProjectsPage() {
               </div>
             </div>
 
-            <div className="bg-navy p-8">
+            <div className="rounded-2xl bg-navy p-8">
               <span className="text-sm font-semibold uppercase tracking-wider text-gold">
                 Reelection Campaign
               </span>
@@ -192,17 +250,23 @@ export default function ProjectsPage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {remaining.map((project) => (
+            {remaining.map((project) => {
+              const embedUrl = getYouTubeEmbedUrl(project.href);
+
+              return (
               <article
                 key={project.title}
-                className="group overflow-hidden bg-white"
+                className="group overflow-hidden rounded-2xl border border-navy/5 bg-white shadow-[0_18px_50px_rgba(42,33,24,0.06)]"
               >
-                <div
-                  className={`relative aspect-video overflow-hidden ${
+                <button
+                  type="button"
+                  disabled={!embedUrl}
+                  onClick={() => embedUrl && setActiveProject(project)}
+                  className={`relative block aspect-video w-full overflow-hidden text-left ${
                     project.image.includes("print-mail-collage")
                       ? "bg-[#0b3d68]"
                       : "bg-navy/10"
-                  }`}
+                  } ${embedUrl ? "cursor-pointer" : "cursor-default"}`}
                 >
                   <Image
                     src={project.image}
@@ -212,10 +276,17 @@ export default function ProjectsPage() {
                     className={`transition duration-500 group-hover:scale-[1.03] ${
                       project.image.includes("print-mail-collage")
                         ? "object-contain"
-                        : "object-cover"
+                      : "object-cover"
                     }`}
                   />
-                </div>
+                  {embedUrl && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-navy/0 transition-colors duration-300 group-hover:bg-navy/20">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-navy shadow-[0_14px_40px_rgba(42,33,24,0.25)] transition-transform duration-300 group-hover:scale-105">
+                        <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[12px] border-y-transparent border-l-gold" />
+                      </span>
+                    </span>
+                  )}
+                </button>
                 <div className="p-5">
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold">
@@ -231,15 +302,14 @@ export default function ProjectsPage() {
                   <p className="mt-3 text-sm leading-relaxed text-steel">
                     {project.summary}
                   </p>
-                  {project.href ? (
-                    <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {embedUrl ? (
+                    <button
+                      type="button"
+                      onClick={() => setActiveProject(project)}
                       className="mt-4 inline-flex text-xs font-bold uppercase tracking-[0.18em] text-gold transition-colors hover:text-navy"
                     >
                       Watch &rarr;
-                    </Link>
+                    </button>
                   ) : (
                     <span className="mt-4 inline-flex text-xs font-bold uppercase tracking-[0.18em] text-navy/35">
                       TAG Hosted
@@ -247,10 +317,53 @@ export default function ProjectsPage() {
                   )}
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
+
+      {activeProject && activeEmbedUrl && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-navy/85 px-4 py-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeProject.title}
+          onClick={() => setActiveProject(null)}
+        >
+          <div
+            className="w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-[0_30px_90px_rgba(0,0,0,0.45)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="relative aspect-video bg-black">
+              <iframe
+                src={activeEmbedUrl}
+                title={activeProject.title}
+                className="absolute inset-0 h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">
+                  {activeProject.category}
+                </p>
+                <h2 className="mt-2 font-serif text-2xl font-bold leading-tight text-navy">
+                  {activeProject.title}
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveProject(null)}
+                className="inline-flex justify-center rounded-full border border-navy/15 px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-navy transition-colors hover:border-gold hover:text-gold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <CTASection />
     </>
