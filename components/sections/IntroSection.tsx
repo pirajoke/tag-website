@@ -162,10 +162,10 @@ export function IntroSection() {
           ))}
         </div>
 
-        <div className="mt-14 flex w-full justify-center reveal-up">
+        <div className="relative left-1/2 mt-14 flex w-[100vw] -translate-x-1/2 justify-center reveal-up">
           <Link
             href="/about"
-            className="group mx-auto inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold transition-colors duration-300 hover:text-navy"
+            className="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold transition-colors duration-300 hover:text-navy"
           >
             <span>Learn Our Story</span>
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
