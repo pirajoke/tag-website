@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL ?? "https://tag-website-orpin.vercel.app";
 
-test("homepage hero scroll reaches clients without console errors", async ({ page }) => {
+test("homepage hero scroll reaches clients marquee without console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
@@ -21,8 +21,9 @@ test("homepage hero scroll reaches clients without console errors", async ({ pag
     await page.waitForTimeout(40);
   }
 
-  await expect(
-    page.getByRole("heading", { name: "Our Clients", exact: true }),
-  ).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText("Trusted By Leaders")).toBeVisible({
+    timeout: 10000,
+  });
+  await expect(page.getByText("NY Communities for Change").first()).toBeVisible();
   expect(errors).toEqual([]);
 });

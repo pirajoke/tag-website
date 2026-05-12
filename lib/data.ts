@@ -1,3 +1,6 @@
+export const youtubeChannelUrl =
+  "https://www.youtube.com/channel/UCvRQOLXzoTVwcBdrY-xBy0g";
+
 export const siteConfig = {
   name: "The Advance Group",
   tagline: "Together, We Make It Happen",

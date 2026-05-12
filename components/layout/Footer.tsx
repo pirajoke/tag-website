@@ -19,7 +19,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-navy text-white overflow-hidden">
+    <footer id="site-footer" className="relative overflow-hidden bg-navy text-white">
       {/* Subtle static radial glow — no blur, no animation */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -31,16 +31,16 @@ export function Footer() {
 
       {/* Giant BG text — static, no GSAP */}
       <div
-        className="absolute -bottom-[3vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-serif"
+        className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-serif"
         style={{
-          fontSize: "22vw",
+          fontSize: "15vw",
           lineHeight: 0.8,
           fontWeight: 900,
-          letterSpacing: "-0.04em",
+          letterSpacing: "0",
           color: "transparent",
-          WebkitTextStroke: "1px rgba(201,168,76,0.08)",
+          WebkitTextStroke: "1px rgba(201,168,76,0.06)",
           background:
-            "linear-gradient(180deg, rgba(201,168,76,0.12) 0%, transparent 60%)",
+            "linear-gradient(180deg, rgba(201,168,76,0.08) 0%, transparent 65%)",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
         }}
@@ -49,7 +49,7 @@ export function Footer() {
       </div>
 
       {/* Marquee strip — GPU-accelerated */}
-      <div className="relative w-full overflow-hidden border-b border-white/5 py-4 z-10">
+      <div className="relative w-full overflow-hidden border-b border-white/5 py-3 z-10">
         <div
           className="flex w-max animate-marquee text-[10px] md:text-xs font-bold tracking-[0.3em] text-white/20 uppercase"
           style={{ willChange: "transform", transform: "translateZ(0)" }}
@@ -64,42 +64,46 @@ export function Footer() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center px-6 pt-20 pb-8 w-full max-w-5xl mx-auto">
-        <div className="text-center reveal-up">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-[1.05] mb-6">
-            <span className="bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
-              Ready to Make
-            </span>
-            <br />
-            <span className="bg-gradient-to-b from-gold to-gold/60 bg-clip-text text-transparent">
-              an Impact?
-            </span>
-          </h2>
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 py-10 md:py-12">
+        <div className="reveal-up grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
+          <div>
+            <h2 className="font-serif text-5xl font-bold leading-[1.02] md:text-7xl lg:text-[5.4rem] xl:text-[6rem]">
+              <span className="bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent">
+                Ready to Make
+              </span>
+              <br />
+              <span className="bg-gradient-to-b from-gold to-gold/65 bg-clip-text text-transparent">
+                an Impact?
+              </span>
+            </h2>
+          </div>
 
-          <p className="text-white/50 text-lg max-w-xl mx-auto mb-10">
-            Let&apos;s discuss how TAG can help you achieve your strategic goals.
-          </p>
+          <div className="flex flex-col items-start justify-center lg:max-w-xl">
+            <p className="text-sm leading-relaxed text-white/50 md:text-base lg:text-lg">
+              Let&apos;s discuss how TAG can help you achieve your strategic
+              goals.
+            </p>
 
-          {/* CTA pills */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            <Link
-              href="/contact"
-              className="bg-gold text-navy px-10 py-4 rounded-full text-sm font-semibold tracking-widest uppercase hover:bg-gold/90 transition-colors duration-300"
-            >
-              Get in Touch
-            </Link>
-            <Link
-              href="/services"
-              className="border border-white/20 text-white/80 px-10 py-4 rounded-full text-sm font-semibold tracking-widest uppercase hover:border-gold hover:text-gold transition-colors duration-300"
-            >
-              Our Services
-            </Link>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="rounded-full bg-gold px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy transition-colors duration-300 hover:bg-gold/90"
+              >
+                Get in Touch
+              </Link>
+              <Link
+                href="/services"
+                className="rounded-full border border-white/20 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-white/80 transition-colors duration-300 hover:border-gold hover:text-gold"
+              >
+                Our Services
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Footer columns */}
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="border-t border-white/10 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div className="w-full">
+          <div className="grid grid-cols-2 gap-8 py-7 md:grid-cols-4 lg:grid-cols-[1.1fr_1.35fr_1.25fr_0.8fr]">
             {/* Brand */}
             <div>
               <span className="text-gold font-serif text-2xl font-bold">
@@ -115,7 +119,7 @@ export function Footer() {
               <h4 className="text-gold/60 text-[10px] font-bold uppercase tracking-widest mb-3">
                 Navigate
               </h4>
-              <ul className="space-y-1.5">
+              <ul className="grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -197,14 +201,14 @@ export function Footer() {
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-white/5 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-white/20 text-[10px] uppercase tracking-widest">
+          <div className="relative flex flex-col items-center justify-center gap-3 border-t border-white/5 pt-4 sm:min-h-9">
+            <p className="text-center text-[10px] uppercase tracking-widest text-white/20">
               &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
               reserved.
             </p>
             <button
               onClick={scrollToTop}
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/30 hover:text-gold hover:border-gold transition-all duration-300 group"
+              className="group flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 hover:border-gold hover:text-gold sm:absolute sm:right-0 sm:top-4"
             >
               <svg
                 className="w-4 h-4 transform group-hover:-translate-y-1 transition-transform duration-300"

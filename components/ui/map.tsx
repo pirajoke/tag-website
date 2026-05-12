@@ -146,11 +146,7 @@ function MapMarker({
       markerRef.current = null;
       queueMicrotask(() => setMarkerElement(null));
     };
-  }, [map, isLoaded]);
-
-  useEffect(() => {
-    markerRef.current?.setLngLat([longitude, latitude]);
-  }, [longitude, latitude]);
+  }, [map, isLoaded, longitude, latitude]);
 
   if (!markerElement) return null;
 
@@ -206,11 +202,7 @@ function MapPopup({
       popupRef.current = null;
       queueMicrotask(() => setContainer(null));
     };
-  }, [isLoaded, map]);
-
-  useEffect(() => {
-    popupRef.current?.setLngLat([longitude, latitude]);
-  }, [longitude, latitude]);
+  }, [isLoaded, map, longitude, latitude]);
 
   const handleClose = () => {
     popupRef.current?.remove();

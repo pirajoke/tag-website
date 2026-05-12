@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -83,9 +84,12 @@ export function AnimatedCarousel({
                 className="flex-1 min-w-0 flex items-center justify-center px-3 py-5 md:px-6 md:py-6"
               >
                 {logo.src ? (
-                  <img
+                  <Image
                     src={logo.src}
                     alt={logo.name}
+                    width={160}
+                    height={80}
+                    unoptimized
                     className="h-10 md:h-14 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
                   />
                 ) : (

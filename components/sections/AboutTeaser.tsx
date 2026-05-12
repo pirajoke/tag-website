@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { siteConfig } from "@/lib/data";
+import { siteConfig, youtubeChannelUrl } from "@/lib/data";
 
 export function AboutTeaser() {
   return (
@@ -15,6 +16,7 @@ export function AboutTeaser() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="lg:order-2"
           >
             <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
               About TAG
@@ -48,9 +50,17 @@ export function AboutTeaser() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
+            className="relative lg:order-1"
           >
-            <div className="aspect-[4/3] bg-navy-light relative overflow-hidden">
+            <div className="aspect-[4/3] bg-navy-light relative overflow-hidden rounded-[2rem] shadow-[0_24px_70px_rgba(42,33,24,0.14)]">
+              <Image
+                src="/images/projects/01-let-s-get-to-work-donovan-richards-for-queens-borough-president.jpg"
+                alt="Donovan Richards campaign video still"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-navy/60" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center p-12">
                   <span className="text-gold font-serif text-8xl font-bold">
@@ -60,6 +70,17 @@ export function AboutTeaser() {
                     Years Shaping Policy
                   </p>
                   <p className="text-white/40 text-sm mt-1">Since 1990</p>
+                  <a
+                    href={youtubeChannelUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-7 inline-flex items-center justify-center gap-3 rounded-full bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-navy transition-all duration-300 hover:bg-white"
+                  >
+                    <span aria-hidden="true" className="text-sm leading-none">
+                      &#9658;
+                    </span>
+                    Play Video
+                  </a>
                 </div>
               </div>
             </div>

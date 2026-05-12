@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import Image from "next/image";
+import { Quote } from "lucide-react";
 
 interface Testimonial {
   id: number;
@@ -54,145 +53,115 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
   },
+  {
+    id: 5,
+    quote:
+      "The team understood the political moment quickly, sharpened the message, and kept our campaign moving with focus.",
+    name: "Laurie Cumbo",
+    title: "Former Council Member",
+    company: "New York City",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
+  },
+  {
+    id: 6,
+    quote:
+      "TAG brought discipline, relationships, and clear execution to a complex public-facing effort.",
+    name: "Community Partner",
+    title: "Executive Lead",
+    company: "Advocacy Client",
+    image:
+      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop",
+  },
 ];
 
-export function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+const rows = [testimonials.slice(0, 3), testimonials.slice(3)];
 
-  const handleNext = useCallback(() => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  }, []);
+function TestimonialCard({ item }: { item: Testimonial }) {
+  return (
+    <article className="mx-3 flex h-[198px] w-[350px] shrink-0 flex-col justify-between overflow-hidden rounded-2xl border border-navy/8 bg-white px-5 py-5 shadow-[0_18px_50px_rgba(42,33,24,0.06)] transition-all duration-300 hover:border-gold/35 hover:shadow-[0_22px_60px_rgba(42,33,24,0.10)] md:h-[208px] md:w-[420px] md:px-6">
+      <div>
+        <Quote className="mb-3 h-5 w-5 text-gold/30 md:h-6 md:w-6" />
+        <p className="line-clamp-3 text-sm italic leading-relaxed text-navy/65">
+          &ldquo;{item.quote}&rdquo;
+        </p>
+      </div>
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-  };
+      <div className="mt-5 flex items-center gap-3">
+        <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full border border-gold/30 bg-navy/10 md:h-11 md:w-11">
+          <Image
+            src={item.image}
+            alt={item.name}
+            width={44}
+            height={44}
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div className="min-w-0">
+          <h4 className="truncate font-serif text-base font-bold leading-tight text-navy md:text-lg">
+            {item.name}
+          </h4>
+          <p className="truncate text-xs font-semibold text-gold">
+            {item.title}
+          </p>
+          <p className="truncate text-xs text-steel/70">{item.company}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
 
-  useEffect(() => {
-    const timer = setInterval(handleNext, 6000);
-    return () => clearInterval(timer);
-  }, [currentIndex, handleNext]);
-
-  const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 600 : -600, opacity: 0 }),
-    center: { zIndex: 1, x: 0, opacity: 1 },
-    exit: (dir: number) => ({ zIndex: 0, x: dir < 0 ? 600 : -600, opacity: 0 }),
-  };
-
-  const current = testimonials[currentIndex];
+function TestimonialMarqueeRow({
+  items,
+  reverse = false,
+}: {
+  items: Testimonial[];
+  reverse?: boolean;
+}) {
+  const doubled = [...items, ...items, ...items];
 
   return (
-    <section className="relative py-24 bg-navy overflow-hidden">
-      <div className="relative max-w-5xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-6">
-            Testimonials
-          </span>
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-white">
-            What Our Clients Say
-          </h2>
-          <div className="mt-6 w-20 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto" />
-        </div>
+    <div className="relative w-full overflow-hidden py-1">
+      <div
+        className={`flex w-max items-stretch hover:[animation-play-state:paused] ${
+          reverse ? "animate-marquee-reverse" : "animate-marquee"
+        }`}
+      >
+        {doubled.map((item, index) => (
+          <TestimonialCard key={`${item.id}-${index}`} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-        {/* Testimonial Card */}
-        <div className="relative min-h-[320px] flex items-center justify-center">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-              className="absolute w-full"
-            >
-              <div className="bg-white/5 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12">
-                <Quote className="w-12 h-12 text-gold/20 mb-6" />
-
-                <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 italic font-light">
-                  &ldquo;{current.quote}&rdquo;
-                </p>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gold/40 flex-shrink-0">
-                    <img
-                      src={current.image}
-                      alt={current.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">
-                      {current.name}
-                    </h4>
-                    <p className="text-gold text-sm font-medium">
-                      {current.title}
-                    </p>
-                    <p className="text-white/40 text-xs">{current.company}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex items-center justify-center gap-6 mt-12">
-          <button
-            onClick={handlePrev}
-            className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold hover:bg-gold hover:text-navy transition-all duration-300"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <div className="flex gap-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setDirection(index > currentIndex ? 1 : -1);
-                  setCurrentIndex(index);
-                }}
-                className={`transition-all duration-300 rounded-full ${
-                  index === currentIndex
-                    ? "w-8 h-2 bg-gold"
-                    : "w-2 h-2 bg-gold/30 hover:bg-gold/50"
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
+export function Testimonials() {
+  return (
+    <section className="relative overflow-hidden bg-white py-14 md:py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
+              Testimonials
+            </span>
+            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+              What Clients Say
+            </h2>
           </div>
-
-          <button
-            onClick={handleNext}
-            className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold hover:bg-gold hover:text-navy transition-all duration-300"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          <p className="max-w-xl text-sm leading-relaxed text-steel">
+            A few notes from campaigns, advocacy partners, and public-sector
+            leaders who have worked with TAG.
+          </p>
         </div>
+      </div>
 
-        {/* Progress bar */}
-        <div className="mt-6 max-w-sm mx-auto">
-          <div className="h-[2px] bg-white/10 rounded-full overflow-hidden">
-            <motion.div
-              key={currentIndex}
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 6, ease: "linear" }}
-              className="h-full bg-gold/60"
-            />
-          </div>
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent md:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent md:w-32" />
+
+        <div className="flex flex-col gap-4">
+          <TestimonialMarqueeRow items={rows[0]} />
+          <TestimonialMarqueeRow items={rows[1]} reverse />
         </div>
       </div>
     </section>
