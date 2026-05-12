@@ -7,7 +7,7 @@ import { siteConfig, youtubeChannelUrl } from "@/lib/data";
 
 export function AboutTeaser() {
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section className="bg-white pb-16 pt-6 md:pb-24 md:pt-8 lg:-mt-40">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="grid grid-cols-1 items-center gap-9 lg:grid-cols-2 lg:gap-16">
           {/* Text */}

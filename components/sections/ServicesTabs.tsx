@@ -143,7 +143,7 @@ export function ServicesTabs() {
           >
             View All Services &rarr;
           </Link>
-          <div className="hidden lg:block lg:h-[44vh]" aria-hidden="true" />
+          <div className="hidden lg:block lg:h-[12vh]" aria-hidden="true" />
         </div>
 
         <div className="lg:col-span-7 lg:ml-6 xl:ml-10">
