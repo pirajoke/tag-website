@@ -21,7 +21,7 @@ const TABS = services.slice(0, 5).map((s, i) => ({
 
 export function ServicesTabs() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -29,28 +29,19 @@ export function ServicesTabs() {
     const updateActiveTab = () => {
       frame = 0;
 
-      const viewportHeight = window.innerHeight;
-      const targetY = Math.min(
-        Math.max(viewportHeight * 0.48, 300),
-        viewportHeight - 180
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const scrolled = Math.min(
+        Math.max(-section.getBoundingClientRect().top, 0),
+        scrollable
       );
-      let nextIndex = 0;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      itemRefs.current.forEach((item, index) => {
-        if (!item) return;
-
-        const rect = item.getBoundingClientRect();
-        const visible = rect.bottom > 96 && rect.top < viewportHeight;
-        if (!visible) return;
-
-        const itemCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(itemCenter - targetY);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          nextIndex = index;
-        }
-      });
+      const progress = scrolled / scrollable;
+      const nextIndex = Math.min(
+        TABS.length - 1,
+        Math.floor(progress * TABS.length)
+      );
 
       setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
     };
@@ -72,86 +63,83 @@ export function ServicesTabs() {
   }, []);
 
   return (
-    <section className="w-full bg-white pb-8 pt-8 md:pb-12 md:pt-10 lg:pt-12">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:px-12 lg:grid-cols-12 lg:gap-8 xl:px-16">
-        <div className="lg:col-span-5">
-          <div className="mb-6 lg:sticky lg:top-28 lg:z-10 lg:bg-white lg:pb-4">
-            <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
-              How We Can Help
-            </h2>
-            <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
-              (Services)
-            </span>
-          </div>
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-white py-10 md:py-12 lg:h-[360vh] lg:py-0"
+    >
+      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:sticky lg:top-16 lg:flex lg:h-[calc(100vh-4rem)] lg:items-center xl:px-16">
+        <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <div className="mb-8 bg-white">
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
+                How We Can Help
+              </h2>
+              <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
+                (Services)
+              </span>
+            </div>
 
-          <div className="relative flex flex-col border-l border-navy/10 pl-5 md:pl-7">
-            {TABS.map((tab, index) => (
-              <div
-                key={tab.id}
-                ref={(node) => {
-                  itemRefs.current[index] = node;
-                }}
-                data-index={index}
-                className={`group relative flex min-h-[28vh] flex-col justify-center border-t border-navy/10 py-5 text-left first:border-t-0 md:min-h-[31vh] md:py-6 lg:min-h-[36vh] ${
-                  activeIndex === index
-                    ? "text-navy"
-                    : "text-navy/28"
-                }`}
-              >
-                <span
-                  className={`absolute bottom-0 left-[-21px] top-0 w-[2px] transition-colors duration-300 md:left-[-33px] ${
-                    activeIndex === index ? "bg-gold" : "bg-transparent"
+            <div className="relative flex flex-col border-l border-navy/10 pl-5 md:pl-7">
+              {TABS.map((tab, index) => (
+                <div
+                  key={tab.id}
+                  data-index={index}
+                  className={`group relative border-t border-navy/10 py-4 text-left first:border-t-0 transition-colors duration-300 ${
+                    activeIndex === index ? "text-navy" : "text-navy/25"
                   }`}
-                />
+                >
+                  <span
+                    className={`absolute bottom-0 left-[-21px] top-0 w-[2px] transition-colors duration-300 md:left-[-33px] ${
+                      activeIndex === index ? "bg-gold" : "bg-transparent"
+                    }`}
+                  />
 
-                <div className="flex items-start gap-3 md:gap-4">
-                  <span className="mt-2 text-[10px] font-medium tabular-nums opacity-50">
-                    /{tab.id}
-                  </span>
-                  <div className="flex-1">
-                    <span className="block font-serif text-2xl font-bold tracking-tight transition-colors duration-300 md:text-3xl">
-                      {tab.title}
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <span className="mt-2 text-[10px] font-medium tabular-nums opacity-50">
+                      /{tab.id}
                     </span>
-                    <div
-                      className={`grid transition-all duration-300 ease-out ${
-                        activeIndex === index
-                          ? "grid-rows-[1fr] opacity-100"
-                          : "grid-rows-[0fr] opacity-0"
-                      }`}
-                    >
-                      <div className="overflow-hidden">
-                        <p className="max-w-sm pt-2 text-sm leading-relaxed text-steel md:text-base">
-                          {tab.description}
-                        </p>
-                        <Link
-                          href={`/services/${tab.slug}`}
-                          className="mt-3 inline-block text-sm font-semibold uppercase tracking-wider text-gold transition-colors hover:text-navy"
-                        >
-                          Learn More &rarr;
-                        </Link>
+                    <div className="flex-1">
+                      <span className="block font-serif text-2xl font-bold tracking-tight transition-colors duration-300 md:text-3xl">
+                        {tab.title}
+                      </span>
+                      <div
+                        className={`grid transition-all duration-300 ease-out ${
+                          activeIndex === index
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <p className="max-w-sm pt-2 text-sm leading-relaxed text-steel md:text-base">
+                            {tab.description}
+                          </p>
+                          <Link
+                            href={`/services/${tab.slug}`}
+                            className="mt-3 inline-block text-sm font-semibold uppercase tracking-wider text-gold transition-colors hover:text-navy"
+                          >
+                            Learn More &rarr;
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <Link
+              href="/services"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:text-gold"
+            >
+              View All Services &rarr;
+            </Link>
           </div>
 
-          <Link
-            href="/services"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:text-gold"
-          >
-            View All Services &rarr;
-          </Link>
-          <div className="hidden lg:block lg:h-[52vh]" aria-hidden="true" />
-        </div>
-
-        <div className="lg:col-span-7 lg:ml-6 xl:ml-10">
-          <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
+          <div className="lg:col-span-7 lg:ml-6 xl:ml-10">
             <div
               className={`relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 transition-transform duration-500 ease-out md:aspect-[4/3] lg:aspect-[16/10] lg:rounded-[2.5rem] ${
                 activeIndex === TABS.length - 1
-                  ? "lg:translate-y-32 xl:translate-y-36"
+                  ? "lg:translate-y-16 xl:translate-y-20"
                   : "lg:translate-y-0"
               }`}
             >
