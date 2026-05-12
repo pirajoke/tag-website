@@ -61,7 +61,7 @@ export default function ProjectsPage() {
         compact
       />
 
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white pb-20 pt-14 md:pb-24 md:pt-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>

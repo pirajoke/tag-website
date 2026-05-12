@@ -16,7 +16,7 @@ export default function AboutPage() {
       />
 
       <section className="bg-white py-20 md:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-16">
+        <div className="mx-auto grid max-w-7xl items-start gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-16">
           <div className="text-center lg:text-left">
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-gold">
               Our Mission
