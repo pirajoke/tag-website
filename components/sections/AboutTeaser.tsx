@@ -49,7 +49,7 @@ export function AboutTeaser() {
   }, [isVideoOpen]);
 
   return (
-    <section className="bg-white pb-16 pt-10 md:pb-24 md:pt-14 lg:-mt-2">
+    <section className="bg-white pb-16 pt-10 md:pb-24 md:pt-14 lg:-mt-12">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="grid grid-cols-1 items-center gap-9 lg:grid-cols-2 lg:gap-16">
           {/* Text */}
