@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Hero } from "@/components/sections/Hero";
 import { CTASection } from "@/components/sections/CTASection";
 import { creativeProjects } from "@/lib/data";
@@ -26,12 +26,52 @@ function getYouTubeEmbedUrl(href?: string) {
   }
 }
 
+function AnimatedRank({
+  value,
+  start,
+}: {
+  value: number;
+  start: boolean;
+}) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+
+    const duration = 1100;
+    const startedAt = performance.now();
+    let frame = 0;
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(Math.round(value * eased));
+
+      if (progress < 1) {
+        frame = window.requestAnimationFrame(tick);
+      }
+    };
+
+    frame = window.requestAnimationFrame(tick);
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [start, value]);
+
+  return (
+    <span className="inline-block min-w-[1.25em] tabular-nums">
+      {displayValue}
+    </span>
+  );
+}
+
 export default function ProjectsPage() {
   const featured = creativeProjects.slice(0, 3);
   const remaining = creativeProjects.slice(3).filter((project) => project.href);
   const [activeProject, setActiveProject] = useState<CreativeProject | null>(
     null
   );
+  const awardRef = useRef<HTMLDivElement | null>(null);
+  const [animateAward, setAnimateAward] = useState(false);
   const activeEmbedUrl = getYouTubeEmbedUrl(activeProject?.href);
 
   useEffect(() => {
@@ -52,6 +92,23 @@ export default function ProjectsPage() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeProject]);
+
+  useEffect(() => {
+    const award = awardRef.current;
+    if (!award) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setAnimateAward(true);
+        observer.disconnect();
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(award);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -148,9 +205,12 @@ export default function ProjectsPage() {
 
       <section className="-mt-16 bg-white pb-20 pt-4 md:-mt-24 md:pt-6">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto mb-16 max-w-4xl rounded-[1.5rem] border border-navy/5 bg-white px-6 py-12 text-center shadow-[0_24px_70px_rgba(42,33,24,0.08)] md:px-12">
+          <div
+            ref={awardRef}
+            className="mx-auto mb-10 max-w-4xl rounded-[1.5rem] border border-navy/5 bg-white px-6 py-12 text-center shadow-[0_24px_70px_rgba(42,33,24,0.08)] md:mb-12 md:px-12"
+          >
             <p className="font-serif text-5xl font-medium leading-none text-gold md:text-6xl">
-              #14
+              #<AnimatedRank value={14} start={animateAward} />
             </p>
             <h3 className="mt-7 text-2xl font-semibold leading-tight text-navy md:text-3xl">
               City &amp; State Political Consultants Power 75
