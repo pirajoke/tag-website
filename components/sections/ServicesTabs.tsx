@@ -145,36 +145,38 @@ export function ServicesTabs() {
           </Link>
         </div>
 
-        <div className="lg:col-span-7 lg:-ml-4 lg:pt-6 xl:-ml-8">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-32 lg:aspect-[16/10] lg:rounded-[2.5rem]">
-            {TABS.map((tab, index) => (
-              <div
-                key={tab.id}
-                className={`absolute inset-0 transition-opacity duration-500 ${
-                  activeIndex === index ? "opacity-100" : "opacity-0"
-                } ${tab.slug === "graphic-design" ? "bg-[#0b3d68]" : ""}`}
-              >
-                <Image
-                  src={tab.image}
-                  alt={tab.title}
-                  fill
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  className={
-                    tab.slug === "graphic-design"
-                      ? "object-contain"
-                      : "object-cover"
-                  }
-                />
-              </div>
-            ))}
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
+        <div className="lg:col-span-7 lg:ml-6 xl:ml-10">
+          <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:aspect-[16/10] lg:rounded-[2.5rem]">
+              {TABS.map((tab, index) => (
+                <div
+                  key={tab.id}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    activeIndex === index ? "opacity-100" : "opacity-0"
+                  } ${tab.slug === "graphic-design" ? "bg-[#0b3d68]" : ""}`}
+                >
+                  <Image
+                    src={tab.image}
+                    alt={tab.title}
+                    fill
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    className={
+                      tab.slug === "graphic-design"
+                        ? "object-contain"
+                        : "object-cover"
+                    }
+                  />
+                </div>
+              ))}
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
 
-            <div className="absolute bottom-6 left-6 z-20 md:bottom-8 md:left-8">
-              <div className="flex items-center gap-2 rounded-full border border-navy/10 bg-white px-4 py-2 shadow-lg">
-                <div className="h-2 w-2 rounded-full bg-gold" />
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-navy">
-                  {TABS[activeIndex].title}
-                </span>
+              <div className="absolute bottom-6 left-6 z-20 md:bottom-8 md:left-8">
+                <div className="flex items-center gap-2 rounded-full border border-navy/10 bg-white px-4 py-2 shadow-lg">
+                  <div className="h-2 w-2 rounded-full bg-gold" />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-navy">
+                    {TABS[activeIndex].title}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

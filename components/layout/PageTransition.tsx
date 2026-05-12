@@ -13,7 +13,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="relative min-h-full overflow-hidden bg-ivory">
+    <div className="relative min-h-full overflow-x-clip bg-ivory">
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={pathname}
