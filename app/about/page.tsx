@@ -188,29 +188,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-ivory">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-6">Recognition</p>
-          <div className="flex flex-wrap justify-center gap-8">
-            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
-              <span className="text-gold font-serif text-3xl font-bold">#14</span>
-              <p className="mt-2 text-navy text-sm font-medium">City & State Political Consultants Power 75</p>
-              <p className="text-steel text-xs mt-1">2021</p>
-            </div>
-            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
-              <span className="text-gold font-serif text-3xl font-bold">35+</span>
-              <p className="mt-2 text-navy text-sm font-medium">Years in NYC Politics</p>
-              <p className="text-steel text-xs mt-1">Since 1990</p>
-            </div>
-            <div className="bg-white px-8 py-6 border border-navy/5 rounded-xl">
-              <span className="text-gold font-serif text-3xl font-bold">$16M+</span>
-              <p className="mt-2 text-navy text-sm font-medium">Annual Revenue</p>
-              <p className="text-steel text-xs mt-1">2026</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <CTASection />
     </>
   );

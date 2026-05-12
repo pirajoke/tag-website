@@ -30,7 +30,7 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group overflow-hidden rounded-2xl border border-navy/5 bg-white transition-shadow hover:shadow-lg"
             >
-              <div className="p-8">
+              <Link href={article.link} className="block h-full p-8">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-gold text-xs font-semibold uppercase tracking-wider">
                     {article.category}
@@ -49,13 +49,10 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
                 <p className="mt-3 text-steel text-sm leading-relaxed">
                   {article.excerpt}
                 </p>
-                <Link
-                  href={article.link}
-                  className="mt-4 inline-block text-gold text-sm font-semibold uppercase tracking-wider group-hover:translate-x-1 transition-transform"
-                >
+                <span className="mt-4 inline-block text-gold text-sm font-semibold uppercase tracking-wider transition-transform group-hover:translate-x-1">
                   Read More &rarr;
-                </Link>
-              </div>
+                </span>
+              </Link>
             </motion.article>
           ))}
         </div>

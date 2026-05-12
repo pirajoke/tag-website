@@ -496,7 +496,7 @@ export const news = [
     date: "2025-03-15",
     excerpt:
       "Scott Levenson examines how affordable housing initiatives and free transit acknowledge mobility as a public good in NYC governance.",
-    link: "#",
+    link: "/news/affordable-housing-as-infrastructure-for-human-dignity",
   },
   {
     title: "AI-Generated Imagery and Political Information",
@@ -504,7 +504,7 @@ export const news = [
     date: "2025-02-20",
     excerpt:
       "TAG addresses the growing impact of AI-generated imagery on political information and media verification.",
-    link: "#",
+    link: "/news/ai-generated-imagery-and-political-information",
   },
   {
     title: "TAG Celebrates 35 Years of Strategic Excellence",
@@ -512,7 +512,7 @@ export const news = [
     date: "2025-01-10",
     excerpt:
       "The Advance Group marks three and a half decades of delivering results for political, nonprofit, and corporate clients.",
-    link: "#",
+    link: "/news/tag-celebrates-35-years-of-strategic-excellence",
   },
   {
     title: "Navigating NYC\u2019s Evolving Policy Landscape",
@@ -520,7 +520,7 @@ export const news = [
     date: "2024-11-05",
     excerpt:
       "How organizations can effectively engage with city and state government in an era of rapid policy change.",
-    link: "#",
+    link: "/news/navigating-nycs-evolving-policy-landscape",
   },
   {
     title: "The Future of Political Campaigning",
@@ -528,7 +528,7 @@ export const news = [
     date: "2024-09-18",
     excerpt:
       "Digital transformation is reshaping how campaigns connect with voters. TAG shares insights from the front lines.",
-    link: "#",
+    link: "/news/the-future-of-political-campaigning",
   },
   {
     title: "Effective Nonprofit Advocacy Strategies",
@@ -536,7 +536,7 @@ export const news = [
     date: "2024-08-01",
     excerpt:
       "Building coalitions and leveraging media to amplify your organization\u2019s mission and impact.",
-    link: "#",
+    link: "/news/effective-nonprofit-advocacy-strategies",
   },
 ];
 

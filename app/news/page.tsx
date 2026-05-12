@@ -15,7 +15,7 @@ export default function NewsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.map((article, i) => (
               <motion.article key={article.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.05 }} className="group overflow-hidden rounded-2xl border border-navy/5 bg-ivory transition-shadow hover:shadow-lg">
-                <div className="p-8">
+                <Link href={article.link} className="block h-full p-8">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-gold text-xs font-semibold uppercase tracking-wider">{article.category}</span>
                     <span className="text-steel/40 text-xs">&mdash;</span>
@@ -23,8 +23,8 @@ export default function NewsPage() {
                   </div>
                   <h3 className="font-serif text-xl font-bold text-navy group-hover:text-gold transition-colors leading-snug">{article.title}</h3>
                   <p className="mt-3 text-steel text-sm leading-relaxed">{article.excerpt}</p>
-                  <Link href={article.link} className="mt-4 inline-block text-gold text-sm font-semibold uppercase tracking-wider">Read More &rarr;</Link>
-                </div>
+                  <span className="mt-4 inline-block text-gold text-sm font-semibold uppercase tracking-wider">Read More &rarr;</span>
+                </Link>
               </motion.article>
             ))}
           </div>
