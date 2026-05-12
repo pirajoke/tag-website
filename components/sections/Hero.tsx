@@ -21,23 +21,12 @@ export function Hero({
   return (
     <section
       className={`relative flex items-center justify-center overflow-hidden ${
-        compact ? "min-h-[60vh] pt-28" : "min-h-screen"
+        compact ? "min-h-[54vh] pt-24 pb-12" : "min-h-screen"
       } ${dark ? "bg-navy text-white" : "bg-ivory text-navy"}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-light/30 to-navy" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <span className="inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2">
-            Est. 1990 &mdash; New York City
-          </span>
-        </motion.div>
-
+      <div className={`relative z-10 max-w-6xl mx-auto px-6 text-center ${compact ? "-mt-4 md:-mt-6" : ""}`}>
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

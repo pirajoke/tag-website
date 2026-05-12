@@ -75,7 +75,7 @@ export function ServicesTabs() {
     <section className="w-full bg-white pb-8 pt-8 md:pb-12 md:pt-10 lg:pt-12">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:px-12 lg:grid-cols-12 lg:gap-8 xl:px-16">
         <div className="lg:col-span-5">
-          <div className="mb-4 lg:sticky lg:top-28 lg:z-10 lg:bg-white lg:pb-3">
+          <div className="mb-6 lg:sticky lg:top-28 lg:z-10 lg:bg-white lg:pb-4">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-navy md:text-4xl lg:text-5xl">
               How We Can Help
             </h2>
@@ -92,7 +92,7 @@ export function ServicesTabs() {
                   itemRefs.current[index] = node;
                 }}
                 data-index={index}
-                className={`group relative flex min-h-[11rem] flex-col justify-center border-t border-navy/10 py-3 text-left first:border-t-0 md:min-h-[12rem] md:py-4 lg:min-h-[13rem] xl:min-h-[13.5rem] ${
+                className={`group relative flex min-h-[28vh] flex-col justify-center border-t border-navy/10 py-5 text-left first:border-t-0 md:min-h-[31vh] md:py-6 lg:min-h-[36vh] ${
                   activeIndex === index
                     ? "text-navy"
                     : "text-navy/28"
@@ -145,8 +145,8 @@ export function ServicesTabs() {
           </Link>
         </div>
 
-        <div className="lg:col-span-7 lg:ml-6 lg:pt-28 xl:ml-10 xl:pt-32">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-60 lg:aspect-[16/10] lg:rounded-[2.5rem]">
+        <div className="lg:col-span-7 lg:-ml-4 lg:pt-6 xl:-ml-8">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-navy/10 bg-navy/5 md:aspect-[4/3] lg:sticky lg:top-32 lg:aspect-[16/10] lg:rounded-[2.5rem]">
             {TABS.map((tab, index) => (
               <div
                 key={tab.id}
