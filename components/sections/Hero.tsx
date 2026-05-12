@@ -21,12 +21,12 @@ export function Hero({
   return (
     <section
       className={`relative flex items-center justify-center overflow-hidden ${
-        compact ? "min-h-[54vh] pt-24 pb-12" : "min-h-screen"
+        compact ? "min-h-[46vh] pt-20 pb-10" : "min-h-screen"
       } ${dark ? "bg-navy text-white" : "bg-ivory text-navy"}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-light/30 to-navy" />
 
-      <div className={`relative z-10 max-w-6xl mx-auto px-6 text-center ${compact ? "-mt-4 md:-mt-6" : ""}`}>
+      <div className={`relative z-10 max-w-6xl mx-auto px-6 text-center ${compact ? "-mt-2 md:-mt-4" : ""}`}>
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
