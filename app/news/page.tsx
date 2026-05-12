@@ -22,7 +22,7 @@ export default function NewsPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filtered.map((article, i) => (
-              <motion.article key={article.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.05 }} className="bg-ivory border border-navy/5 group hover:shadow-lg transition-shadow">
+              <motion.article key={article.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.05 }} className="group overflow-hidden rounded-lg border border-navy/5 bg-ivory transition-shadow hover:shadow-lg">
                 <div className="p-8">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-gold text-xs font-semibold uppercase tracking-wider">{article.category}</span>

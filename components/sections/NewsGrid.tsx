@@ -28,7 +28,7 @@ export function NewsGrid({ limit = 3 }: { limit?: number }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-white border border-navy/5 group hover:shadow-lg transition-shadow"
+              className="group overflow-hidden rounded-lg border border-navy/5 bg-white transition-shadow hover:shadow-lg"
             >
               <div className="p-8">
                 <div className="flex items-center gap-3 mb-4">

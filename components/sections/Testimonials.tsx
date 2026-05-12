@@ -137,7 +137,7 @@ function TestimonialMarqueeRow({
 
 export function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-white py-12 md:py-16">
+    <section className="relative overflow-hidden bg-white pt-6 pb-12 md:pt-8 md:pb-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

@@ -8,9 +8,10 @@ Visual polish plus production hardening. The MVP exists and builds, and the late
 
 ## Current Visual Baseline
 
-- Latest local working version/reference: `http://127.0.0.1:3010`
-- Local preview session: `tmux` session `tag-website-preview`
-- Latest Vercel production deployment before this sync: `https://tag-website-dbzgd2151-pirajokes-projects.vercel.app`
+- User-confirmed current public reference: `https://tag-website-orpin.vercel.app`
+- Latest local preview reference when running: `http://127.0.0.1:3010`
+- Local preview session target: `tmux` session `tag-website-preview` (not running at the latest recall)
+- Latest direct Vercel deployment noted in memory: `https://tag-website-mbbmns7yj-pirajokes-projects.vercel.app` (may require Vercel SSO)
 - Local codebase: `/Users/pirajoke/tag-website`
 - Current client-logo marquee work is in `components/sections/ClientsMarquee.tsx` and is intended to sit immediately after the hero on the home page.
 - Current visual polish touches:
@@ -24,13 +25,14 @@ Visual polish plus production hardening. The MVP exists and builds, and the late
 - `npm run lint` exits 0 with 0 warnings.
 - `npm run build` passes on Next.js 16.2.4 and prerenders 18 pages.
 - Local preview at `http://127.0.0.1:3010/` returns `200 OK`.
+- User-confirmed public alias `https://tag-website-orpin.vercel.app` returns `200 OK`.
 - `npx playwright test` passes locally against `next start`: 14 passed.
 - Existing Playwright tests cover route smoke, contact form presence, navigation, chat button, and service detail page.
 - Missing local team image references were removed from `lib/data.ts`; the About page currently uses initials placeholders until approved photos exist.
 
 ## Next Task
 
-After pushing the visual polish, confirm the new Vercel deployment, then start Milestone 2 in `docs/PLAN.md`: make contact and lead capture real.
+Use `https://tag-website-orpin.vercel.app` as the current visual reference, then start Milestone 2 in `docs/PLAN.md`: make contact and lead capture real.
 
 ## Assumptions
 
@@ -50,3 +52,4 @@ After pushing the visual polish, confirm the new Vercel deployment, then start M
 - 2026-05-09: Created execution plan, status, test plan, and backlog for finishing the site.
 - 2026-05-09: Completed Milestone 1 technical cleanup: lint is warning-free, build passes, local Playwright passes, and missing team image references were removed.
 - 2026-05-12: Added local visual polish for About video presentation, testimonial marquee, and compact footer; lint and production build pass.
+- 2026-05-12: User confirmed `https://tag-website-orpin.vercel.app` as the current public website version/reference.
