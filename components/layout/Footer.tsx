@@ -19,7 +19,10 @@ export function Footer() {
   };
 
   return (
-    <footer id="site-footer" className="relative overflow-hidden bg-navy text-white">
+    <footer
+      id="site-footer"
+      className="relative -mt-px overflow-hidden bg-navy text-white"
+    >
       {/* Subtle static radial glow — no blur, no animation */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -31,9 +34,9 @@ export function Footer() {
 
       {/* Giant BG text — static, no GSAP */}
       <div
-        className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-serif"
+        className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-serif md:-bottom-10"
         style={{
-          fontSize: "15vw",
+          fontSize: "clamp(8rem, 15vw, 18rem)",
           lineHeight: 0.8,
           fontWeight: 900,
           letterSpacing: "0",
@@ -64,10 +67,10 @@ export function Footer() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 py-10 md:py-12">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 py-12 sm:px-6 md:py-12 lg:py-14">
         <div className="reveal-up grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
           <div>
-            <h2 className="font-serif text-5xl font-bold leading-[1.02] md:text-7xl lg:text-[5.4rem] xl:text-[6rem]">
+            <h2 className="font-serif text-[3.15rem] font-bold leading-[0.98] sm:text-6xl md:text-7xl lg:text-[5.4rem] lg:leading-[1.02] xl:text-[6rem]">
               <span className="bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent">
                 Ready to Make
               </span>
@@ -84,16 +87,16 @@ export function Footer() {
               goals.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact"
-                className="rounded-full bg-gold px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy transition-colors duration-300 hover:bg-gold/90"
+                className="inline-flex justify-center rounded-full bg-gold px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy transition-colors duration-300 hover:bg-gold/90"
               >
                 Get in Touch
               </Link>
               <Link
                 href="/services"
-                className="rounded-full border border-white/20 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-white/80 transition-colors duration-300 hover:border-gold hover:text-gold"
+                className="inline-flex justify-center rounded-full border border-white/20 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-white/80 transition-colors duration-300 hover:border-gold hover:text-gold"
               >
                 Our Services
               </Link>
@@ -103,7 +106,7 @@ export function Footer() {
 
         {/* Footer columns */}
         <div className="w-full">
-          <div className="grid grid-cols-2 gap-8 py-7 md:grid-cols-4 lg:grid-cols-[1.1fr_1.35fr_1.25fr_0.8fr]">
+          <div className="grid grid-cols-1 gap-7 py-7 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.1fr_1.35fr_1.25fr_0.8fr]">
             {/* Brand */}
             <div>
               <span className="text-gold font-serif text-2xl font-bold">
@@ -119,7 +122,7 @@ export function Footer() {
               <h4 className="text-gold/60 text-[10px] font-bold uppercase tracking-widest mb-3">
                 Navigate
               </h4>
-              <ul className="grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 md:grid-cols-1 lg:grid-cols-2">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -138,7 +141,7 @@ export function Footer() {
               <h4 className="text-gold/60 text-[10px] font-bold uppercase tracking-widest mb-3">
                 Contact
               </h4>
-              <ul className="space-y-1.5 text-xs text-white/40">
+              <ul className="space-y-1.5 break-words text-xs text-white/40">
                 <li>420 Lexington Ave, Suite 1402</li>
                 <li>New York, NY 10170</li>
                 <li>
@@ -208,6 +211,7 @@ export function Footer() {
             </p>
             <button
               onClick={scrollToTop}
+              aria-label="Scroll to top"
               className="group flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 hover:border-gold hover:text-gold sm:absolute sm:right-0 sm:top-4"
             >
               <svg

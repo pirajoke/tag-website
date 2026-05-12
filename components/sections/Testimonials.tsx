@@ -79,7 +79,7 @@ const rows = [testimonials.slice(0, 3), testimonials.slice(3)];
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <article className="mx-3 flex h-[198px] w-[350px] shrink-0 flex-col justify-between overflow-hidden rounded-2xl border border-navy/8 bg-white px-5 py-5 shadow-[0_18px_50px_rgba(42,33,24,0.06)] transition-all duration-300 hover:border-gold/35 hover:shadow-[0_22px_60px_rgba(42,33,24,0.10)] md:h-[208px] md:w-[420px] md:px-6">
+    <article className="mx-3 flex h-[198px] w-[calc(100vw-56px)] max-w-[350px] shrink-0 flex-col justify-between overflow-hidden rounded-2xl border border-navy/8 bg-white px-5 py-5 shadow-[0_18px_50px_rgba(42,33,24,0.06)] transition-all duration-300 hover:border-gold/35 hover:shadow-[0_22px_60px_rgba(42,33,24,0.10)] md:h-[208px] md:w-[420px] md:max-w-none md:px-6">
       <div>
         <Quote className="mb-3 h-5 w-5 text-gold/30 md:h-6 md:w-6" />
         <p className="line-clamp-3 text-sm italic leading-relaxed text-navy/65">
@@ -137,8 +137,8 @@ function TestimonialMarqueeRow({
 
 export function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-white py-14 md:py-16">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative overflow-hidden bg-white py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
