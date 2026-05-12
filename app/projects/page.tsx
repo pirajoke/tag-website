@@ -111,9 +111,6 @@ export default function ProjectsPage() {
                         : "object-cover"
                     }`}
                   />
-                  <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-navy">
-                    {project.duration}
-                  </div>
                   {embedUrl && (
                     <span className="absolute inset-0 flex items-center justify-center bg-navy/0 transition-colors duration-300 group-hover:bg-navy/20">
                       <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-navy shadow-[0_14px_40px_rgba(42,33,24,0.25)] transition-transform duration-300 group-hover:scale-105">
@@ -320,14 +317,9 @@ export default function ProjectsPage() {
                   )}
                 </button>
                 <div className="p-5">
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold">
-                      {project.category}
-                    </span>
-                    <span className="text-xs font-medium text-steel/70">
-                      {project.duration}
-                    </span>
-                  </div>
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gold">
+                    {project.category}
+                  </p>
                   <h3 className="font-serif text-xl font-bold leading-snug text-navy">
                     {project.title}
                   </h3>
