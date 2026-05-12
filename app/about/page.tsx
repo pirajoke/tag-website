@@ -4,7 +4,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { CTASection } from "@/components/sections/CTASection";
-import { stats, team, timeline } from "@/lib/data";
+import { team, timeline } from "@/lib/data";
+
+const missionStats = [
+  { value: "3", label: "Government Levels" },
+  { value: "11-50", label: "Team Size" },
+  { value: "7", label: "Core Specializations" },
+  { value: "60+", label: "Senior Staff Expertise" },
+];
 
 export default function AboutPage() {
   return (
@@ -33,14 +40,13 @@ export default function AboutPage() {
             <div className="mx-auto mt-6 h-0.5 w-16 bg-gold lg:mx-0" />
 
             <div className="mt-9 grid gap-3 sm:grid-cols-2">
-              {stats.map((stat) => (
+              {missionStats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-2xl border border-navy/5 bg-ivory/55 px-5 py-4 text-left shadow-[0_14px_36px_rgba(42,33,24,0.04)]"
                 >
                   <p className="font-serif text-3xl font-bold leading-none text-gold">
                     {stat.value}
-                    {stat.suffix}
                   </p>
                   <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy/60">
                     {stat.label}

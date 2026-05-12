@@ -3,9 +3,51 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { siteConfig, youtubeChannelUrl } from "@/lib/data";
+import { useEffect, useState } from "react";
+import { creativeProjects, siteConfig } from "@/lib/data";
+
+function getYouTubeEmbedUrl(href?: string) {
+  if (!href) return null;
+
+  try {
+    const url = new URL(href);
+    const videoId =
+      url.hostname.includes("youtu.be")
+        ? url.pathname.slice(1)
+        : url.searchParams.get("v");
+
+    return videoId
+      ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 export function AboutTeaser() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const videoProject = creativeProjects[1];
+  const embedUrl = getYouTubeEmbedUrl(videoProject.href);
+
+  useEffect(() => {
+    if (!isVideoOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsVideoOpen(false);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isVideoOpen]);
+
   return (
     <section className="bg-white pb-16 pt-10 md:pb-24 md:pt-14 lg:-mt-2">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
@@ -70,23 +112,55 @@ export function AboutTeaser() {
                     Years Shaping Policy
                   </p>
                   <p className="text-white/40 text-sm mt-1">Since 1990</p>
-                  <a
-                    href={youtubeChannelUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => embedUrl && setIsVideoOpen(true)}
                     className="mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-gold px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-navy transition-all duration-300 hover:bg-white sm:mt-7 sm:px-6 sm:text-xs sm:tracking-[0.18em]"
                   >
                     <span aria-hidden="true" className="text-sm leading-none">
                       &#9658;
                     </span>
                     Play Video
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {isVideoOpen && embedUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy/80 px-4 py-8 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={videoProject.title}
+          onClick={() => setIsVideoOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-navy shadow-[0_30px_90px_rgba(0,0,0,0.35)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-2xl leading-none text-navy transition-colors hover:bg-gold"
+              aria-label="Close video"
+            >
+              &times;
+            </button>
+            <div className="aspect-video w-full">
+              <iframe
+                src={embedUrl}
+                title={videoProject.title}
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
