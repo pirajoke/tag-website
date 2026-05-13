@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
-import { CTASection } from "@/components/sections/CTASection";
 import { clients } from "@/lib/data";
 
 const categories = [
@@ -42,7 +41,6 @@ export default function ClientsPage() {
           </AnimatePresence>
         </div>
       </section>
-      <CTASection />
     </>
   );
 }

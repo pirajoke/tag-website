@@ -319,7 +319,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="bg-ivory py-20">
+      <section id="campaign-advocacy-work" className="scroll-mt-28 bg-ivory py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>

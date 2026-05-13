@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CTASection } from "@/components/sections/CTASection";
 import { news } from "@/lib/data";
 
 const getSlug = (link: string) => link.split("/").filter(Boolean).at(-1);
@@ -97,7 +96,6 @@ export default async function NewsArticlePage({
         </div>
       </article>
 
-      <CTASection />
     </>
   );
 }

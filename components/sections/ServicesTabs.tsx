@@ -10,6 +10,10 @@ const TABS = services.slice(0, 5).map((s, i) => ({
   slug: s.slug,
   title: s.title,
   description: s.shortDescription,
+  href:
+    s.slug === "lobbying"
+      ? "/projects#campaign-advocacy-work"
+      : `/services/${s.slug}`,
   image: [
     "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&h=800&fit=crop&q=80",
     "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=1200&h=800&fit=crop&q=80",
@@ -124,7 +128,7 @@ export function ServicesTabs() {
                           {tab.description}
                         </p>
                         <Link
-                          href={`/services/${tab.slug}`}
+                          href={tab.href}
                           className="mt-3 inline-block text-sm font-semibold uppercase tracking-wider text-gold transition-colors hover:text-navy"
                         >
                           Learn More &rarr;

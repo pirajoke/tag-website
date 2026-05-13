@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { services } from "@/lib/data";
-import { CTASection } from "@/components/sections/CTASection";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -51,7 +50,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </section>
-      <CTASection />
     </>
   );
 }
