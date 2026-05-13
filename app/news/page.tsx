@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
-import { CTASection } from "@/components/sections/CTASection";
 import { news } from "@/lib/data";
 
 export default function NewsPage() {
@@ -30,7 +29,6 @@ export default function NewsPage() {
           </div>
         </div>
       </section>
-      <CTASection />
     </>
   );
 }

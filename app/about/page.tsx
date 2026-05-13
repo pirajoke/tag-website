@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
-import { CTASection } from "@/components/sections/CTASection";
 import { team, timeline } from "@/lib/data";
 
 const missionStats = [
@@ -211,7 +210,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CTASection />
     </>
   );
 }

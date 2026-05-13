@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/sections/Hero";
-import { CTASection } from "@/components/sections/CTASection";
 import { careers } from "@/lib/data";
 
 export default function CareersPage() {
@@ -105,7 +104,6 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
-      <CTASection />
     </>
   );
 }

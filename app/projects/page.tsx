@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Hero } from "@/components/sections/Hero";
-import { CTASection } from "@/components/sections/CTASection";
 import { creativeProjects } from "@/lib/data";
 
 type CreativeProject = (typeof creativeProjects)[number];
@@ -449,7 +448,6 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      <CTASection />
     </>
   );
 }
