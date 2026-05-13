@@ -72,7 +72,11 @@ export function Footer() {
       )}
 
       {/* Main content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 py-12 sm:px-6 md:py-12 lg:py-14">
+      <div
+        className={`relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 sm:px-6 ${
+          showFooterCta ? "py-12 md:py-12 lg:py-14" : "py-7 md:py-8 lg:py-9"
+        }`}
+      >
         {showFooterCta && (
           <div className="reveal-up grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
             <div>
