@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig, navLinks } from "@/lib/data";
 
 const services = [
@@ -14,6 +15,9 @@ const services = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  const showFooterCta = pathname === "/";
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -51,58 +55,61 @@ export function Footer() {
         TAG
       </div>
 
-      {/* Marquee strip — GPU-accelerated */}
-      <div className="relative w-full overflow-hidden border-b border-white/5 py-3 z-10">
-        <div
-          className="flex w-max animate-marquee text-[10px] md:text-xs font-bold tracking-[0.3em] text-white/20 uppercase"
-          style={{ willChange: "transform", transform: "translateZ(0)" }}
-        >
-          {[...services, ...services, ...services, ...services].map((s, i) => (
-            <span key={i} className="flex items-center gap-8 px-4">
-              {s}
-              <span className="text-gold/40">&#9670;</span>
-            </span>
-          ))}
+      {showFooterCta && (
+        <div className="relative w-full overflow-hidden border-b border-white/5 py-3 z-10">
+          <div
+            className="flex w-max animate-marquee text-[10px] md:text-xs font-bold tracking-[0.3em] text-white/20 uppercase"
+            style={{ willChange: "transform", transform: "translateZ(0)" }}
+          >
+            {[...services, ...services, ...services, ...services].map((s, i) => (
+              <span key={i} className="flex items-center gap-8 px-4">
+                {s}
+                <span className="text-gold/40">&#9670;</span>
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main content */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 py-12 sm:px-6 md:py-12 lg:py-14">
-        <div className="reveal-up grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
-          <div>
-            <h2 className="font-serif text-[3.15rem] font-bold leading-[0.98] sm:text-6xl md:text-7xl lg:text-[5.4rem] lg:leading-[1.02] xl:text-[6rem]">
-              <span className="bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent">
-                Ready to Make
-              </span>
-              <br />
-              <span className="bg-gradient-to-b from-gold to-gold/65 bg-clip-text text-transparent">
-                an Impact?
-              </span>
-            </h2>
-          </div>
+        {showFooterCta && (
+          <div className="reveal-up grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
+            <div>
+              <h2 className="font-serif text-[3.15rem] font-bold leading-[0.98] sm:text-6xl md:text-7xl lg:text-[5.4rem] lg:leading-[1.02] xl:text-[6rem]">
+                <span className="bg-gradient-to-b from-white to-white/45 bg-clip-text text-transparent">
+                  Ready to Make
+                </span>
+                <br />
+                <span className="bg-gradient-to-b from-gold to-gold/65 bg-clip-text text-transparent">
+                  an Impact?
+                </span>
+              </h2>
+            </div>
 
-          <div className="flex flex-col items-start justify-center lg:max-w-xl">
-            <p className="text-sm leading-relaxed text-white/50 md:text-base lg:text-lg">
-              Let&apos;s discuss how TAG can help you achieve your strategic
-              goals.
-            </p>
+            <div className="flex flex-col items-start justify-center lg:max-w-xl">
+              <p className="text-sm leading-relaxed text-white/50 md:text-base lg:text-lg">
+                Let&apos;s discuss how TAG can help you achieve your strategic
+                goals.
+              </p>
 
-            <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact"
-                className="inline-flex justify-center rounded-full bg-gold px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy transition-colors duration-300 hover:bg-gold/90"
-              >
-                Get in Touch
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex justify-center rounded-full border border-white/20 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-white/80 transition-colors duration-300 hover:border-gold hover:text-gold"
-              >
-                Our Services
-              </Link>
+              <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+                <Link
+                  href="/contact"
+                  className="inline-flex justify-center rounded-full bg-gold px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy transition-colors duration-300 hover:bg-gold/90"
+                >
+                  Get in Touch
+                </Link>
+                <Link
+                  href="/services"
+                  className="inline-flex justify-center rounded-full border border-white/20 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-white/80 transition-colors duration-300 hover:border-gold hover:text-gold"
+                >
+                  Our Services
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Footer columns */}
         <div className="w-full">
