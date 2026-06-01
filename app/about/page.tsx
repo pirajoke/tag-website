@@ -62,6 +62,8 @@ export default function AboutPage() {
                 alt="Scott Levenson, Founder and President of The Advance Group"
                 fill
                 sizes="(min-width: 1024px) 420px, 90vw"
+                quality={90}
+                loading="eager"
                 className="object-cover grayscale"
                 style={{ objectPosition: "center 34%" }}
               />
@@ -159,13 +161,15 @@ export default function AboutPage() {
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="group"
               >
-                <div className="relative aspect-[8/9] overflow-hidden rounded-2xl bg-navy/10 shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
                     fill
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+                    quality={90}
+                    loading={i < 4 ? "eager" : "lazy"}
+                    className="object-contain grayscale transition duration-500 group-hover:grayscale-0"
                     style={{ objectPosition: member.imagePosition }}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
