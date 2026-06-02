@@ -131,7 +131,7 @@ export default function AboutPage() {
           </defs>
         </svg>
 
-        <div className="relative z-10 mx-auto max-w-[100rem] px-6">
+        <div className="relative z-10 mx-auto max-w-[88rem] px-6">
           <div className="mx-auto mb-14 flex max-w-4xl flex-col items-center text-center">
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -161,7 +161,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="group"
               >
-                <div className="relative aspect-[15/16] overflow-hidden rounded-[20px] bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
+                <div className="relative aspect-[2/3] overflow-hidden rounded-[20px] bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
@@ -169,7 +169,7 @@ export default function AboutPage() {
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     quality={90}
                     loading={i < 4 ? "eager" : "lazy"}
-                    className="object-cover"
+                    className="object-contain"
                     style={{ objectPosition: member.imagePosition }}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
