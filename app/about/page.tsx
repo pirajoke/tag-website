@@ -131,7 +131,7 @@ export default function AboutPage() {
           </defs>
         </svg>
 
-        <div className="relative z-10 mx-auto max-w-[104rem] px-6">
+        <div className="relative z-10 mx-auto max-w-[100rem] px-6">
           <div className="mx-auto mb-14 flex max-w-4xl flex-col items-center text-center">
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,7 +151,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-14">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((member, i) => (
               <motion.article
                 key={member.name}
