@@ -64,7 +64,7 @@ export default function AboutPage() {
                 sizes="(min-width: 1024px) 420px, 90vw"
                 quality={90}
                 loading="eager"
-                className="object-cover grayscale"
+                className="object-cover"
                 style={{ objectPosition: "center 34%" }}
               />
             </div>
@@ -169,7 +169,7 @@ export default function AboutPage() {
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     quality={90}
                     loading={i < 4 ? "eager" : "lazy"}
-                    className="object-cover grayscale transition duration-500 group-hover:grayscale-0"
+                    className="object-cover"
                     style={{ objectPosition: member.imagePosition }}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
@@ -201,7 +201,7 @@ export default function AboutPage() {
                   alt="Scott Levenson"
                   fill
                   sizes="56px"
-                  className="object-cover grayscale"
+                  className="object-cover"
                   style={{ objectPosition: "center 36%" }}
                 />
               </div>
