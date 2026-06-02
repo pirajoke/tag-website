@@ -131,7 +131,7 @@ export default function AboutPage() {
           </defs>
         </svg>
 
-        <div className="relative z-10 mx-auto max-w-[88rem] px-6">
+        <div className="relative z-10 mx-auto max-w-[80rem] px-6">
           <div className="mx-auto mb-14 flex max-w-4xl flex-col items-center text-center">
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,29 +151,30 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-x-7 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((member, i) => (
               <motion.article
                 key={member.name}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -6, transition: { duration: 0.2, delay: 0 } }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="group"
               >
-                <div className="relative aspect-[2/3] overflow-hidden rounded-[20px] bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
+                <div className="relative aspect-[2/3] overflow-hidden rounded-[20px] bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)] transition-shadow duration-300 ease-out group-hover:shadow-[0_26px_70px_rgba(42,33,24,0.16)]">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
                     fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 320px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     quality={90}
                     loading={i < 4 ? "eager" : "lazy"}
-                    className="object-contain"
+                    className="object-contain transition duration-300 ease-out group-hover:brightness-105 group-hover:saturate-110"
                     style={{ objectPosition: member.imagePosition }}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
-                    <div className="w-[82%] rounded-xl bg-white/95 px-5 py-4 shadow-[0_14px_34px_rgba(42,33,24,0.12)] backdrop-blur-sm">
+                    <div className="w-[82%] rounded-xl bg-white/95 px-5 py-4 shadow-[0_14px_34px_rgba(42,33,24,0.12)] backdrop-blur-sm transition-transform duration-300 ease-out group-hover:-translate-y-1">
                       <h3 className="font-serif text-lg font-bold leading-tight tracking-normal text-gold">
                         {member.name}
                       </h3>
