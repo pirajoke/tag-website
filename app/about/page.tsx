@@ -131,7 +131,7 @@ export default function AboutPage() {
           </defs>
         </svg>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="relative z-10 mx-auto max-w-[104rem] px-6">
           <div className="mx-auto mb-14 flex max-w-4xl flex-col items-center text-center">
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-navy">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,7 +151,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-14">
             {team.map((member, i) => (
               <motion.article
                 key={member.name}
@@ -161,7 +161,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.45, delay: i * 0.04 }}
                 className="group"
               >
-                <div className="relative aspect-square overflow-hidden rounded-2xl bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
+                <div className="relative aspect-[15/16] overflow-hidden rounded-[20px] bg-ivory shadow-[0_20px_60px_rgba(42,33,24,0.08)]">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
@@ -169,15 +169,15 @@ export default function AboutPage() {
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     quality={90}
                     loading={i < 4 ? "eager" : "lazy"}
-                    className="object-contain grayscale transition duration-500 group-hover:grayscale-0"
+                    className="object-cover grayscale transition duration-500 group-hover:grayscale-0"
                     style={{ objectPosition: member.imagePosition }}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
-                    <div className="max-w-[82%] rounded-xl bg-white/95 px-4 py-3 shadow-[0_14px_34px_rgba(42,33,24,0.12)] backdrop-blur-sm">
-                      <h3 className="font-sans text-base font-bold tracking-normal text-gold">
+                    <div className="w-[82%] rounded-xl bg-white/95 px-5 py-4 shadow-[0_14px_34px_rgba(42,33,24,0.12)] backdrop-blur-sm">
+                      <h3 className="font-serif text-lg font-bold leading-tight tracking-normal text-gold">
                         {member.name}
                       </h3>
-                      <p className="mt-1 text-xs font-medium leading-snug text-navy">
+                      <p className="mt-2 text-sm font-medium leading-snug text-navy">
                         {member.title}
                       </p>
                     </div>
