@@ -58,14 +58,14 @@ export default function AboutPage() {
           <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-navy/10 bg-ivory shadow-[0_24px_70px_rgba(42,33,24,0.10)] lg:max-w-none">
             <div className="relative aspect-[4/5]">
               <Image
-                src="/images/team/scott-levenson.webp"
+                src="/images/team/scott-levenson-studio.webp"
                 alt="Scott Levenson, Founder and President of The Advance Group"
                 fill
                 sizes="(min-width: 1024px) 420px, 90vw"
                 quality={90}
                 loading="eager"
                 className="object-cover"
-                style={{ objectPosition: "center 34%" }}
+                style={{ objectPosition: "center 40%" }}
               />
             </div>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/75 via-navy/35 to-transparent px-6 pb-6 pt-20">
