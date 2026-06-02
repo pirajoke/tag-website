@@ -169,7 +169,7 @@ export default function AboutPage() {
                     fill
                     sizes="(min-width: 1280px) 320px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     quality={90}
-                    loading={i < 4 ? "eager" : "lazy"}
+                    loading="eager"
                     className="object-contain transition duration-300 ease-out group-hover:brightness-105 group-hover:saturate-110"
                     style={{ objectPosition: member.imagePosition }}
                   />

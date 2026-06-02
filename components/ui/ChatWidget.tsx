@@ -58,7 +58,7 @@ export function ChatWidget() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-navy text-white flex items-center justify-center shadow-2xl shadow-navy/30 hover:scale-105 active:scale-95 transition-transform"
+        className="fixed bottom-6 right-6 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-navy text-white shadow-2xl shadow-navy/30 transition-transform hover:scale-105 active:scale-95 sm:flex"
         aria-label="Chat with TAG"
       >
         {open ? (
@@ -80,7 +80,7 @@ export function ChatWidget() {
       {/* Chat panel */}
       {open && (
           <div
-            className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] rounded-2xl overflow-hidden shadow-2xl shadow-navy/20 border border-navy/10 bg-white flex flex-col animate-fade-in-up"
+            className="fixed bottom-24 right-6 z-50 hidden w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-2xl shadow-navy/20 animate-fade-in-up sm:flex"
             style={{ maxHeight: "min(520px, calc(100vh - 8rem))" }}
           >
             {/* Header */}
