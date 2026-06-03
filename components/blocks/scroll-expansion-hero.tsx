@@ -16,17 +16,12 @@ interface ScrollExpandMediaProps {
 }
 
 const clamp = (value: number): number => Math.min(Math.max(value, 0), 1);
-const MOBILE_EXPAND_TOUCH_FACTOR = 0.0038;
-const MOBILE_COLLAPSE_TOUCH_FACTOR = 0.006;
 const TOUCH_EXPAND_FACTOR = 0.007;
 const TOUCH_COLLAPSE_FACTOR = 0.011;
-const getTouchScrollFactor = (deltaY: number, isMobile: boolean): number => {
-  if (isMobile) {
-    return deltaY < 0 ? MOBILE_COLLAPSE_TOUCH_FACTOR : MOBILE_EXPAND_TOUCH_FACTOR;
-  }
-
-  return deltaY < 0 ? TOUCH_COLLAPSE_FACTOR : TOUCH_EXPAND_FACTOR;
-};
+const MOBILE_HERO_COPY =
+  'Political strategy, lobbying, campaigns, and communications for high-stakes work.';
+const getTouchScrollFactor = (deltaY: number): number =>
+  deltaY < 0 ? TOUCH_COLLAPSE_FACTOR : TOUCH_EXPAND_FACTOR;
 
 const ScrollExpandMedia = ({
   mediaType = 'image',
@@ -71,6 +66,11 @@ const ScrollExpandMedia = ({
       showContentRef.current = nextShowContent;
       setShowContent(nextShowContent);
     };
+
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      updateContentVisibility(true);
+      return;
+    }
 
     const applyProgress = (): void => {
       frameRef.current = null;
@@ -172,6 +172,7 @@ const ScrollExpandMedia = ({
     };
 
     const handleWheel = (e: globalThis.WheelEvent): void => {
+      if (isMobileRef.current) return;
       if (recoverIfPageIsAlreadyScrolled()) return;
 
       if (mediaFullyExpandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
@@ -187,10 +188,12 @@ const ScrollExpandMedia = ({
     };
 
     const handleTouchStart = (e: globalThis.TouchEvent): void => {
+      if (isMobileRef.current) return;
       touchStartYRef.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: globalThis.TouchEvent): void => {
+      if (isMobileRef.current) return;
       if (!touchStartYRef.current) return;
       if (recoverIfPageIsAlreadyScrolled()) return;
 
@@ -205,7 +208,7 @@ const ScrollExpandMedia = ({
 
       if (!mediaFullyExpandedRef.current) {
         e.preventDefault();
-        const scrollFactor = getTouchScrollFactor(deltaY, isMobileRef.current);
+        const scrollFactor = getTouchScrollFactor(deltaY);
         setProgress(progressRef.current + deltaY * scrollFactor);
         touchStartYRef.current = touchY;
       }
@@ -216,6 +219,7 @@ const ScrollExpandMedia = ({
     };
 
     const handleScroll = (): void => {
+      if (isMobileRef.current) return;
       if (recoverIfPageIsAlreadyScrolled()) return;
 
       if (!mediaFullyExpandedRef.current && window.scrollY > 0) {
@@ -251,176 +255,203 @@ const ScrollExpandMedia = ({
   }, [mediaType]);
 
   return (
-    <div
-      ref={sectionRef}
-      className='transition-colors duration-700 ease-in-out overflow-x-hidden'
-    >
-      <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
-        <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
-          <div ref={backgroundRef} className='absolute inset-0 z-0 h-full'>
-            <Image
-              src={bgImageSrc}
-              alt='Background'
-              width={1920}
-              height={1080}
-              sizes='100vw'
-              className='w-screen h-screen'
-              style={{
-                objectFit: 'cover',
-                objectPosition: 'center',
-              }}
-              priority
-            />
-            <div className='absolute inset-0 bg-black/40' />
-          </div>
+    <div className='overflow-x-hidden'>
+      <section className='relative flex min-h-[100svh] overflow-hidden bg-navy text-white md:hidden'>
+        <Image
+          src={mediaSrc}
+          alt={title || 'TAG hero image'}
+          fill
+          sizes='100vw'
+          className='scale-105 object-cover'
+          style={{ objectPosition: 'center' }}
+          priority
+        />
+        <div className='absolute inset-0 bg-gradient-to-b from-navy/35 via-navy/35 to-navy/85' />
+        <div className='relative z-10 flex min-h-[100svh] w-full flex-col justify-end px-6 pb-14 pt-28'>
+          <p className='mb-4 text-[0.66rem] font-semibold uppercase tracking-[0.26em] text-gold'>
+            Est. 1990 / New York City
+          </p>
+          <h1 className='max-w-[10ch] font-serif text-[clamp(3rem,13vw,4.5rem)] font-bold leading-[0.92] tracking-normal text-white'>
+            Together, We Make It Happen
+          </h1>
+          <div className='mt-6 h-px w-16 bg-gold' />
+          <p className='mt-5 max-w-[21rem] text-base font-light leading-7 text-white/78'>
+            {MOBILE_HERO_COPY}
+          </p>
+        </div>
+      </section>
 
-          <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
-            <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
-              <div
-                ref={mediaRef}
-                className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
+      <div
+        ref={sectionRef}
+        className='hidden overflow-x-hidden transition-colors duration-700 ease-in-out md:block'
+      >
+        <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
+          <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
+            <div ref={backgroundRef} className='absolute inset-0 z-0 h-full'>
+              <Image
+                src={bgImageSrc}
+                alt='Background'
+                width={1920}
+                height={1080}
+                sizes='100vw'
+                className='w-screen h-screen'
                 style={{
-                  width: '300px',
-                  height: '400px',
-                  maxWidth: '95vw',
-                  maxHeight: '85vh',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                 }}
-              >
+                priority
+              />
+              <div className='absolute inset-0 bg-black/40' />
+            </div>
+
+            <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
+              <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
                 <div
-                  ref={mediaVisualRef}
-                  className='relative w-full h-full rounded-2xl transition-none will-change-[opacity,transform]'
+                  ref={mediaRef}
+                  className='absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl'
                   style={{
-                    opacity: 0,
-                    transform: 'scale(0.72)',
-                    boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                    width: '300px',
+                    height: '400px',
+                    maxWidth: '95vw',
+                    maxHeight: '85vh',
                   }}
                 >
-                  {mediaType === 'video' ? (
-                    <div className='relative w-full h-full pointer-events-none'>
-                      <video
-                        src={mediaSrc}
-                        poster={posterSrc}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload='metadata'
-                        className='w-full h-full object-cover rounded-xl'
-                        controls={false}
-                        disablePictureInPicture
-                        disableRemotePlayback
-                      />
-                      <div
-                        ref={videoOverlayRef}
-                        className='absolute inset-0 bg-black/30 rounded-xl'
-                        style={{ opacity: 0.5 }}
-                      />
-                    </div>
-                  ) : (
-                    <div className='relative w-full h-full'>
-                      <Image
-                        src={mediaSrc}
-                        alt={title || 'Media content'}
-                        width={1280}
-                        height={720}
-                        sizes='(min-width: 768px) 95vw, 95vw'
-                        className='w-full h-full object-cover rounded-xl'
-                        priority
-                      />
-                      <div
-                        ref={imageOverlayRef}
-                        className='absolute inset-0 bg-black/50 rounded-xl'
-                        style={{ opacity: 0.7 }}
-                      />
-                    </div>
-                  )}
-
                   <div
-                    ref={expandedOverlayRef}
-                    className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
-                    style={{ opacity: 0 }}
+                    ref={mediaVisualRef}
+                    className='relative w-full h-full rounded-2xl transition-none will-change-[opacity,transform]'
+                    style={{
+                      opacity: 0,
+                      transform: 'scale(0.72)',
+                      boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                    }}
                   >
-                    <div className='flex flex-col items-center'>
-                      <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
-                        Est. 1990 &mdash; New York City
-                      </span>
-                      <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
-                        Together, We Make<br />It Happen
-                      </h2>
-                    </div>
+                    {mediaType === 'video' ? (
+                      <div className='relative w-full h-full pointer-events-none'>
+                        <video
+                          src={mediaSrc}
+                          poster={posterSrc}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          preload='metadata'
+                          className='w-full h-full object-cover rounded-xl'
+                          controls={false}
+                          disablePictureInPicture
+                          disableRemotePlayback
+                        />
+                        <div
+                          ref={videoOverlayRef}
+                          className='absolute inset-0 bg-black/30 rounded-xl'
+                          style={{ opacity: 0.5 }}
+                        />
+                      </div>
+                    ) : (
+                      <div className='relative w-full h-full'>
+                        <Image
+                          src={mediaSrc}
+                          alt={title || 'Media content'}
+                          width={1280}
+                          height={720}
+                          sizes='(min-width: 768px) 95vw, 95vw'
+                          className='w-full h-full object-cover rounded-xl'
+                          priority
+                        />
+                        <div
+                          ref={imageOverlayRef}
+                          className='absolute inset-0 bg-black/50 rounded-xl'
+                          style={{ opacity: 0.7 }}
+                        />
+                      </div>
+                    )}
 
-                    <div className='flex flex-col items-center'>
-                      <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
-                        Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
-                      </p>
-                      <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
-                        <span>Lobbying</span>
-                        <span className='text-gold'>&#9670;</span>
-                        <span>Campaigns</span>
-                        <span className='text-gold'>&#9670;</span>
-                        <span>Communications</span>
-                        <span className='text-gold'>&#9670;</span>
-                        <span>Design</span>
+                    <div
+                      ref={expandedOverlayRef}
+                      className='absolute inset-0 z-20 flex flex-col items-center justify-between text-center px-8 py-12 md:py-16 rounded-xl bg-gradient-to-b from-black/50 via-transparent to-black/70'
+                      style={{ opacity: 0 }}
+                    >
+                      <div className='flex flex-col items-center'>
+                        <span className='inline-block text-gold text-xs font-semibold uppercase tracking-[0.3em] border border-gold/30 px-4 py-2 mb-5'>
+                          Est. 1990 &mdash; New York City
+                        </span>
+                        <h2 className='text-3xl md:text-5xl lg:text-6xl font-bold text-white font-serif leading-[1.1]'>
+                          Together, We Make<br />It Happen
+                        </h2>
+                      </div>
+
+                      <div className='flex flex-col items-center'>
+                        <p className='text-white/90 text-lg md:text-xl max-w-3xl font-light leading-relaxed'>
+                          Since 1990, TAG has represented political candidates, not-for-profits, corporations, advocacy groups, and labor unions &mdash; combining deep institutional knowledge with innovative strategy to deliver results.
+                        </p>
+                        <div className='mt-4 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white/50 text-sm uppercase tracking-wider'>
+                          <span>Lobbying</span>
+                          <span className='text-gold'>&#9670;</span>
+                          <span>Campaigns</span>
+                          <span className='text-gold'>&#9670;</span>
+                          <span>Communications</span>
+                          <span className='text-gold'>&#9670;</span>
+                          <span>Design</span>
+                        </div>
                       </div>
                     </div>
+                  </div>
+
+                  <div
+                    ref={metaRef}
+                    className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'
+                  >
+                    {date && (
+                      <p
+                        ref={dateRef}
+                        className='text-2xl text-gold/80'
+                      >
+                        {date}
+                      </p>
+                    )}
+                    {scrollToExpand && (
+                      <p
+                        ref={scrollLabelRef}
+                        className='text-white/60 font-medium text-center text-sm uppercase tracking-[0.3em]'
+                      >
+                        {scrollToExpand}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div
-                  ref={metaRef}
-                  className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'
+                  ref={titleWrapRef}
+                  className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
+                    textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                  }`}
                 >
-                  {date && (
-                    <p
-                      ref={dateRef}
-                      className='text-2xl text-gold/80'
-                    >
-                      {date}
-                    </p>
-                  )}
-                  {scrollToExpand && (
-                    <p
-                      ref={scrollLabelRef}
-                      className='text-white/60 font-medium text-center text-sm uppercase tracking-[0.3em]'
-                    >
-                      {scrollToExpand}
-                    </p>
-                  )}
+                  <h2
+                    ref={firstTitleRef}
+                    className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-white font-serif leading-[1.05] transition-none'
+                  >
+                    {firstWord}
+                  </h2>
+                  <h2
+                    ref={restTitleRef}
+                    className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-center text-white font-serif leading-[1.05] transition-none'
+                  >
+                    {restOfTitle}
+                  </h2>
                 </div>
               </div>
 
-              <div
-                ref={titleWrapRef}
-                className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
-                  textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
-                }`}
-              >
-                <h2
-                  ref={firstTitleRef}
-                  className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-white font-serif leading-[1.05] transition-none'
+              {children && (
+                <section
+                  className='flex flex-col w-full px-8 py-10 md:px-16 lg:py-20 transition-opacity duration-700'
+                  style={{ opacity: showContent ? 1 : 0 }}
                 >
-                  {firstWord}
-                </h2>
-                <h2
-                  ref={restTitleRef}
-                  className='text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-center text-white font-serif leading-[1.05] transition-none'
-                >
-                  {restOfTitle}
-                </h2>
-              </div>
+                  {children}
+                </section>
+              )}
             </div>
-
-            {children && (
-              <section
-                className='flex flex-col w-full px-8 py-10 md:px-16 lg:py-20 transition-opacity duration-700'
-                style={{ opacity: showContent ? 1 : 0 }}
-              >
-                {children}
-              </section>
-            )}
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
