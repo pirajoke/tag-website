@@ -16,6 +16,17 @@ interface ScrollExpandMediaProps {
 }
 
 const clamp = (value: number): number => Math.min(Math.max(value, 0), 1);
+const MOBILE_EXPAND_TOUCH_FACTOR = 0.0038;
+const MOBILE_COLLAPSE_TOUCH_FACTOR = 0.006;
+const TOUCH_EXPAND_FACTOR = 0.007;
+const TOUCH_COLLAPSE_FACTOR = 0.011;
+const getTouchScrollFactor = (deltaY: number, isMobile: boolean): number => {
+  if (isMobile) {
+    return deltaY < 0 ? MOBILE_COLLAPSE_TOUCH_FACTOR : MOBILE_EXPAND_TOUCH_FACTOR;
+  }
+
+  return deltaY < 0 ? TOUCH_COLLAPSE_FACTOR : TOUCH_EXPAND_FACTOR;
+};
 
 const ScrollExpandMedia = ({
   mediaType = 'image',
@@ -194,7 +205,7 @@ const ScrollExpandMedia = ({
 
       if (!mediaFullyExpandedRef.current) {
         e.preventDefault();
-        const scrollFactor = deltaY < 0 ? 0.011 : 0.007;
+        const scrollFactor = getTouchScrollFactor(deltaY, isMobileRef.current);
         setProgress(progressRef.current + deltaY * scrollFactor);
         touchStartYRef.current = touchY;
       }
